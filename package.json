@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "initDB": "node scripts/initialize_db.js data/adda.db",
+    "initDB": "node scripts/initializeDB.js data/adda.db",
     "test": "mocha tests/*test.js"
   },
   "dependencies": {
