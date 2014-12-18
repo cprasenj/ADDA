@@ -17,9 +17,9 @@ router.get('/', function(req, res) {
 
 
 router.get('/topic/:id',function(req,res) {
-	//load topics
+	// load topics
 	// lib.loadRecentComments(id, topics) => recent topics
-	//update topic 
+	// update topic 
 	var id = +req.params.id;
 	var topic = topics[id-1];
 	topic['comments'] = lib.loadRecentComments(id, topics);
@@ -32,6 +32,7 @@ module.exports = router;
 router.get("/dashboard",function(req,res){
 	var email = "mahesh@mail.com"; // logged in user email we will get it.
 	var myTopics = records.getMyTopics(email);
-	res.render('dashboard',{ title:'dashboard', myTopics:[]});
+	res.render('dashboard',{ title:'dashboard', myTopics:myTopics});
 });
+
 
