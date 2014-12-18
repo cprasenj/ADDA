@@ -2,7 +2,9 @@ var fs = require('fs');
 var _ = require('lodash');
 
 exports.create = function(location, dbIndex){
-	var db = JSON.parse(fs.readFileSync(location))[dbIndex];
+	var dbFile = fs.readFileSync(location,'utf-8');
+	var dbs = JSON.parse(dbFile);
+	var db = dbs[dbIndex];
 	var records = {};
 
 	records.reWriteDataBaseFile = function(){
@@ -44,9 +46,10 @@ exports.create = function(location, dbIndex){
 
 	records.getTop5Topics = function(){
 		var topicIds = Object.keys(db.topics);
-		return topicIds.map(function(id){
+		var topics = topicIds.map(function(id){
 			return db.topics[id].name;
 		});
+		return topics.reverse().slice(0,5);
 	};
 
 	records.findNumberOfCommentors = function(){
@@ -75,4 +78,4 @@ exports.create = function(location, dbIndex){
 		return newId;
 	};
 	return records;
-}
+};

@@ -35,17 +35,35 @@ describe("adda",function(){
 	describe("getTop5Topics",function(){
 		it("returns three topics Music Cricket STEP", function(done){
 			var lib = create("./tests/data/db.json", 0);
-			var topics = ["Music","Cricket","STEP"];
+			var topics = ["STEP","Cricket","Music"];
+			assert.deepEqual(lib.getTop5Topics(),topics);
+			done();
+		});
+		it("returns all the five topics when there are only five topics", function(done){
+			var lib = create("./tests/data/db.json", 2);
+			var topics = ["Films","Comedy","Cricket","Dance","Music"];
+			assert.deepEqual(lib.getTop5Topics(),topics);
+			done();
+		});
+		it("returns the latest five topics when there are more than five topics", function(done){
+			var lib = create("./tests/data/db.json", 3);
+			var topics = [ 'Cricket','Action','Films','Comedy','Romance' ];
+			assert.deepEqual(lib.getTop5Topics(),topics);
+			done();
+		});
+		it("returns empty array when there is no topics", function(done){
+			var lib = create("./tests/data/db.json", 4);
+			var topics = [];
 			assert.deepEqual(lib.getTop5Topics(),topics);
 			done();
 		});
 	});
 	describe("addTopic",function(){
 		it("should add new topic to the user budda@mail.com",function(done){
-			var lib = create("./tests/data/db.json", 2);
+			var lib = create("./tests/data/db.json", 5);
 			var id = lib.addTopic("budda@mail.com","TeamWork","What is TeamWork");
 			assert.equal(id,3);
-			assert.equal(lib.getTop5Topics()[2],"TeamWork");
+			assert.equal(lib.getTop5Topics()[0],"TeamWork");
 			done();
 		});
 	});
