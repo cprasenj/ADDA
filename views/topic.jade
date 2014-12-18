@@ -12,8 +12,14 @@ block content
   button Load All
   ul
    each comment in comments
-    li #{comment.commenter} #{comment.comment} #{comment.time}
- form(action = "" method = "POST")
-  input(type = text, name = currentComment, placeholder = "My current comment")
-  input(type = submit, value = "submit")
-
+    li
+     | Commentor: #{comment.commentor}
+     br
+     | Comment: #{comment.text}
+     br
+     | Time: #{comment.time}
+     br
+ form(action = "addComment" method = "POST")
+  input(type = "text", name = "currentComment")
+  input(type = "text", name = "id", value = "#{id}")
+  input(type = "submit", value = "submit") 
