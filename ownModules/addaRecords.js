@@ -44,5 +44,11 @@ exports.create = function(location, dbIndex){
 			return db.topics[id].comments.length;
 		});
 	};
+
+	records.validate = function(login){
+		var user = db.loginDetails[login.emailId];
+		return user && user.password == login.password ;
+	};
+
 	return records;
 };

@@ -55,4 +55,23 @@ describe("adda",function(){
 			done();
 		});
 	});
+	describe("validate",function(){
+		it("returns false when emailId doesn't match",function(){
+			var lib = create("./tests/data/db.json",0);
+			var loginDetails = {"emailId" : "mah@mail.com", "password": "secret"};
+			assert.notOk(lib.validate(loginDetails));
+		});
+		it("returns false when password doesn't match",function(){
+			var lib = create("./tests/data/db.json",0);
+			var loginDetails = {"emailId" : "mahesh@mail.com", "password": "goodboy"};
+			assert.notOk(lib.validate(loginDetails));
+		});
+		it("returns true when emailId and password matches",function(){
+			var lib = create("./tests/data/db.json",0);
+			var loginDetails = {"emailId" : "mahesh@mail.com", "password": "mahesh"};
+			assert.ok(lib.validate(loginDetails));
+		});
+	});
 });
+
+//			"mahesh@mail.com": {"name": "Mahesh Kumar", "password": "mahesh"},

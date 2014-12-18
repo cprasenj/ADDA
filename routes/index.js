@@ -38,3 +38,10 @@ router.get("/topics",function(req,res){
 	res.render('topics',{title:'Topics'})
 });
 
+router.get('/login', function(req, res) {
+	res.render('login',{title:'Login'});
+});
+router.post('/validate',function(req,res,next){
+	var validity = records.validate(req.body);
+	(validity)? res.redirect('/dashboard') : res.redirect('/login');
+});

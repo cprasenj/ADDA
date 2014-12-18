@@ -1,7 +1,7 @@
 [
 	{
 		"loginDetails": {
-			"mahesh@mail.com": {"name": "Mahesh Kumar", "password": "secret"},
+			"mahesh@mail.com": {"name": "Mahesh Kumar", "password": "mahesh"},
 			"prajapati@mail.com": {"name": "Prasanjit Chakraborty", "password": "secret"},
 			"prasanjit@mail.com": {"name": "Pooja Prajapati", "password": "secret"},
 			"budda@mail.com": {"name": "Buddarthan A N", "password": "secret"},
