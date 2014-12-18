@@ -21,6 +21,13 @@ describe("adda",function(){
   				{ topicId: 3, topicName: 'STEP' } ]);
 			done();
 		});
+		it("should give all topics created and joined by budda@mail.com from database index 1",function(done){
+			var lib = create("./tests/data/db.json", 1);
+			var myTopics = lib.getMyTopics("budda@mail.com");
+			assert.deepEqual(myTopics,[ { topicId: 2, topicName: 'Cricket' },
+ 				{ topicId: 1, topicName: 'Music' } ]);
+			done();
+		});
 	});
 	describe("getTop5Topics",function(){
 		it("returns three topics Music Cricket STEP", function(done){
@@ -30,19 +37,19 @@ describe("adda",function(){
 			done();
 		});
 		it("returns all the five topics when there are only five topics", function(done){
-			var lib = create("./tests/data/db.json", 1);
+			var lib = create("./tests/data/db.json", 2);
 			var topics = ["Films","Comedy","Cricket","Dance","Music"];
 			assert.deepEqual(lib.getTop5Topics(),topics);
 			done();
 		});
 		it("returns the latest five topics when there are more than five topics", function(done){
-			var lib = create("./tests/data/db.json", 2);
+			var lib = create("./tests/data/db.json", 3);
 			var topics = [ 'Cricket','Action','Films','Comedy','Romance' ];
 			assert.deepEqual(lib.getTop5Topics(),topics);
 			done();
 		});
 		it("returns empty array when there is no topics", function(done){
-			var lib = create("./tests/data/db.json", 3);
+			var lib = create("./tests/data/db.json", 4);
 			var topics = [];
 			assert.deepEqual(lib.getTop5Topics(),topics);
 			done();

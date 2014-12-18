@@ -1,19 +1,10 @@
 var fs = require('fs');
 var _ = require('lodash');
 
-var fs = require('fs');
-
-exports.addComment = function(topic,newComment) {
-	topic.comments.push(newComment);
-}; 
-
-exports.loadRecentComments = function(Id,topics) {
-	var topic = topics[_.findIndex(topics,{id:Id})];
-	return topic.comments.slice(-5);
-};
-
 exports.create = function(location, dbIndex){
-	var db = JSON.parse(fs.readFileSync(location))[dbIndex];
+	var dbFile = fs.readFileSync(location,'utf-8');
+	var dbs = JSON.parse(dbFile);
+	var db = dbs[dbIndex];
 	var records = {};
 	records.getMyTopics = function(email){
 		var myAllTopicIds = db["userTopics"][email];
@@ -54,4 +45,4 @@ exports.create = function(location, dbIndex){
 		});
 	};
 	return records;
-}
+};
