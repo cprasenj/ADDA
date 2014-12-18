@@ -1,7 +1,7 @@
 var fs = require('fs');
 var lib = {};
 
-lib.create = function(location){
+exports.create = function(location){
 	var db = JSON.parse(fs.readFileSync(location));
 	var records = {};
 	
@@ -10,16 +10,12 @@ lib.create = function(location){
 		return myTopics;
 	};
 	
-	// records.getTop5Topics = function(onComplete){
-	// 	var allTopics = Object.keys(db.topics || {});
-	// 	var select = function(selected, topic){
+	records.getTop5Topics = function(){
+		var allTopics = Object.keys(db.topics || {});
+		var select = function(selected, topic){
 
-	// 	};
-	// 	var first5 = allTopics.reduce(select,[]);
-	// 	onComplete(null,first5);
-	// };
-	
+		};
+		return allTopics;
+	};
 	return records;
 };
-
-exports.lib = lib;
