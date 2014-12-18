@@ -1,6 +1,8 @@
 var fs = require('fs');
 var _ = require('lodash');
 
+var fs = require('fs');
+
 exports.addComment = function(topic,newComment) {
 	topic.comments.push(newComment);
 }; 
@@ -28,6 +30,15 @@ exports.create = function(location, dbIndex){
 		return myTopics;
 	};
 	
+	records.loadRecentComments = function(Id,topics) {
+		var topic = topics[_.findIndex(topics,{id:Id})];
+		return topic.comments.slice(-5);
+	};
+
+	records.addComment = function(topic,newComment) {
+		topic.comments.push(newComment);
+	}; 
+
 	records.getTop5Topics = function(){
 		var topicIds = Object.keys(db.topics);
 		return topicIds.map(function(id){
