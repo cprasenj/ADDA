@@ -1,0 +1,17 @@
+extends layout
+
+block content
+ h3= title
+
+ p
+  form(action="/addTopic" method="post")
+   |Name:
+   input(type="text" name="topicName")
+   |Description:
+   input(type="text" name="topicDescription")
+   input(type="submit" value="Add Topic")
+ p
+  form(action="/searchTopic")
+   |Search Topic Here:
+   input(type="text" name="searchKeyWord")
+   input(type="submit" value="Search")

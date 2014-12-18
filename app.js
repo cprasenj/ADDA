@@ -6,10 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var fs = require('fs');
-var content = JSON.parse(fs.readFileSync('./data/addaDB.json'));
-var lib = require('./ownModules/addaRecords.js');
-// var school_records = require('./own_modules/school_records').init('./data/school.db');
 
 var app = express();
 // view engine setup
@@ -27,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/topic/:id',routes);
 app.post('/topic/addComment',routes);
-
+app.post('/validate',routes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

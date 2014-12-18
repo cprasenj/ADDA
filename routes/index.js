@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json");
-
+var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json",0);
 module.exports = router;
 
 router.get('/', function(req, res) {
@@ -27,3 +26,24 @@ router.post('/topic/addComment',function(req, res) {
 	records.addComment(req.body);
     res.redirect('/topic/'+req.body.id);
 });
+
+router.get("/topics",function(req,res){
+	res.render('topics',{title:'Topics'})
+});
+
+router.post("/addTopic",function(req,res){
+	var email = "mahesh@mail.com"; 
+	var topicName = req.body.topicName;
+	var topicDescription = req.body.topicDescription;
+	var topicId = records.addTopic(email,topicName,topicDescription);
+	res.redirect("/topic/"+topicId);
+});
+
+router.get('/login', function(req, res) {
+	res.render('login',{title:'Login'});
+});
+router.post('/validate',function(req,res,next){
+	var validity = records.validate(req.body);
+	(validity)? res.redirect('/dashboard') : res.redirect('/login');
+});
+
