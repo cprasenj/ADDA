@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var pages = require('./routes/pages');
 var users = require('./routes/users');
+var session = require('express-session');
+var routes = require('./routes/index');
 
 var app = express();
 // view engine setup
@@ -20,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', routes);
+app.use('/',routes);
 app.use('/topic/:id',routes);
 app.get('/registration',routes);
 app.post('/registration',routes);

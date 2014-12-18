@@ -4,11 +4,6 @@ var router = express.Router();
 var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json",0);
 module.exports = router;
 
-router.get('/', function(req, res) {
-	var topics = records.getTop5Topics();
-	res.render('index', { title:'Home',topics:topics});
-});
-
 router.get('/registration',function(req,res) {
     res.render('registration');
 });
@@ -61,7 +56,17 @@ router.post("/addTopic",function(req,res){
 router.get('/login', function(req, res) {
 	res.render('login',{title:'Login'});
 });
+
 router.post('/validate',function(req,res,next){
 	var validity = records.validate(req.body);
 	(validity)? res.redirect('/dashboard') : res.redirect('/login');
 });
+
+router.get('/logout',function(req,res){
+    req.session.destroy();
+    res.redirect('/');
+});
+
+
+
+
