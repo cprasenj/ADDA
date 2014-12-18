@@ -1,4 +1,4 @@
-var lib = require('../ownModules/addaRecords.js');
+var lib = require('../ownModules/addaRecords.js').create("./data/addaDB.json");
 var assert = require('chai').assert;
 
 describe('#addComment', function(){
