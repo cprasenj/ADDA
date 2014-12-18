@@ -1,3 +1,4 @@
+var fs = require('fs');
 var _ = require('lodash');
 
 exports.addComment = function(topic,newComment) {
@@ -7,7 +8,7 @@ exports.addComment = function(topic,newComment) {
 exports.loadRecentComments = function(Id,topics) {
 	var topic = topics[_.findIndex(topics,{id:Id})];
 	return topic.comments.slice(-5);
-var fs = require('fs');
+};	
 
 exports.create = function(location){
 	var db = JSON.parse(fs.readFileSync(location));
@@ -17,7 +18,7 @@ exports.create = function(location){
 		var myAllTopicIds = db["userTopics"][email];
 		var myCretedTopics = myAllTopicIds["created"].map(function(createdTopicId){
 			var topicName = db["topics"][createdTopicId]["name"];
-			return({topicId: createdTopicId, topicName: topicName})
+			return({topicId: createdTopicId, topicName: topicName});
 		});
 
 		var myJoinedTopics =  myAllTopicIds["joined"].map(function(joinedTopicId){
@@ -35,5 +36,4 @@ exports.create = function(location){
 		});
 	};
 	return records;
-};
-
+}

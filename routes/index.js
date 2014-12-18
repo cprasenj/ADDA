@@ -31,6 +31,6 @@ module.exports = router;
 router.get("/dashboard",function(req,res){
 	var email = "mahesh@mail.com"; // logged in user email we will get it.
 	var myTopics = records.getMyTopics(email);
-	res.render('dashboard',{ title:'dashboard', myTopics:[]});
+	res.render('dashboard',{ title:'dashboard', myTopics:myTopics});
 });
 
