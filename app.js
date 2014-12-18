@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/topic/:id',routes);
-app.post('/topic/addComment',routes);
+app.post('/topic/:id/addComment',routes);
 app.post('/validate',routes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -23,9 +23,11 @@ router.get("/dashboard",function(req,res){
 	res.render('dashboard',{ title:'dashboard', myTopics:myTopics});
 });
 
-router.post('/topic/addComment',function(req, res) {
-	records.addComment(req.body);
-    res.redirect('/topic/'+req.body.id);
+router.post('/topic/:id/addComment',function(req, res) {
+	var body = req.body;
+	body.id = req.params.id;
+	records.addComment(body);
+    res.redirect('/topic/'+body.id);
 });
 
 router.get("/topics",function(req,res){
@@ -47,4 +49,3 @@ router.post('/validate',function(req,res,next){
 	var validity = records.validate(req.body);
 	(validity)? res.redirect('/dashboard') : res.redirect('/login');
 });
-
