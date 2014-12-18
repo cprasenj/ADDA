@@ -7,12 +7,7 @@ exports.Create = function(location){
 }
 
 records.getMyTopics = function(email){
-	var myTopics = topics.filter(function(topic){
-		if(topic['email'] == email)
-			return true;
-		if(topic["joined"].indexOf(email) > -1)
-			return true;
-	});
+	var myTopics = topics["userTopics"]["email"];
 	return myTopics;
 }
 

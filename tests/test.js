@@ -1,4 +1,4 @@
-var records = require("../ownModules/addaRecords.js").Create("./tests/data/topics.json");
+var records = require("../ownModules/addaRecords.js").Create("./tests/data/testData.json");
 var assert = require("chai").assert;
 
 describe("dashboard1", function(){
