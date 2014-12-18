@@ -1,0 +1,19 @@
+extends layout
+
+block content
+ center
+  h3 #{name}
+ span
+  | Name: #{ownerName}
+  | startTime: #{startTime}
+  | description: #{description}
+ button Join/Close/Leave
+ div
+  button Load All
+  ul
+   each comment in comments
+    li #{comment.commenter} #{comment.comment} #{comment.time}
+ form(action = "" method = "POST")
+  input(type = text, name = currentComment, placeholder = "My current comment")
+  input(type = submit, value = "submit")
+
