@@ -1,9 +1,9 @@
-var lib = require('../ownModules/addaRecords.js').create("./tests/data/db.json");
+var lib = require('../ownModules/addaRecords.js').create("./tests/data/db.json",0);
 var assert = require('chai').assert;
 
 describe('#addComment', function(){
 	it('addComment() adds a comment into the topic 1', function(){
-		var db = require('../ownModules/addaRecords.js').create("./tests/data/db.json");
+		var db = require('../ownModules/addaRecords.js').create("./tests/data/db.json",0);
 		var comment = {
 			id : 2,
 			currentComment : "Cool Stuff"
@@ -13,7 +13,7 @@ describe('#addComment', function(){
 		assert.deepEqual(lastFiveComments[lastFiveComments.length-1].text,comment.currentComment);
 	});
 	it('addComment() adds a comment into the topic 2', function(){
-		var db = require('../ownModules/addaRecords.js').create("./tests/data/db.json");
+		var db = require('../ownModules/addaRecords.js').create("./tests/data/db.json",0);
 		var comment = {
 			id : 2,
 			currentComment : "bad game"

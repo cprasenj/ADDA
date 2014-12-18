@@ -1,10 +1,11 @@
 var fs = require('fs');
+var _ = require('lodash');
 
 exports.create = function(location, dbIndex){
 	var dbFile = fs.readFileSync(location,'utf-8');
 	var dbs = JSON.parse(dbFile);
 	var db = dbs[dbIndex];
-	var records = {};
+	var records = {db:db};
 
 	records.reWriteDataBaseFile = function(){
 		var dbToWrite = JSON.parse(fs.readFileSync(location));

@@ -1,7 +1,7 @@
 var create = require("../ownModules/addaRecords.js").create;
 var assert = require("chai").assert;
 var fs = require('fs');
-var backUpDb = fs.readFileSync("./tests/data/backUp.json");
+var backUpDb = fs.readFileSync("./tests/data/db.json");
 
 describe("adda",function(){
 	beforeEach(function(){
@@ -86,5 +86,4 @@ describe("adda",function(){
 	});
 });
 
-//			"mahesh@mail.com": {"name": "Mahesh Kumar", "password": "mahesh"},
 
