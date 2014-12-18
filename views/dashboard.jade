@@ -1,0 +1,12 @@
+extends layout
+
+block content
+ h3 DashBoard
+ p
+  |My Topics
+  ul
+    each topic in myTopics
+     li
+      a(href="/topic/#{topic.id}") #{topic.name}
+ p
+  a(href="/topics") Topics
