@@ -46,3 +46,11 @@ router.post("/addTopic",function(req,res){
 	res.redirect("/topic/"+topicId);
 });
 
+router.get('/login', function(req, res) {
+	res.render('login',{title:'Login'});
+});
+router.post('/validate',function(req,res,next){
+	var validity = records.validate(req.body);
+	(validity)? res.redirect('/dashboard') : res.redirect('/login');
+});
+

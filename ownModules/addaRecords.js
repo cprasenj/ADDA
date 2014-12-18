@@ -77,5 +77,9 @@ exports.create = function(location, dbIndex){
 		records.reWriteDataBaseFile();
 		return newId;
 	};
+	records.validate = function(login){
+		var user = db.loginDetails[login.emailId];
+		return user && user.password == login.password ;
+	};
 	return records;
 };
