@@ -34,4 +34,7 @@ router.get("/dashboard",function(req,res){
 	res.render('dashboard',{ title:'dashboard', myTopics:myTopics});
 });
 
+router.get("/topics",function(req,res){
+	res.render('topics',{title:'Topics'})
+});
 
