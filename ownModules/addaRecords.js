@@ -19,14 +19,13 @@ exports.create = function(location){
 		return myTopics;
 	};
 	
-	// records.getTop5Topics = function(onComplete){
-	// 	var allTopics = Object.keys(db.topics || {});
-	// 	var select = function(selected, topic){
+	records.getTop5Topics = function(){
+		var allTopics = Object.keys(db.topics || {});
+		var select = function(selected, topic){
 
-	// 	};
-	// 	var first5 = allTopics.reduce(select,[]);
-	// 	onComplete(null,first5);
-	// };
-	
+		};
+		return allTopics;
+	};
 	return records;
 };
+

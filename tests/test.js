@@ -1,11 +1,10 @@
-var lib = require("../ownModules/addaRecords.js");
-var records = lib.create("./tests/data/db.json");
+var lib = require("../ownModules/addaRecords.js").create("./tests/data/db.json");
 var assert = require("chai").assert;
 
 describe("adda",function(){
 	describe("getMyTopics-1",function(){
 		it("should give all topics created and joined by mahesh@mail.com",function(done){
-			var myTopics = records.getMyTopics("mahesh@mail.com");
+			var myTopics = lib.getMyTopics("mahesh@mail.com");
 			assert.deepEqual(myTopics,[ { topicId: 1, topicName: 'Music' },
  				{ topicId: 2, topicName: 'Cricket' },
   				{ topicId: 3, topicName: 'STEP' } ]);
@@ -14,7 +13,7 @@ describe("adda",function(){
 	});
 	describe("getMyTopics-2",function(){
 		it("should give all topics created and joined by prajapati@mail.com",function(done){
-			var myTopics = records.getMyTopics("mahesh@mail.com");
+			var myTopics = lib.getMyTopics("mahesh@mail.com");
 			assert.deepEqual(myTopics,[ { topicId: 1, topicName: 'Music' },
  				{ topicId: 2, topicName: 'Cricket' },
   				{ topicId: 3, topicName: 'STEP' } ]);
