@@ -1,12 +1,21 @@
 var fs = require('fs');
-var lib = {};
 
-lib.create = function(location){
+exports.create = function(location){
 	var db = JSON.parse(fs.readFileSync(location));
 	var records = {};
 	
 	records.getMyTopics = function(email){
-		var myTopics = db["userTopics"]["email"];
+		var myAllTopicIds = db["userTopics"][email];
+		var myCretedTopics = myAllTopicIds["created"].map(function(createdTopicId){
+			var topicName = db["topics"][createdTopicId]["name"];
+			return({topicId: createdTopicId, topicName: topicName})
+		});
+
+		var myJoinedTopics =  myAllTopicIds["joined"].map(function(joinedTopicId){
+			var topicName = db["topics"][joinedTopicId]["name"];
+			return({topicId: joinedTopicId, topicName: topicName});
+		});
+		myTopics = myCretedTopics.concat(myJoinedTopics);
 		return myTopics;
 	};
 	
@@ -21,5 +30,3 @@ lib.create = function(location){
 	
 	return records;
 };
-
-exports.lib = lib;
