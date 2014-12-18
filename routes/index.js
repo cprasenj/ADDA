@@ -38,3 +38,11 @@ router.get("/topics",function(req,res){
 	res.render('topics',{title:'Topics'})
 });
 
+router.post("/addTopic",function(req,res){
+	var email = "mahesh@mail.com"; // logged in user email we will get it.
+	var topicName = req.body.topicName;
+	var topicDescription = req.body.topicDescription;
+	var topicId = records.addTopic(email,topicName,topicDescription);
+	res.redirect("/topic/"+topicId);
+});
+

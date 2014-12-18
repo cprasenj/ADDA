@@ -1,31 +1,36 @@
 var fs = require('fs');
 var _ = require('lodash');
 
-exports.addComment = function(topic,newComment) {
-	topic.comments.push(newComment);
-}; 
-
-exports.loadRecentComments = function(Id,topics) {
-	var topic = topics[_.findIndex(topics,{id:Id})];
-	return topic.comments.slice(-5);
-};
-
 exports.create = function(location, dbIndex){
 	var db = JSON.parse(fs.readFileSync(location))[dbIndex];
 	var records = {};
+
+	records.reWriteDataBaseFile = function(){
+		var dbToWrite = JSON.parse(fs.readFileSync(location));
+		dbToWrite[dbIndex] = db;
+		fs.writeFileSync(location,JSON.stringify(dbToWrite));
+	}
+
 	records.getMyTopics = function(email){
 		var myAllTopicIds = db["userTopics"][email];
-		var myCretedTopics = myAllTopicIds["created"].map(function(createdTopicId){
+		var myCretedTopics = records.getMyCreatedTopics(myAllTopicIds);
+		var myJoinedTopics = records.getMyJoinedTopics(myAllTopicIds);
+		myTopics = myCretedTopics.concat(myJoinedTopics);
+		return myTopics;
+	};
+
+	records.getMyJoinedTopics = function(myAllTopicIds){
+		return myJoinedTopics =  myAllTopicIds["joined"].map(function(joinedTopicId){
+			var topicName = db["topics"][joinedTopicId]["name"];
+			return({topicId: joinedTopicId, topicName: topicName});
+		});	
+	}
+
+	records.getMyCreatedTopics = function(myAllTopicIds){
+		return myCretedTopics = myAllTopicIds["created"].map(function(createdTopicId){
 			var topicName = db["topics"][createdTopicId]["name"];
 			return({topicId: createdTopicId, topicName: topicName});
 		});
-
-		var myJoinedTopics =  myAllTopicIds["joined"].map(function(joinedTopicId){
-			var topicName = db["topics"][joinedTopicId]["name"];
-			return({topicId: joinedTopicId, topicName: topicName});
-		});
-		myTopics = myCretedTopics.concat(myJoinedTopics);
-		return myTopics;
 	};
 	
 	records.loadRecentComments = function(Id,topics) {
@@ -49,6 +54,25 @@ exports.create = function(location, dbIndex){
 		return topicIds.map(function(id){
 			return db.topics[id].comments.length;
 		});
+	};
+
+	records.addTopic = function(email,topicName,topicDescription){
+		var newId = +(_.max(Object.keys(db["topics"]))) + 1;
+		if(_.has(db["userTopics"],email))
+			db['userTopics'][email]["created"].push(newId);
+		else
+			db["userTopics"][email] = {joined: [], created: [newId]};
+
+		db["topics"][newId] = {
+			name: topicName,
+			ownerEmailId: email, 
+			startTime: String(new Date()).slice(0,21), 
+			closeTime: "Not Closed",
+			description: topicDescription,
+			comments: []
+		};
+		records.reWriteDataBaseFile();
+		return newId;
 	};
 	return records;
 }

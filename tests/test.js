@@ -1,8 +1,12 @@
 var create = require("../ownModules/addaRecords.js").create;
-
 var assert = require("chai").assert;
+var fs = require('fs');
+var backUpDb = fs.readFileSync("./tests/data/backUp.json");
 
 describe("adda",function(){
+	beforeEach(function(){
+		fs.writeFileSync('./tests/data/db.json',backUpDb);
+	});
 	describe("getMyTopics",function(){
 		it("should give all topics created and joined by mahesh@mail.com",function(done){
 			var lib = create("./tests/data/db.json", 0);
@@ -33,6 +37,15 @@ describe("adda",function(){
 			var lib = create("./tests/data/db.json", 0);
 			var topics = ["Music","Cricket","STEP"];
 			assert.deepEqual(lib.getTop5Topics(),topics);
+			done();
+		});
+	});
+	describe("addTopic",function(){
+		it("should add new topic to the user budda@mail.com",function(done){
+			var lib = create("./tests/data/db.json", 2);
+			var id = lib.addTopic("budda@mail.com","TeamWork","What is TeamWork");
+			assert.equal(id,3);
+			assert.equal(lib.getTop5Topics()[2],"TeamWork");
 			done();
 		});
 	});
