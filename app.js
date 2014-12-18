@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var school_records = require('./own_modules/school_records').init('./data/school.db');
+// var school_records = require('./own_modules/school_records').init('./data/school.db');
 var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
