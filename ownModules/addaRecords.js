@@ -16,5 +16,12 @@ exports.create = function(location){
 			return db.topics[id].name;
 		});
 	};
+
+	records.findNumberOfCommentors = function(){
+		var topicIds = Object.keys(db.topics);
+		return topicIds.map(function(id){
+			return db.topics[id].comments.length;
+		});
+	};
 	return records;
 };
