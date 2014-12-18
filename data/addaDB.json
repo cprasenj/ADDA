@@ -6,7 +6,8 @@
 			"prasanjit@mail.com": {"name": "Pooja Prajapati", "password": "secret"},
 			"budda@mail.com": {"name": "Buddarthan A N", "password": "secret"},
 			"suparna@mail.com": {"name": "Suparna Dey", "password": "secret"},
-			"chopra@mail.com": {"name": "Pooja Chopra", "password": "secret"}
+			"chopra@mail.com": {"name": "Pooja Chopra", "password": "secret"},
+			"sidthu@fmail.com": {"name": "Gautam Sidtharth", "password": "asdfghjkl;"}
 		},
 		"userTopics": {
 			"mahesh@mail.com": {"joined": [2,3], "created": [1]},
