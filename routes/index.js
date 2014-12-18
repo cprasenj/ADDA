@@ -3,11 +3,18 @@ var router = express.Router();
 var lib = require('../ownModules/addaRecords.js');
 var topics = require('../ownModules/tempdata.js').topics;
 
+var addaRoutes = require('../ownModules/addaRecords');
+var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json");
+
+module.exports = router;
+
 /* GET home page. */
 
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Home' });
+	var topics = records.getTop5Topics();
+	res.render('index', { title:'Home',topics:topics});
 });
+
 
 router.get('/topic/:id',function(req,res) {
 	//load topics
@@ -21,4 +28,10 @@ router.get('/topic/:id',function(req,res) {
 
 module.exports = router;
 
+
+router.get("/dashboard",function(req,res){
+	var email = "mahesh@mail.com"; // logged in user email we will get it.
+	var myTopics = records.getMyTopics(email);
+	res.render('dashboard',{ title:'dashboard', myTopics:[]});
+});
 
