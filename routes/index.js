@@ -33,3 +33,5 @@ router.get("/dashboard",function(req,res){
 	var myTopics = records.getMyTopics(email);
 	res.render('dashboard',{ title:'dashboard', myTopics:myTopics});
 });
+
+

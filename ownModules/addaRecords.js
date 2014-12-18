@@ -17,7 +17,7 @@ exports.create = function(location){
 		var myAllTopicIds = db["userTopics"][email];
 		var myCretedTopics = myAllTopicIds["created"].map(function(createdTopicId){
 			var topicName = db["topics"][createdTopicId]["name"];
-			return({topicId: createdTopicId, topicName: topicName})
+			return({topicId: createdTopicId, topicName: topicName});
 		});
 
 		var myJoinedTopics =  myAllTopicIds["joined"].map(function(joinedTopicId){
@@ -42,5 +42,4 @@ exports.create = function(location){
 		});
 	};
 	return records;
-};
-
+}
