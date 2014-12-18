@@ -1,25 +1,39 @@
 extends layout
-
+ 
 block content
- center
-  h3 #{name}
- span
-  | Name: #{ownerName}
-  | startTime: #{startTime}
-  | description: #{description}
- button Join/Close/Leave
  div
-  button Load All
-  ul
-   each comment in comments
-    li
-     | Commentor: #{comment.commentor}
-     br
-     | Comment: #{comment.text}
-     br
-     | Time: #{comment.time}
-     br
- form(action = "addComment" method = "POST")
-  input(type = "text", name = "currentComment")
-  input(type = "text", name = "id", value = "#{id}")
-  input(type = "submit", value = "submit") 
+  h3 #{name}
+ div
+  | StartedBy: #{ownerName}
+ div
+  | startedTime: #{startTime}
+ div
+  | closedTime: #{closeTime}
+ div
+  | description: #{description}
+ div
+ button Join/Close/Leave
+ br
+ br
+ br
+ div
+  h3 Comments:
+  div
+   ul
+    each comment in comments
+     li
+      div
+       | Commentor: #{comment.commentor}
+      div
+       | Comment: #{comment.text}
+      div
+       | Time: #{comment.time}
+   button Load All
+  br
+  br
+  div
+   form(action = "#{id}/addComment" method = "POST")
+    div
+     | Add new Comments: 
+     input(type = "text", name = "currentComment")
+    input(type = "submit", value = "submit")

@@ -26,7 +26,7 @@ exports.create = function(location, dbIndex){
 			var topicName = db["topics"][joinedTopicId]["name"];
 			return({topicId: joinedTopicId, topicName: topicName});
 		});	
-	}
+	};
 
 	records.getMyCreatedTopics = function(myAllTopicIds){
 		return myCretedTopics = myAllTopicIds["created"].map(function(createdTopicId){
