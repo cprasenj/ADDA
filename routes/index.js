@@ -1,4 +1,5 @@
 var express = require('express');
+var lib = require('../library/userStore.js').create();
 var router = express.Router();
 var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json",0);
 module.exports = router;
@@ -6,6 +7,21 @@ module.exports = router;
 router.get('/', function(req, res) {
 	var topics = records.getTop5Topics();
 	res.render('index', { title:'Home',topics:topics});
+});
+
+router.get('/registration',function(req,res) {
+    res.render('registration');
+});
+
+router.post('/registration',function(req,res) {
+    var result = lib.save({
+    firstName:req.body.firstName,
+    lastName:req.body.lastName,
+    email:req.body.email,
+    password:req.body.password
+  });
+  result.error ? res.render('registration',result) : res.redirect('/dashboard');  
+
 });
 
 router.get('/topic/:id',function(req,res) {

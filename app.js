@@ -22,6 +22,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/topic/:id',routes);
+app.get('/registration',routes);
+app.post('/registration',routes);
 app.post('/topic/addComment',routes);
 app.post('/validate',routes);
 // catch 404 and forward to error handler
