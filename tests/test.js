@@ -1,8 +1,13 @@
 var create = require("../ownModules/addaRecords.js").create;
 var assert = require("chai").assert;
+var fs = require('fs');
+var backUpDb = fs.readFileSync("./tests/data/backUp.json");
 
 describe("adda",function(){
-	describe("getMyTopics-1",function(){
+	beforeEach(function(){
+		fs.writeFileSync('./tests/data/db.json',backUpDb);
+	});
+	describe("getMyTopics",function(){
 		it("should give all topics created and joined by mahesh@mail.com",function(done){
 			var lib = create("./tests/data/db.json", 0);
 			var myTopics = lib.getMyTopics("mahesh@mail.com");
@@ -11,8 +16,6 @@ describe("adda",function(){
   				{ topicId: 3, topicName: 'STEP' } ]);
 			done();
 		});
-	});
-	describe("getMyTopics-2",function(){
 		it("should give all topics created and joined by prajapati@mail.com",function(done){
 			var lib = create("./tests/data/db.json", 0);
 			var myTopics = lib.getMyTopics("mahesh@mail.com");
@@ -55,6 +58,15 @@ describe("adda",function(){
 			done();
 		});
 	});
+	describe("addTopic",function(){
+		it("should add new topic to the user budda@mail.com",function(done){
+			var lib = create("./tests/data/db.json", 5);
+			var id = lib.addTopic("budda@mail.com","TeamWork","What is TeamWork");
+			assert.equal(id,3);
+			assert.equal(lib.getTop5Topics()[0],"TeamWork");
+			done();
+		});
+	});
 	describe("validate",function(){
 		it("returns false when emailId doesn't match",function(){
 			var lib = create("./tests/data/db.json",0);
@@ -75,3 +87,4 @@ describe("adda",function(){
 });
 
 //			"mahesh@mail.com": {"name": "Mahesh Kumar", "password": "mahesh"},
+
