@@ -3,7 +3,6 @@ var router = express.Router();
 var lib = require('../ownModules/addaRecords.js');
 var topics = require('../ownModules/tempdata.js').topics;
 
-var addaRoutes = require('../ownModules/addaRecords');
 var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json");
 
 module.exports = router;
