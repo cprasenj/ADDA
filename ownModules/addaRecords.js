@@ -41,9 +41,10 @@ exports.create = function(location, dbIndex){
 
 	records.getTop5Topics = function(){
 		var topicIds = Object.keys(db.topics);
-		return topicIds.map(function(id){
+		var topics = topicIds.map(function(id){
 			return db.topics[id].name;
 		});
+		return topics.reverse().slice(0,5);
 	};
 
 	records.findNumberOfCommentors = function(){

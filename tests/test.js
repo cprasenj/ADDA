@@ -26,7 +26,25 @@ describe("adda",function(){
 	describe("getTop5Topics",function(){
 		it("returns three topics Music Cricket STEP", function(done){
 			var lib = create("./tests/data/db.json", 0);
-			var topics = ["Music","Cricket","STEP"];
+			var topics = ["STEP","Cricket","Music"];
+			assert.deepEqual(lib.getTop5Topics(),topics);
+			done();
+		});
+		it("returns all the five topics when there are only five topics", function(done){
+			var lib = create("./tests/data/db.json", 1);
+			var topics = ["Films","Comedy","Cricket","Dance","Music"];
+			assert.deepEqual(lib.getTop5Topics(),topics);
+			done();
+		});
+		it("returns the latest five topics when there are more than five topics", function(done){
+			var lib = create("./tests/data/db.json", 2);
+			var topics = [ 'Cricket','Action','Films','Comedy','Romance' ];
+			assert.deepEqual(lib.getTop5Topics(),topics);
+			done();
+		});
+		it("returns empty array when there is no topics", function(done){
+			var lib = create("./tests/data/db.json", 3);
+			var topics = [];
 			assert.deepEqual(lib.getTop5Topics(),topics);
 			done();
 		});
