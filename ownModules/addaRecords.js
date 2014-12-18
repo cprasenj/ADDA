@@ -1,8 +1,6 @@
 var fs = require('fs');
 var _ = require('lodash');
 
-var fs = require('fs');
-
 exports.addComment = function(topic,newComment) {
 	topic.comments.push(newComment);
 }; 
