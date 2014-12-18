@@ -10,8 +10,8 @@ exports.loadRecentComments = function(Id,topics) {
 	return topic.comments.slice(-5);
 };
 
-exports.create = function(location){
-	var db = JSON.parse(fs.readFileSync(location));
+exports.create = function(location, dbIndex){
+	var db = JSON.parse(fs.readFileSync(location))[dbIndex];
 	var records = {};
 	records.getMyTopics = function(email){
 		var myAllTopicIds = db["userTopics"][email];

@@ -1,3 +1,4 @@
+[
 {
 	"loginDetails": {
 		"mahesh@mail.com": {"name": "Mahesh Kumar", "password": "secret"},
@@ -54,3 +55,4 @@
 		}
 	}
 }
+]
