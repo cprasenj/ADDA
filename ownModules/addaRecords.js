@@ -11,11 +11,10 @@ exports.create = function(location){
 	};
 	
 	records.getTop5Topics = function(){
-		var allTopics = Object.keys(db.topics || {});
-		var select = function(selected, topic){
-
-		};
-		return allTopics;
+		var topicIds = Object.keys(db.topics);
+		return topicIds.map(function(id){
+			return db.topics[id].name;
+		});
 	};
 	return records;
 };
