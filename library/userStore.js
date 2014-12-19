@@ -17,7 +17,7 @@ exports.create = function(){
 			return {};
 		},
 		load: function(email){
-			return _.find(db.users,{email:email});
+			return _.find(db[0].users,{email:email});
 		}
 	};
 };
