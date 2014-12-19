@@ -104,3 +104,7 @@ router.get("/logout",function(req,res){
 	req.session.destroy();
 	res.redirect("/");
 });
+router.post('/searchTopic',function(req,res) {
+	var topic = records.getRelatedTopics(req.body.searchKeyWord);
+	res.end(JSON.stringify(topic));
+});
