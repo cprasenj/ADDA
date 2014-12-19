@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var userStore = require("../library/userStore.js")
-var records = require("../ownModules/addaRecords.js").create("./data/productionData.json",0);
+var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json",0);
 var lib = require('../library/userStore.js').create();
 module.exports = router;
 
-var loadUserFromSession = function(req,res,nent){
-	var user = req.session.userEmail && userStore.load(req.session.userEmail);
+var loadUserFromSession = function(req,res,next){
+	var user = req.session.userEmail && lib.load(req.session.userEmail);
+	console.log("@@@",user)
 	if(user){
 		req.user = user;
 		res.locals.user = user;
@@ -17,6 +17,7 @@ var loadUserFromSession = function(req,res,nent){
 }
 
 var requireLogin = function(req,res,next){
+	console.log("---->",req.user)
 	req.user ? next(): res.redirect("/login");
 }
 
@@ -74,9 +75,14 @@ router.get('/login', function(req, res) {
 	res.render('login',{title:'Login'});
 });
 
-router.post('/validate',requireLogin,function(req,res){
+router.post('/validate',function(req,res){
 	var validity = records.validate(req.body);
-	(validity)? res.redirect('/dashboard') : res.redirect('/login');
+	if(validity){
+		req.session.userEmail = req.body.emailId;
+		res.redirect('/dashboard'); 
+	}else{
+		res.redirect('/login');
+	}
 });
 
 router.get('/registration',function(req,res) {
