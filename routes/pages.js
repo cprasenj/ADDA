@@ -18,7 +18,6 @@ router.get('/index.html', function(req, res) {
 
 router.get('/topic/:id',function(req,res) {
 	var id = req.params.id;
-    console.log(records.db);
 	var topic = records.db['topics'][id];
 	topic['id'] = id;
 	topic['comments'] = records.loadRecentComments(id);
