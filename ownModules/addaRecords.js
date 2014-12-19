@@ -17,18 +17,12 @@ exports.create = function(location, dbIndex){
 		fs.writeFileSync(location,JSON.stringify(dbToWrite));
 	};
 
-	records.getTopicNames =  function(){
-		var keysOfDB = Object.keys(records.db["topics"]);
-		return keysOfDB.map(function(topic){
-			return records.db["topics"][topic]["name"];
-		});
-	};
-
 	records.getRelatedTopics = function(chunk){
 		var keysOfDB = Object.keys(records.db["topics"]);
 		var searchResult = keysOfDB.map(function(topic){
 			var topicName = records.db["topics"][topic]["name"];
-			if(topicName.match(chunk))
+			var matchString = new RegExp(chunk,'i');
+			if(topicName.match(matchString))
 		 		return topicName;
 		});
 		return _.compact(searchResult);

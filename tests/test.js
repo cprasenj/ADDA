@@ -3,15 +3,15 @@ var assert = require("chai").assert;
 var fs = require('fs');
 var backUpDb = fs.readFileSync("./tests/data/db.json");
 
-describe("adda",function(){
+describe("#adda",function(){
 	beforeEach(function(){
 		fs.writeFileSync('./tests/data/db.json',backUpDb);
 	});
-	describe("searchTopics",function(){
-		describe("getTopicNames",function(){
+	describe("#searchTopics",function(){
+		describe("#getTopicNames",function(){
 			it("should returns the name of topics",function(done){
 				var lib = create("./tests/data/db.json", 0);
-  				var actual = lib.getTopicNames();
+  				var actual = lib.getRelatedTopics();
   				var expected = ["Music", "Cricket","STEP"];
   				assert.deepEqual(actual,expected);		
   				done();
@@ -20,6 +20,20 @@ describe("adda",function(){
 				var lib = create("./tests/data/db.json", 0);
 				var actual = lib.getRelatedTopics("Cri");
   				var expected = ["Cricket"];
+  				assert.deepEqual(actual,expected);		
+  				done();
+			});
+			it("should returns Cricket when Cri is typed",function(done){
+				var lib = create("./tests/data/db.json", 0);
+				var actual = lib.getRelatedTopics("Mu");
+  				var expected = ["Music"];
+  				assert.deepEqual(actual,expected);		
+  				done();
+			});
+			it("should returns Cricket when Cri is typed",function(done){
+				var lib = create("./tests/data/db.json", 0);
+				var actual = lib.getRelatedTopics("Ep");
+  				var expected = ["STEP"];
   				assert.deepEqual(actual,expected);		
   				done();
 			});
