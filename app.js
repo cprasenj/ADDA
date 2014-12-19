@@ -28,6 +28,7 @@ app.get('/registration',pages);
 app.post('/registration',pages);
 app.post('/topic/:id/addComment',pages);
 app.post('/validate',pages);
+app.post('/searchTopic',pages);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

@@ -11,7 +11,7 @@ block content
    input(type="text" name="topicDescription")
    input(type="submit" value="Add Topic")
  p
-  form(action="/searchTopic")
+  form(action="/searchTopic" method="post")
    |Search Topic Here:
    input(type="text" name="searchKeyWord")
    input(type="submit" value="Search")

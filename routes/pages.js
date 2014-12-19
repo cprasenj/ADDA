@@ -74,3 +74,8 @@ router.post('/registration',function(req,res) {
   result.error ? res.render('registration',result) : res.redirect('/dashboard');  
 
 });
+
+router.post('/searchTopic',function(req,res) {
+	var topic = records.getRelatedTopics(req.body.searchKeyWord);
+	res.end(JSON.stringify(topic));
+});
