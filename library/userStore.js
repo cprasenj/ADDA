@@ -1,6 +1,6 @@
 var fs = require('fs');
 var _ = require('lodash');
-var USERFILE = './data/addaDB.json';
+var USERFILE = './data/productionData.json';
 var db = fs.existsSync(USERFILE)?
 	JSON.parse(fs.readFileSync(USERFILE,'utf-8')):
 	[];

@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var pages = require('./routes/pages');
 var users = require('./routes/users');
+var session = require("express-session");
 
 var app = express();
 // view engine setup
@@ -18,6 +19,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({name:"Adda",secret: "This is Adda App secret string", cookie:{maxAge:600000}}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', pages);

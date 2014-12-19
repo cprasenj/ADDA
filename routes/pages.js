@@ -1,7 +1,25 @@
 var express = require('express');
 var router = express.Router();
-var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json",0);
+var userStore = require("../library/userStore.js")
+var records = require("../ownModules/addaRecords.js").create("./data/productionData.json",0);
 module.exports = router;
+
+var loadUserFromSession = function(req,res,nent){
+	var user = req.session.userEmail && userStore.load(req.session.userEmail);
+	if(user){
+		req.user = user;
+		res.locals.user = user;
+	}else{
+		delete req.session.userEmail;
+	}
+	next();
+}
+
+var requireLogin = function(req,res,next){
+	req.user ? next(): res.redirect("/login");
+}
+
+router.use(loadUserFromSession);
 
 router.get('/', function(req, res) {
 	var topics = records.getTop5Topics();
@@ -17,7 +35,7 @@ router.get('/index.html', function(req, res) {
 	res.render('index', { title:'Home',topics:topics});
 });
 
-router.get('/topic/:id',function(req,res) {
+router.get('/topic/:id',requireLogin,function(req,res) {
 	var id = req.params.id;
 	var topic = records.db['topics'][id];
 	topic['id'] = id;
@@ -25,24 +43,24 @@ router.get('/topic/:id',function(req,res) {
     res.render('topic',topic);
 });
 
-router.get("/dashboard",function(req,res){
+router.get("/dashboard",requireLogin,function(req,res){
 	var email = "mahesh@mail.com"; 
 	var myTopics = records.getMyTopics(email);
 	res.render('dashboard',{ title:'dashboard', myTopics:myTopics});
 });
 
-router.post('/topic/:id/addComment',function(req, res) {
+router.post('/topic/:id/addComment',requireLogin,function(req, res) {
 	var body = req.body;
 	body.id = req.params.id;
 	records.addComment(body);
     res.redirect('/topic/'+body.id);
 });
 
-router.get("/topics",function(req,res){
+router.get("/topics",requireLogin,function(req,res){
 	res.render('topics',{title:'Topics'})
 });
 
-router.post("/topicAdd",function(req,res){
+router.post("/topicAdd",requireLogin,function(req,res){
 	var email = "mahesh@mail.com"; 
 	var topicName = req.body.topicName;
 	var topicDescription = req.body.topicDescription;
@@ -52,11 +70,11 @@ router.post("/topicAdd",function(req,res){
 
 
 
-router.get('/login', function(req, res) {
+router.get('/login',requireLogin, function(req, res) {
 	res.render('login',{title:'Login'});
 });
 
-router.post('/validate',function(req,res){
+router.post('/validate',requireLogin,function(req,res){
 	var validity = records.validate(req.body);
 	(validity)? res.redirect('/dashboard') : res.redirect('/login');
 });
