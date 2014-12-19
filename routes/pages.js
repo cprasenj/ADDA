@@ -7,6 +7,7 @@ router.get('/', function(req, res) {
 	var topics = records.getTop5Topics();
 	res.render('index', { title:'Home',topics:topics});
 });
+
 router.get('/index', function(req, res) {
 	var topics = records.getTop5Topics();
 	res.render('index', { title:'Home',topics:topics});
@@ -48,6 +49,8 @@ router.post("/topicAdd",function(req,res){
 	var topicId = records.addTopic(email,topicName,topicDescription);
 	res.redirect("/topic/"+topicId);
 });
+
+
 
 router.get('/login', function(req, res) {
 	res.render('login',{title:'Login'});
