@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json",0);
+var lib = require('../library/userStore.js').create();
 module.exports = router;
 
 router.get('/', function(req, res) {
@@ -50,8 +51,6 @@ router.post("/topicAdd",function(req,res){
 	res.redirect("/topic/"+topicId);
 });
 
-
-
 router.get('/login', function(req, res) {
 	res.render('login',{title:'Login'});
 });
@@ -59,4 +58,19 @@ router.get('/login', function(req, res) {
 router.post('/validate',function(req,res){
 	var validity = records.validate(req.body);
 	(validity)? res.redirect('/dashboard') : res.redirect('/login');
+});
+
+router.get('/registration',function(req,res) {
+    res.render('registration');
+});
+
+router.post('/registration',function(req,res) {
+    var result = lib.save({
+    firstName:req.body.firstName,
+    lastName:req.body.lastName,
+    email:req.body.email,
+    password:req.body.password
+  });
+  result.error ? res.render('registration',result) : res.redirect('/dashboard');  
+
 });
