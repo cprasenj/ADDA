@@ -7,6 +7,24 @@ describe("adda",function(){
 	beforeEach(function(){
 		fs.writeFileSync('./tests/data/db.json',backUpDb);
 	});
+	describe("searchTopics",function(){
+		describe("getTopicNames",function(){
+			it("should returns the name of topics",function(done){
+				var lib = create("./tests/data/db.json", 0);
+  				var actual = lib.getTopicNames();
+  				var expected = ["Music", "Cricket","STEP"];
+  				assert.deepEqual(actual,expected);		
+  				done();
+			});
+			it("should returns Cricket when Cri is typed",function(done){
+				var lib = create("./tests/data/db.json", 0);
+				var actual = lib.getRelatedTopics("Cri");
+  				var expected = ["Cricket"];
+  				assert.deepEqual(actual,expected);		
+  				done();
+			});
+		});
+	});
 	describe("getMyTopics",function(){
 		it("should give all topics created and joined by mahesh@mail.com",function(done){
 			var lib = create("./tests/data/db.json", 0);
