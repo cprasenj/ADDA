@@ -99,3 +99,8 @@ router.post('/registration',function(req,res) {
   result.error ? res.render('registration',result) : res.redirect('/dashboard');  
 
 });
+
+router.get("/logout",function(req,res){
+	req.session.destroy();
+	res.redirect("/");
+});
