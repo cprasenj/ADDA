@@ -26,7 +26,7 @@ exports.create = function(location, dbIndex){
 			var topicName = db["topics"][joinedTopicId]["name"];
 			return({topicId: joinedTopicId, topicName: topicName});
 		});	
-	};
+	}
 
 	records.getMyCreatedTopics = function(myAllTopicIds){
 		return myCretedTopics = myAllTopicIds["created"].map(function(createdTopicId){
@@ -61,14 +61,11 @@ exports.create = function(location, dbIndex){
 
 	records.addTopic = function(email,topicName,topicDescription){
 		var newId = +(_.max(Object.keys(db["topics"]))) + 1;
-		(_.has(db["userTopics"],email)) &&	db['userTopics'][email]["created"].push(newId);
-		(_.has(db["userTopics"],email)) || (db["userTopics"][email] = {joined: [], created: [newId]});
-		records.addNewTopicIdWithDetails(email,topicName,topicDescription,newId);
-		records.reWriteDataBaseFile();
-		return newId;
-	};
+		if(_.has(db["userTopics"],email))
+			db['userTopics'][email]["created"].push(newId);
+		else
+			db["userTopics"][email] = {joined: [], created: [newId]};
 
-	records.addNewTopicIdWithDetails = function(email,topicName,topicDescription,newId){
 		db["topics"][newId] = {
 			name: topicName,
 			ownerEmailId: email, 
@@ -77,14 +74,13 @@ exports.create = function(location, dbIndex){
 			description: topicDescription,
 			comments: []
 		};
-	}
+		records.reWriteDataBaseFile();
+		return newId;
+	};
+	
 	records.validate = function(login){
 		var user = db.loginDetails[login.emailId];
 		return user && user.password == login.password ;
 	};
-
-	records.getAllTopics = function(){
-		 return db["topics"]
-	}
 	return records;
 };

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var userStore = require("../library/userStore.js")
 var records = require("../ownModules/addaRecords.js").create("./data/productionData.json",0);
+var lib = require('../library/userStore.js').create();
 module.exports = router;
 
 var loadUserFromSession = function(req,res,nent){
@@ -69,12 +70,26 @@ router.post("/topicAdd",requireLogin,function(req,res){
 });
 
 
-
-router.get('/login',requireLogin, function(req, res) {
+router.get('/login', function(req, res) {
 	res.render('login',{title:'Login'});
 });
 
 router.post('/validate',requireLogin,function(req,res){
 	var validity = records.validate(req.body);
 	(validity)? res.redirect('/dashboard') : res.redirect('/login');
+});
+
+router.get('/registration',function(req,res) {
+    res.render('registration');
+});
+
+router.post('/registration',function(req,res) {
+    var result = lib.save({
+    firstName:req.body.firstName,
+    lastName:req.body.lastName,
+    email:req.body.email,
+    password:req.body.password
+  });
+  result.error ? res.render('registration',result) : res.redirect('/dashboard');  
+
 });

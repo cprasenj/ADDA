@@ -1,7 +1,6 @@
 [
 	{
-
-		"users": [
+		"users":[
 			{"email":"mahesh@mail.com","name": "Mahesh Kumar", "password": "mahesh"},
 			{"email":"prajapati@mail.com","name": "Prasanjit Chakraborty", "password": "secret"},
 			{"email":"prasanjit@mail.com","name": "Pooja Prajapati", "password": "secret"},
@@ -9,7 +8,6 @@
 			{"email":"suparna@mail.com","name": "Suparna Dey", "password": "secret"},
 			{"email":"chopra@mail.com","name": "Pooja Chopra", "password": "secret"}
 		],
-	
 		"loginDetails": {
 			"mahesh@mail.com": {"name": "Mahesh Kumar", "password": "mahesh"},
 			"prajapati@mail.com": {"name": "Prasanjit Chakraborty", "password": "secret"},
