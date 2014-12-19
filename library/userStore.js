@@ -4,16 +4,17 @@ var USERFILE = './data/addaDB.json';
 var db = fs.existsSync(USERFILE)?
 	JSON.parse(fs.readFileSync(USERFILE,'utf-8')):
 	[];
-var saveAll = function(){
+var saveAll = function(USERFILE){
 	fs.writeFile(USERFILE,JSON.stringify(db));
 };
-exports.create = function(){
+exports.create = function(location){
+	if(location) USERFILE = location;
 	return {
 		save: function(user){
 			if(_.some(db,{email:user.email}))
 				return {error:'email already registered'};
 			db[0]['users'].push(user);
-			saveAll();
+			saveAll(USERFILE);
 			return {};
 		},
 		load: function(email){
