@@ -1,5 +1,4 @@
 var express = require('express');
-var lib = require('../library/userStore.js').create();
 var router = express.Router();
 var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json",0);
 module.exports = router;
@@ -8,20 +7,13 @@ router.get('/', function(req, res) {
 	var topics = records.getTop5Topics();
 	res.render('index', { title:'Home',topics:topics});
 });
-
-router.get('/registration',function(req,res) {
-    res.render('registration');
+router.get('/index', function(req, res) {
+	var topics = records.getTop5Topics();
+	res.render('index', { title:'Home',topics:topics});
 });
-
-router.post('/registration',function(req,res) {
-    var result = lib.save({
-    firstName:req.body.firstName,
-    lastName:req.body.lastName,
-    email:req.body.email,
-    password:req.body.password
-  });
-  result.error ? res.render('registration',result) : res.redirect('/dashboard');  
-
+router.get('/index.html', function(req, res) {
+	var topics = records.getTop5Topics();
+	res.render('index', { title:'Home',topics:topics});
 });
 
 router.get('/topic/:id',function(req,res) {
@@ -50,7 +42,7 @@ router.get("/topics",function(req,res){
 	res.render('topics',{title:'Topics'})
 });
 
-router.post("/addTopic",function(req,res){
+router.post("/topicAdd",function(req,res){
 	var email = "mahesh@mail.com"; 
 	var topicName = req.body.topicName;
 	var topicDescription = req.body.topicDescription;
@@ -61,9 +53,8 @@ router.post("/addTopic",function(req,res){
 router.get('/login', function(req, res) {
 	res.render('login',{title:'Login'});
 });
-router.post('/validate',function(req,res,next){
+
+router.post('/validate',function(req,res){
 	var validity = records.validate(req.body);
 	(validity)? res.redirect('/dashboard') : res.redirect('/login');
 });
-
-module.exports = router;
