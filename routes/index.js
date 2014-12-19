@@ -25,7 +25,6 @@ router.get('/topic/:id',function(req,res) {
 	res.render('topic',topic);
 });
 
-module.exports = router;
 
 
 router.get("/dashboard",function(req,res){
@@ -38,3 +37,4 @@ router.get("/topics",function(req,res){
 	res.render('topics',{title:'Topics'})
 });
 
+module.exports = router;
