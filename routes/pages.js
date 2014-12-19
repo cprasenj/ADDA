@@ -91,8 +91,7 @@ router.get('/registration',function(req,res) {
 
 router.post('/registration',function(req,res) {
     var result = lib.save({
-    firstName:req.body.firstName,
-    lastName:req.body.lastName,
+    Name:req.body.Name,
     email:req.body.email,
     password:req.body.password
   });
@@ -104,6 +103,7 @@ router.get("/logout",function(req,res){
 	req.session.destroy();
 	res.redirect("/");
 });
+
 router.post('/searchTopic',function(req,res) {
 	var topic = records.getRelatedTopics(req.body.searchKeyWord);
 	res.end(JSON.stringify(topic));
