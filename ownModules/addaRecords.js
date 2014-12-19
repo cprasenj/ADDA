@@ -7,10 +7,31 @@ exports.create = function(location, dbIndex){
 	var db = dbs[dbIndex];
 	var records = {db:db};
 
+	records.getAllTopics = function(){
+		 return db["topics"];
+	};
+
 	records.reWriteDataBaseFile = function(){
 		var dbToWrite = JSON.parse(fs.readFileSync(location));
 		dbToWrite[dbIndex] = db;
 		fs.writeFileSync(location,JSON.stringify(dbToWrite));
+	};
+
+	records.getTopicNames =  function(){
+		var keysOfDB = Object.keys(records.db["topics"]);
+		return keysOfDB.map(function(topic){
+			return records.db["topics"][topic]["name"];
+		});
+	};
+
+	records.getRelatedTopics = function(chunk){
+		var keysOfDB = Object.keys(records.db["topics"]);
+		var searchResult = keysOfDB.map(function(topic){
+			var topicName = records.db["topics"][topic]["name"];
+			if(topicName.match(chunk))
+		 		return topicName;
+		});
+		return _.compact(searchResult);
 	};
 
 	records.getMyTopics = function(email){
