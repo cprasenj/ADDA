@@ -78,11 +78,14 @@ exports.create = function(location, dbIndex){
 
 	records.addTopic = function(email,topicName,topicDescription){
 		var newId = +(_.max(Object.keys(db["topics"]))) + 1;
-		if(_.has(db["userTopics"],email))
-			db['userTopics'][email]["created"].push(newId);
-		else
-			db["userTopics"][email] = {joined: [], created: [newId]};
+		(_.has(db["userTopics"],email)) &&	db['userTopics'][email]["created"].push(newId);
+		(_.has(db["userTopics"],email)) || (db["userTopics"][email] = {joined: [], created: [newId]});
+		records.addNewTopicIdWithDetails(email,topicName,topicDescription,newId);
+		records.reWriteDataBaseFile();
+		return newId;
+	};
 
+	records.addNewTopicIdWithDetails = function(email,topicName,topicDescription,newId){
 		db["topics"][newId] = {
 			name: topicName,
 			ownerEmailId: email, 
@@ -91,12 +94,14 @@ exports.create = function(location, dbIndex){
 			description: topicDescription,
 			comments: []
 		};
-		records.reWriteDataBaseFile();
-		return newId;
-	};
+	}
 	records.validate = function(login){
 		var user = db.loginDetails[login.emailId];
 		return user && user.password == login.password ;
 	};
+
+	records.getAllTopics = function(){
+		 return db["topics"]
+	}
 	return records;
 };

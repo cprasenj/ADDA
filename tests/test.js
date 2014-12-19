@@ -82,6 +82,48 @@ describe("adda",function(){
 			var id = lib.addTopic("budda@mail.com","TeamWork","What is TeamWork");
 			assert.equal(id,3);
 			assert.equal(lib.getTop5Topics()[0],"TeamWork");
+			assert.deepEqual(lib.getAllTopics()[id],{ name: 'TeamWork',
+ 				ownerEmailId: 'budda@mail.com',
+  				startTime: String(new Date()).slice(0,21),
+  				closeTime: 'Not Closed',
+  				description: 'What is TeamWork',
+  				comments: [] });
+			done();
+		});
+		it("should add new topic to the user mahesh@mail.com",function(done){
+			var lib = create("./tests/data/db.json", 5);
+			var id = lib.addTopic("mahesh@mail.com","Diwali","Festival of light");
+			assert.equal(id,3);
+			assert.deepEqual(lib.getAllTopics()[id],{ name: 'Diwali',
+ 				ownerEmailId: 'mahesh@mail.com',
+  				startTime: String(new Date()).slice(0,21),
+  				closeTime: 'Not Closed',
+  				description: 'Festival of light',
+  				comments: [] });
+			done();
+		});
+	});
+
+	describe("getAllTopics", function(){
+		it("should get all the topics in the database", function(done){
+			var lib = create("./tests/data/db.json", 5);
+			assert.deepEqual(lib.getAllTopics()[1],{ name: 'Music',
+  				ownerEmailId: 'mahesh@mail.com',
+				startTime: '11-12-2014 11:05',
+				closeTime: 'Not Closed',
+				description: 'Jayanth Knows about it well',
+				comments: [] });
+			done();
+		});
+		it("should get all the topics in the database cheking 2nd topic", function(done){
+			var lib = create("./tests/data/db.json", 5);
+			assert.deepEqual(lib.getAllTopics()[2],{
+				name: "Cricket",
+				ownerEmailId: "budda@mail.com", 
+				startTime: "12-12-2014 10:05", 
+				closeTime: "Not Closed",
+				description: "Swamiji Knows about it well",
+				comments: [] });
 			done();
 		});
 	});
