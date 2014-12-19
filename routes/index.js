@@ -4,6 +4,11 @@ var router = express.Router();
 var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json",0);
 module.exports = router;
 
+router.get('/', function(req, res) {
+    console.log(records.db.topics);
+  res.render('index',{titlt:'adda',topics:records.db[5]});
+});
+
 router.get('/registration',function(req,res) {
     res.render('registration');
 });
