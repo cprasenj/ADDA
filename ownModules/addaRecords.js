@@ -116,6 +116,7 @@ exports.create = function(location, dbIndex){
 	}
 	return records;
 };
+console.log("hi");
 //============================================================
 /*exports.create = function(location){
 	var records = {};
