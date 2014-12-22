@@ -2,12 +2,12 @@
 	{
 
 		"loginDetails": {
-			"mahesh@mail.com": {"name": "Mahesh Kumar", "password": "mahesh"},
-			"prajapati@mail.com": {"name": "Prasanjit Chakraborty", "password": "secret"},
-			"prasanjit@mail.com": {"name": "Pooja Prajapati", "password": "secret"},
-			"budda@mail.com": {"name": "Buddarthan A N", "password": "secret"},
-			"suparna@mail.com": {"name": "Suparna Dey", "password": "secret"},
-			"chopra@mail.com": {"name": "Pooja Chopra", "password": "secret"}
+			"mahesh@mail.com": {"name": "Mahesh Kumar", "password": "mahesh", "email" :"mahesh@mail.com"},
+			"prajapati@mail.com": {"name": "Prasanjit Chakraborty", "password": "secret","email" :"prajapati@mail.com"},
+			"prasanjit@mail.com": {"name": "Pooja Prajapati", "password": "secret","email" :"prasanjit@mail.com"},
+			"budda@mail.com": {"name": "Buddarthan A N", "password": "secret","email" :"budda@mail.com"},
+			"suparna@mail.com": {"name": "Suparna Dey", "password": "secret","email" :"suparna@mail.com"},
+			"chopra@mail.com": {"name": "Pooja Chopra", "password": "secret","email" :"chopra@mail.com"}
 		},
 		"userTopics": {
 			"mahesh@mail.com": {"joined": [2,3], "created": [1]},
