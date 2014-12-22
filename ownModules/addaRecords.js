@@ -116,3 +116,15 @@ exports.create = function(location, dbIndex){
 	}
 	return records;
 };
+//============================================================
+/*exports.create = function(location){
+	var records = {};
+	var db = new sqlite3.Database(location);
+
+	records.getAllTopics = function(onComplete){
+		var topicsQuery = "select * topics;"
+		db.all(topicsQuery, function(err, topics){
+			onComplete(topics);
+		});
+	};
+};*/
