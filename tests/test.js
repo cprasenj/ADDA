@@ -185,7 +185,7 @@ describe("#adda",function(){
 			assert.deepEqual(lib.loadUser("budda@mail.com"),{
   				name: 'Buddarthan A N',
   				password: 'secret' });
-			assert.notOk(false);
+			assert.notOk(true);
 			done();
 		});
 	});
