@@ -6,7 +6,7 @@ describe("userStore", function(){
 	describe("load",function(){
 		it("should load the user of given email id",function(done){
 			assert.deepEqual(userStore.load("mahesh@mail.com"),{ email: 'mahesh@mail.com',
-  				name: 'Mhesh Kumar',
+  				name: 'Mahesh Kumar',
   				password: 'mahesh' });
 			done();
 		});
