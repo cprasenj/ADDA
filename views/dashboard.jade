@@ -3,8 +3,11 @@ extends layout
 block content
  h3= title
  p
-  |My Topics
-  ul
+  if(myTopics == "No Topics") 
+   |You Have no Topics Create or Join 
+  else
+   |My Topics
+   ul
     each topic in myTopics
      li
       a(href="/topic/#{topic.topicId}") #{topic.topicName}
