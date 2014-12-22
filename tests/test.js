@@ -7,6 +7,7 @@ describe("#adda",function(){
 	beforeEach(function(){
 		fs.writeFileSync('./tests/data/db.json',backUpDb);
 	});
+	console.log("h");
 	describe("#searchTopics",function(){
 		describe("#getTopicNames",function(){
 			it("should returns the name of topics",function(done){
