@@ -7,6 +7,14 @@ a {
   color: #00B7FF;
 }
 
+div{
+	background-color: yellow;
+}
+
+h1{
+	background-color: #F5A9F2;
+}
+
 .title{
   text-decoration: none;
 }

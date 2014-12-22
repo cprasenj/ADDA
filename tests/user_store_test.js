@@ -16,7 +16,5 @@ describe("userStore", function(){
   				password: 'secret' });
 			done();
 		});
-
 	});
-
 });

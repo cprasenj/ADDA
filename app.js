@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var pages = require('./routes/pages');
 var session = require('express-session');
-
 var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -45,8 +44,8 @@ if (app.get('env') === 'development') {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: err
-        });
+            error: err 
+       });
     });
 }
 
