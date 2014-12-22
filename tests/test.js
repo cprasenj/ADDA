@@ -16,21 +16,21 @@ describe("#adda",function(){
   				assert.deepEqual(actual,expected);		
   				done();
 			});
-			it("should returns Cricket when Cri is typed",function(done){
+			it("should return Cricket when Cri is typed",function(done){
 				var lib = create("./tests/data/db.json", 0);
 				var actual = lib.getRelatedTopics("Cri");
   				var expected = ["Cricket"];
   				assert.deepEqual(actual,expected);		
   				done();
 			});
-			it("should returns Cricket when Cri is typed",function(done){
+			it("should return Music when Mu is typed",function(done){
 				var lib = create("./tests/data/db.json", 0);
 				var actual = lib.getRelatedTopics("Mu");
   				var expected = ["Music"];
   				assert.deepEqual(actual,expected);		
   				done();
 			});
-			it("should returns Cricket when Cri is typed",function(done){
+			it("should return STEP when Ep is typed",function(done){
 				var lib = create("./tests/data/db.json", 0);
 				var actual = lib.getRelatedTopics("Ep");
   				var expected = ["STEP"];
