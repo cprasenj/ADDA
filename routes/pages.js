@@ -32,12 +32,8 @@ router.get('/index', function(req, res) {
 	var topics = records.getTop5Topics();
 	res.render('index', { title:'Home',topics:topics});
 });
-router.get('/index.html', function(req, res) {
-	var topics = records.getTop5Topics();
-	res.render('index', { title:'Home',topics:topics});
-});
-
-router.get('/topic/:id',requireLogin,function(req,res) {
+router
+.get('/topic/:id',requireLogin,function(req,res) {
 	var id = req.params.id;
 	var topic = records.db['topics'][id];
 	topic['id'] = id;
