@@ -12,7 +12,7 @@ describe("userStore", function(){
 		});
 		it("should load the user of given email id budda@mail.com",function(done){
 			assert.deepEqual(userStore.load("budda@mail.com"),{ email: 'budda@mail.com',
-  				name: 'Buddarthan A N',
+  				name: 'Budarthan A N',
   				password: 'secret' });
 			done();
 		});
