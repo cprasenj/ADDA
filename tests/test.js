@@ -179,10 +179,10 @@ describe("#adda",function(){
 	describe("createNewUser",function(){
 		it("should create a new user in the database", function(done){
 			var lib = create("./tests/data/db.json",5);
-			var created = lib.createNewUser("prajapati@mail.com","Pooja Prajapati","secret");
+			var created = lib.createNewUser("sample@mail.com","Sample","secret");
 			assert.ok(created);
-			assert.deepEqual(lib.loadUser("prajapati@mail.com"),{
-				name: "Pooja Prajapati",
+			assert.deepEqual(lib.loadUser("sample@mail.com"),{
+				name: "Sample",
 				password: "secret"
 			});
 			done();
