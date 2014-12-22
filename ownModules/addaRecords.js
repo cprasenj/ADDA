@@ -29,11 +29,15 @@ exports.create = function(location, dbIndex){
 	};
 
 	records.getMyTopics = function(email){
-		var myAllTopicIds = db["userTopics"][email];
-		var myCretedTopics = records.getMyCreatedTopics(myAllTopicIds);
-		var myJoinedTopics = records.getMyJoinedTopics(myAllTopicIds);
-		myTopics = myCretedTopics.concat(myJoinedTopics);
-		return myTopics;
+		console.log("------------>",email);
+		if(db["userTopics"][email]){
+			var myAllTopicIds = db["userTopics"][email];
+			var myCretedTopics = records.getMyCreatedTopics(myAllTopicIds);
+			var myJoinedTopics = records.getMyJoinedTopics(myAllTopicIds);
+			myTopics = myCretedTopics.concat(myJoinedTopics);
+			return myTopics;
+		}
+		return "No Topics";
 	};
 
 	records.getMyJoinedTopics = function(myAllTopicIds){
@@ -95,7 +99,21 @@ exports.create = function(location, dbIndex){
 	
 	records.validate = function(login){
 		var user = db.loginDetails[login.emailId];
-		return user && user.password == login.password ;
+		return user && user.password == login.password;
 	};
+
+	records.loadUser = function(email){
+		return (db.loginDetails[email]);
+	}
+
+	records.createNewUser = function(email,name,password){
+		if(db.loginDetails[email]){
+			return false;
+		} else{
+			db.loginDetails[email] = {name:name ,password:password};
+			records.reWriteDataBaseFile();
+			return true;
+		}
+	}
 	return records;
 };

@@ -158,6 +158,36 @@ describe("#adda",function(){
 			assert.ok(lib.validate(loginDetails));
 		});
 	});
+
+	describe("loadUser",function(){
+		it("should loadUser the user of given email id",function(done){
+			var lib = create("./tests/data/db.json",0);
+			assert.deepEqual(lib.loadUser("mahesh@mail.com"),{
+  				name: 'Mahesh Kumar',
+  				password: 'mahesh' });
+			done();
+		});
+		it("should loadUser the user of given email id budda@mail.com",function(done){
+			var lib = create("./tests/data/db.json",0);
+			assert.deepEqual(lib.loadUser("budda@mail.com"),{
+  				name: 'Buddarthan A N',
+  				password: 'secret' });
+			done();
+		});
+	});
+
+	describe("createNewUser",function(){
+		it("should create a new user in the database", function(done){
+			var lib = create("./tests/data/db.json",5);
+			var created = lib.createNewUser("prajapati@mail.com","Pooja Prajapati","secret");
+			assert.ok(created);
+			assert.deepEqual(lib.loadUser("prajapati@mail.com"),{
+				name: "Pooja Prajapati",
+				password: "secret"
+			});
+			done();
+		});
+	});
 });
 
 

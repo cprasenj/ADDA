@@ -1,12 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json",0);
-var lib = require('../library/userStore.js').create();
+// var lib = require('../library/userStore.js').create();
 module.exports = router;
 
 var loadUserFromSession = function(req,res,next){
-	var user = req.session.userEmail && lib.load(req.session.userEmail);
-	console.log("@@@",user)
+	var user = req.session.userEmail && records.loadUser(req.session.userEmail);
 	if(user){
 		req.user = user;
 		res.locals.user = user;
@@ -17,7 +16,6 @@ var loadUserFromSession = function(req,res,next){
 }
 
 var requireLogin = function(req,res,next){
-	console.log("---->",req.user)
 	req.user ? next(): res.redirect("/login");
 }
 
@@ -42,7 +40,7 @@ router
 });
 
 router.get("/dashboard",requireLogin,function(req,res){
-	var email = "mahesh@mail.com"; 
+	var email = req.session.userEmail; 
 	var myTopics = records.getMyTopics(email);
 	res.render('dashboard',{ title:'dashboard', myTopics:myTopics});
 });
@@ -59,7 +57,7 @@ router.get("/topics",requireLogin,function(req,res){
 });
 
 router.post("/topicAdd",requireLogin,function(req,res){
-	var email = "mahesh@mail.com"; 
+	var email = req.session.userEmail; 
 	var topicName = req.body.topicName;
 	var topicDescription = req.body.topicDescription;
 	var topicId = records.addTopic(email,topicName,topicDescription);
@@ -85,14 +83,15 @@ router.get('/registration',function(req,res) {
     res.render('registration');
 });
 
-router.post('/registration',function(req,res) {
-    var result = lib.save({
-    Name:req.body.Name,
-    email:req.body.email,
-    password:req.body.password
-  });
-  result.error ? res.render('registration',result) : res.redirect('/dashboard');  
-
+router.post('/registration',function(req,res){ 
+	var email = req.body.email;
+  	var name = req.body.name;
+  	var password = req.body.password;
+  	var created = records.createNewUser(email,name,password);
+  	if(created){
+  		req.session.userEmail = req.body.email;
+		res.redirect('/dashboard');
+  	}else res.end("Email already Exists");
 });
 
 router.get("/logout",function(req,res){
