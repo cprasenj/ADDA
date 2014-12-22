@@ -29,7 +29,6 @@ exports.create = function(location, dbIndex){
 	};
 
 	records.getMyTopics = function(email){
-		console.log("------------>",email);
 		if(db["userTopics"][email]){
 			var myAllTopicIds = db["userTopics"][email];
 			var myCretedTopics = records.getMyCreatedTopics(myAllTopicIds);

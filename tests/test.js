@@ -158,6 +158,19 @@ describe("#adda",function(){
 			assert.ok(lib.validate(loginDetails));
 		});
 	});
+	
+	describe("createNewUser",function(){
+		it("should create a new user in the database", function(done){
+			var lib = create("./tests/data/db.json",5);
+			var created = lib.createNewUser("sample@mail.com","Sample","secret");
+			assert.ok(created);
+			assert.deepEqual(lib.loadUser("sample@mail.com"),{
+				name: "Sample",
+				password: "secret"
+			});
+			done();
+		});
+	});
 
 	describe("loadUser",function(){
 		it("should loadUser the user of given email id",function(done){
@@ -176,18 +189,7 @@ describe("#adda",function(){
 		});
 	});
 
-	describe("createNewUser",function(){
-		it("should create a new user in the database", function(done){
-			var lib = create("./tests/data/db.json",5);
-			var created = lib.createNewUser("sample@mail.com","Sample","secret");
-			assert.ok(created);
-			assert.deepEqual(lib.loadUser("sample@mail.com"),{
-				name: "Sample",
-				password: "secret"
-			});
-			done();
-		});
-	});
+	
 });
 
 
