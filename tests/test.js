@@ -185,11 +185,38 @@ describe("#adda",function(){
 			assert.deepEqual(lib.loadUser("budda@mail.com"),{
   				name: 'Buddarthan A N',
   				password: 'secret' });
+			assert.notOk(false);
 			done();
 		});
 	});
-
 	
 });
-
-
+//====================================================================================================
+var lib = require("../ownModules/addaRecords.js").init('./tests/data/db.db');
+var fs = require('fs');
+var dbFileData = fs.readFileSync('tests/data/db.db.backup');
+describe("addaRecords",function(){
+	beforeEach(function(){
+		fs.writeFileSync('./tests/data/db.db',dbFileData);
+	});
+	describe("getAllTopics", function(){
+		it("should get all the topics in the database", function(done){
+			lib.getAllTopics(function(err,topics) {
+				assert.deepEqual(topics, [ { id: 1,
+					name: 'Cricket',
+					description: 'Horrible game',
+					ownersEmailId: 'mahesh@gmail.com',
+					startTime: '2014-12-17 15:12',
+					closeTime: '2014-12-17 16:14' },
+					{ id: 2,
+					name: 'football',
+					description: 'Horrible game',
+					ownersEmailId: 'prasenjit@gmail.com',
+					startTime: '2014-12-17 15:12',
+					closeTime: '2014-12-17 16:14' } 
+					]);
+				done();
+			})
+		});
+	});
+})

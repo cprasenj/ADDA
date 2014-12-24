@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var records = require("../ownModules/addaRecords.js").create("./data/adda.db",0);
-// var lib = require('../library/userStore.js').create();
 module.exports = router;
 
 var loadUserFromSession = function(req,res,next){
