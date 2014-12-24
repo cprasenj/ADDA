@@ -1,6 +1,37 @@
 var fs = require('fs');
+var sqlite3 = require('sqlite3').verbose();
 var _ = require('lodash');
 
+var _getAllTopics = function(db,onComplete){
+	var topicsQuery = "select * from topics;";
+	db.all(topicsQuery,function(err,data) {
+		onComplete(null,data);
+	});
+};
+
+exports.init = function(location){	
+	var operate = function(operation){
+		return function(){
+			var onComplete = (arguments.length == 2)?arguments[1]:arguments[0];
+			var arg = (arguments.length == 2) && arguments[0];
+			var onDBOpen = function(err){
+				if(err){onComplete(err);return;}
+				db.run("PRAGMA foreign_keys = 'ON';");
+				arg && operation(arg,db,onComplete);
+				arg || operation(db,onComplete);
+				db.close();
+			};
+			var db = new sqlite3.Database(location,onDBOpen);
+		};	
+	};
+	var records = {
+		getAllTopics : operate(_getAllTopics)
+	};
+	return records;
+};
+
+
+//=====================================================
 exports.create = function(location, dbIndex){
 	var dbFile = fs.readFileSync(location,'utf-8');
 	var dbs = JSON.parse(dbFile);
@@ -116,16 +147,4 @@ exports.create = function(location, dbIndex){
 	}
 	return records;
 };
-console.log("hi");
 //============================================================
-/*exports.create = function(location){
-	var records = {};
-	var db = new sqlite3.Database(location);
-
-	records.getAllTopics = function(onComplete){
-		var topicsQuery = "select * topics;"
-		db.all(topicsQuery, function(err, topics){
-			onComplete(topics);
-		});
-	};
-};*/

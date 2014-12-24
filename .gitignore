@@ -1,5 +1,7 @@
+tests/data/db.db
 node_modules/
+pdata/
+npm_debug.log
 image/
 data/addaDB.json
-npm-debug.log
-data/production.db
+data/
