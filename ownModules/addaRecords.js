@@ -9,6 +9,26 @@ var _getAllTopics = function(db,onComplete){
 	});
 };
 
+var _getRecent5Topic = function(db,onComplete) {
+	var topicQuery = "select name from topics";
+	db.all(topicQuery,function(err,topics){
+		var topicNames = topics.map(function(topic){
+			return topic.name;
+		})
+		onComplete(null,topicNames.reverse().slice(0,5));
+	});
+};
+
+var _getRecent5Comment = function(id,db,onComplete){
+	var selectRecent5Comment = "select comment from comments where topicId="+id;
+	db.all(selectRecent5Comment,function(err,comments){
+		var commentNames = comments.map(function(comment){
+			return comment.comment;
+		});
+		onComplete(null,commentNames.reverse().slice(0,5));
+	});
+}
+
 exports.init = function(location){	
 	var operate = function(operation){
 		return function(){
@@ -25,7 +45,9 @@ exports.init = function(location){
 		};	
 	};
 	var records = {
-		getAllTopics : operate(_getAllTopics)
+		getAllTopics : operate(_getAllTopics),
+		getRecent5Topic : operate(_getRecent5Topic),
+		getRecent5Comment : operate(_getRecent5Comment)
 	};
 	return records;
 };
