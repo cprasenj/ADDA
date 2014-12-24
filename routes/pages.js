@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var records = require("../ownModules/addaRecords.js").create("./data/addaDB.json",0);
+var records = require("../ownModules/addaRecords.js").create("./pdata/addaDB.json",0);
 // var lib = require('../library/userStore.js').create();
 module.exports = router;
 
