@@ -213,10 +213,77 @@ describe("addaRecords",function(){
 					description: 'Horrible game',
 					ownersEmailId: 'prasenjit@gmail.com',
 					startTime: '2014-12-17 15:12',
-					closeTime: '2014-12-17 16:14' } 
+					closeTime: '2014-12-17 16:14' },
+					{ id: 3,
+					name: 'foobar',
+					description: 'Something is smelling',
+					ownersEmailId: 'mahesh@gmail.com',
+					startTime: '2014-12-17 15:12',
+					closeTime: '2014-12-17 16:14' }  
 					]);
 				done();
 			})
 		});
 	});
-})
+	describe('#getRelatedTopics', function(){
+		it("should get the topic asked by the user", function(done){
+			lib.getRelatedTopics("Cricket",function(err,relatedTopics) {
+				var expected = [{id : 1, name : 'Cricket'}];
+				var actual = relatedTopics;
+				assert.deepEqual(expected,actual);
+				done();
+			})
+		});
+		it("should give 'football' when search keyword is 'foot' ", function(done){
+			lib.getRelatedTopics("foot",function(err,relatedTopics) {
+				var expected = [{id : 2, name : 'football'}];
+				var actual = relatedTopics;
+				assert.deepEqual(expected,actual);
+				done();
+			})
+		});
+		it("should give [] when searched topic is not present in db", function(done){
+			lib.getRelatedTopics("badSearch",function(err,relatedTopics) {
+				var expected = [];
+				var actual = relatedTopics;
+				assert.deepEqual(expected,actual);
+				done();
+			})
+		});
+		it("should get all the topic related to keyword searched by the user ", function(done){
+			lib.getRelatedTopics("foo",function(err,relatedTopics) {
+				var expected = [{id : 2, name : 'football'}, {id : 3, name : 'foobar'}];
+				var actual = relatedTopics;
+				assert.deepEqual(expected,actual);
+				done();
+			})
+		});
+	});
+	// describe("getMyTopics",function(){
+	// 	it("should give all topics created and joined by mahesh@mail.com",function(done){
+	// 		lib.getMyTopics("mahesh@mail.com", function(err, myTopics){
+	// 			var expected = [ { topicId: 1, topicName: 'Music' },
+ // 								{ topicId: 2, topicName: 'Cricket' },
+ //  								{ topicId: 3, topicName: 'STEP' } ];
+ //  				var actual = myTopics;
+	// 			assert.deepEqual(actual, expected);	
+	// 			done();
+	// 		});
+	// 	});
+		// it("should give all topics created and joined by prajapati@mail.com",function(done){
+		// 	var lib = create("./tests/data/db.json", 0);
+		// 	var myTopics = lib.getMyTopics("mahesh@mail.com");
+		// 	assert.deepEqual(myTopics,[ { topicId: 1, topicName: 'Music' },
+ 	// 			{ topicId: 2, topicName: 'Cricket' },
+  // 				{ topicId: 3, topicName: 'STEP' } ]);
+		// 	done();
+		// });
+		// it("should give all topics created and joined by budda@mail.com from database index 1",function(done){
+		// 	var lib = create("./tests/data/db.json", 1);
+		// 	var myTopics = lib.getMyTopics("budda@mail.com");
+		// 	assert.deepEqual(myTopics,[ { topicId: 2, topicName: 'Cricket' },
+ 	// 			{ topicId: 1, topicName: 'Music' } ]);
+		// 	done();
+		// });
+	// });
+});

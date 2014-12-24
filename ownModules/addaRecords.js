@@ -9,6 +9,17 @@ var _getAllTopics = function(db,onComplete){
 	});
 };
 
+var _getRelatedTopics = function(chunk,db,onComplete){
+	var searchQuery = 'select id, name from topics where name like "' + chunk + '%";';
+	db.all(searchQuery, function(err, data) {
+		onComplete(null, data);
+	});	
+};
+
+var _getMyTopics = function(email, db, onComplete){
+	var searchQuery = ""
+};
+
 exports.init = function(location){	
 	var operate = function(operation){
 		return function(){
@@ -25,7 +36,9 @@ exports.init = function(location){
 		};	
 	};
 	var records = {
-		getAllTopics : operate(_getAllTopics)
+		getAllTopics : operate(_getAllTopics),
+		getRelatedTopics : operate(_getRelatedTopics),
+		getMyTopics : operate(_getMyTopics),
 	};
 	return records;
 };

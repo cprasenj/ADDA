@@ -5,3 +5,5 @@ npm_debug.log
 image/
 data/addaDB.json
 data/
+a
+refreshDB.sh

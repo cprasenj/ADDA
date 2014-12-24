@@ -13,12 +13,18 @@ var runAllQueries = function(){
 	};
 
 	[	"create table users(emailId text primary key, name text not null, secret text not null);",
+
 		"create table topics(id integer primary key autoincrement, name text not null,"+
 			" description text, ownersEmailId text not null, startTime text not null, closeTime text,"+
 			" foreign key(ownersEmailId) references users(emailId));",
+
 		"create table comments(id integer primary key autoincrement, topicId integer not null,"+
 			"emailId text not null, comment text not null, time text not null,"+
-			" foreign key(topicId) references topics(id), foreign key(emailId) references users(emailId));"
+			" foreign key(topicId) references topics(id), foreign key(emailId) references users(emailId));",
+
+		// "create table joinTopic(mailId text not null, topicId integer not null"+
+		// " foreign key(mailId) references users(emailId), foreign key(topicId) references topics(id));"
+
 	].forEach(runQuery)	;
 };
 db.serialize(runAllQueries);
