@@ -35,13 +35,14 @@ insert into comments (topicId, emailId, comment, time)
 	(3, 'budda@gmail.com', 'fun, learn and earn','2014-12-20 13:13'),
 	(7, 'mahesh@gmail.com', 'Beautifull City', '2014-12-25 18:18');
 
-insert into joinedTopics (email,topic)
+insert into joinedTopics (email, topicId, topicName)
 	values
-	("mahesh@gmail.com","1"),
-	("budda@gmail.com","1"),
-	("prajapati@gmail.com","1"),
-	("suparna@gmail.com","1"),
-	("step@gmail.com","1"),
-	("suparna@gmail.com","2"),
-	("mahesh@gmail.com","5"),
-	("budda@gmail.com","5");
+	("mahesh@gmail.com","1","Cricket"),
+	("mahesh@gmail.com","1","Cricket"),
+	("budda@gmail.com","1","Cricket"),
+	("prajapati@gmail.com","1","Cricket"),
+	("suparna@gmail.com","1","Cricket"),
+	("step@gmail.com","1","Cricket"),
+	("suparna@gmail.com","2","Music"),
+	("mahesh@gmail.com","5","STEP"),
+	("budda@gmail.com","5","STEP");
