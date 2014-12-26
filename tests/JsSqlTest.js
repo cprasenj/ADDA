@@ -1,5 +1,8 @@
 var JsSql = require("../ownModules/JsSql").JsSql;
 var assert = require('assert');
+var chaiAssert = require('chai').assert;
+// var db = new sqlite3.Database("./data/");
+
 describe('JsSql',function(){
 	describe("select",function(){
 		it("should give query of 'SELECT *'",function(){
@@ -29,17 +32,18 @@ describe('JsSql',function(){
 			var a = new JsSql();
 			a.select(["id"]).as(["st_id"]);
 			a.from("students");
+			assert.equal(a.query,"SELECT id AS st_id FROM students");
 			a.where(["name='mahesh'"]);
 			assert.equal(a.query,"SELECT id AS st_id FROM students WHERE name='mahesh'");
 		})
 	});
 	describe("connectors",function(){
-		it("should give 'SELECT id AS st_id FROM students WHERE name=mahesh and id=1'",function(){
+		it("should give 'SELECT * FROM students WHERE name=mahesh and id=1'",function(){
 			var a = new JsSql();
-			a.select(["id"]).as(["st_id"]);
+			a.select(["*"]);
 			a.from("students");
 			a.where(["name='mahesh'","id=1"]).connectors(["and"]);
-			assert.equal(a.query,"SELECT id AS st_id FROM students WHERE name='mahesh' and id=1");
+			assert.equal(a.query,"SELECT * FROM students WHERE name='mahesh' and id=1");
 		})
 	});
 	describe("insertInto",function(){
@@ -52,8 +56,8 @@ describe('JsSql',function(){
 	describe("someFields",function(){
 		it("should give 'INSERT INTO sb('id')'",function(){
 			var a = new JsSql();
-			a.insertInto("sb").someFields(["id"]);
-			assert.equal(a.query,"INSERT INTO sb('id')");
+			a.insertInto("sb").someFields(["id","name"]);
+			assert.equal(a.query,"INSERT INTO sb('id','name')");
 		})
 	});
 	describe("values",function(){
@@ -86,5 +90,12 @@ describe('JsSql',function(){
 			a.set(["id"]).values(["1"]);
 			assert.equal(a.query,"UPDATE emp SET id='1'");
 		})
+	});
+	describe("ready",function(){
+		it("should call the callback",function(done){
+			// var	a = new JsSql();
+			// a.ready()
+			done();
+		});
 	});
 });
