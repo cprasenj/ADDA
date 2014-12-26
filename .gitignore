@@ -7,3 +7,5 @@ data/addaDB.json
 data/
 a
 data/
+data/adda.db
+tests/data/db.db
