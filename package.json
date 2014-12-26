@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "initDB": "node scripts/initializeDB.js data/adda.db",
-    "test": "mocha tests/*Test.js",
+    "test": "npm run delete && npm run setupTestDBs && mocha tests/*Test.js",
     "delete": "rm -rf tests/data/instance.db && rm -rf tests/data/instance.db.backup" ,
     "initTestDB": "node scripts/initializeDB.js tests/data/instance.db",    
     "backupTestDB": "node scripts/initializeDB.js tests/data/instance.db.backup",    
