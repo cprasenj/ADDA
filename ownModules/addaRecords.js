@@ -110,7 +110,7 @@ records.searchTopic = function(searchText,callback){
 	});
 	searchQry.fire();
 	closeDBConnection(db);
-}
+};
 
 records.getTop5Topics = function(callback){
 	var top5Qry = new JsSql();
@@ -123,7 +123,7 @@ records.getTop5Topics = function(callback){
 	});
 	top5Qry.fire();
 	closeDBConnection(db);
-}
+};
 
 records.createNewUser = function(email,name,password,callback){
 	var newUserQry = new JsSql();
@@ -133,7 +133,7 @@ records.createNewUser = function(email,name,password,callback){
 	newUserQry.ready(db,"run",callback);
 	newUserQry.fire();
 	closeDBConnection(db);
-}
+};
 
 records.getTopicById = function(topicId,callback){
 	var topicQry = new JsSql();
