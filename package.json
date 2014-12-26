@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "initDB": "touch data/adda.db && node scripts/initializeDB.js data/adda.db",
+    "initDB": "mkdir data && touch data/adda.db && node scripts/initializeDB.js data/adda.db",
     "test": "sh runTest.sh",
     "setup": "npm install && npm run initDB"
   },
