@@ -1,11 +1,11 @@
-var records = require("../ownModules/addaRecords.js").create("./tests/data/db.db");
+var records = require("../ownModules/addaRecords.js").create("./tests/data/instance.db");
 var assert = require("chai").assert;
 var fs = require('fs');
-var backUpDb = fs.readFileSync("./tests/data/db.db");
+var backUpDb = fs.readFileSync("./tests/data/instance.db.backup");
 
 describe("Adda", function(){
 	beforeEach(function(){
-		fs.writeFileSync('./tests/data/db.db',backUpDb);
+		fs.writeFileSync('./tests/data/instance.db',backUpDb);
 	});
 
 	describe("getMyTopics", function(){
