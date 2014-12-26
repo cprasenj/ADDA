@@ -85,7 +85,7 @@ records.addTopic = function(email,topicName,topicDescription,callback){
 	var db = openDBConnection();
 	topicAddQry.ready(db,"run",function(err){
 		records.getAllTopics(function(err,topics){
-			callback(topics[topics.length - 1].id);
+			callback(topics[topics.length-1].id);
 		});
 	});
 	topicAddQry.fire();
@@ -131,6 +131,57 @@ records.createNewUser = function(email,name,password,callback){
 	newUserQry.ready(db,"run",callback);
 	newUserQry.fire();
 	closeDBConnection(db);
+}
+
+records.getTopicById = function(topicId,callback){
+	var topicQry = new JsSql();
+	topicQry.select();
+	topicQry.from(["topics"]);
+	topicQry.where(["id='"+topicId+"'"]);
+	var db = openDBConnection();
+	topicQry.ready(db,"get",callback);
+	topicQry.fire();
+	closeDBConnection(db);
+}
+
+records.giveJoinOrLeave = function(joinedTopics,topicId,topic){
+	var joined = _.find(joinedTopics,{id: +topicId});
+	if(joined) topic.buttonName = "Leave Topic";
+	else topic.buttonName = "Join To Topic";
+}
+
+records.loadLastFiveComments = function(topicId,callback){
+	var commentsQry = new JsSql();
+	commentsQry.select();
+	commentsQry.from(["comments"]);
+	commentsQry.where(["topicId='"+topicId+"'"]);
+	commentsQry.query += "order by id desc limit 5";
+	var db = openDBConnection();
+	commentsQry.ready(db,"all",function(err,comments){
+		comments = comments.reverse();
+		callback(null,comments);
+	});
+	commentsQry.fire();
+	closeDBConnection(db);
+}
+
+records.getTopic = function(topicId, loggedInMail, callback){
+	records.getTopicById(topicId,function(err,topic){
+		records.loadLastFiveComments(topicId,function(err,lastComments){
+			if(topic.ownersEmailId == loggedInMail){
+				topic.buttonName = "Close Topic";
+				topic.comments = lastComments;
+				callback(topic);
+			} else{
+				records.getMyJoinedTopics(loggedInMail,function(err,joinedTopics){
+					records.giveJoinOrLeave(joinedTopics,topicId,topic);
+					topic.comments = lastComments;
+					callback(topic);
+				});
+			}
+			
+		});
+	});
 }
 
 exports.create = function(path){

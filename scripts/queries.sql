@@ -42,5 +42,5 @@ insert into joinedTopics (email, topicId, topicName)
 	("suparna@gmail.com","1","Cricket"),
 	("step@gmail.com","1","Cricket"),
 	("suparna@gmail.com","2","Music"),
-	("mahesh@gmail.com","5","STEP"),
-	("budda@gmail.com","5","STEP");
+	("mahesh@gmail.com","3","STEP"),
+	("budda@gmail.com","3","STEP");

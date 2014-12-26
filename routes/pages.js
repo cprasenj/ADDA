@@ -37,11 +37,24 @@ router.get('/index', function(req, res) {
 });
 
 router.get('/topic/:id',requireLogin,function(req,res) {
-	var id = req.params.id;
-	var topic = records.db['topics'][id];
-	topic['id'] = id;
-	topic['comments'] = records.loadRecentComments(id);
-    res.render('topic',topic);
+	// var topic = {
+	// 	name:"Music",
+	// 	description: "Jayanth knows it well",
+	// 	ownersEmailId:"mahesh@gmail.com",
+	// 	startTime: "2-2-2",
+	// 	closeTime: "Not Closed",
+	// 	buttonName: "Leave",
+	// 	comments: [
+	// 		{name:"prajapati@gmail.com",time:"2-3-2",comment:"hai"},
+	// 		{name:"prajapati@gmail.com",time:"2-3-2",comment:"hai"},
+	// 		{name:"prajapati@gmail.com",time:"2-3-2",comment:"hai"}
+	// 	]
+	// }	
+	var topicId = req.params.id;
+	var loggedInMail = req.session.userEmail;
+	records.getTopic(topicId, loggedInMail, function(topicDetails){
+		res.render('topic',{topic:topicDetails});		
+	});
 });
 
 router.get("/dashboard",requireLogin,function(req,res){

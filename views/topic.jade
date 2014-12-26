@@ -1,39 +1,39 @@
 extends layout
  
 block content
- div
-  h3 #{name}
- div
-  | StartedBy: #{ownerName}
- div
-  | startedTime: #{startTime}
- div
-  | closedTime: #{closeTime}
- div
-  | description: #{description}
- div
- button Join/Close/Leave
+ script(src="/javascripts/topic.js") 
+ |Name: 
+ b #{topic.name}
+ br
+ |Description:
+ b #{topic.description}
+ br 
+ |Started By:
+ b #{topic.ownersEmailId}
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Started Time:
+ b #{topic.startTime}
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Closed Time:
+ b #{topic.closeTime}
+ br
+ button(onclick="") #{topic.buttonName}
  br
  br
+ u Comments:
  br
- div
-  h3 Comments:
-  div
-   ul
-    li
-     each comment in comments
-      div
-       | Commentor: #{comment.commentor}
-      div
-       | Comment: #{comment.text}
-      div
-       | Time: #{comment.time}
-   button Load All
+ p
+  each comment in topic.comments
+   |Mail:
+   b #{comment.emailId}
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time:
+   b #{comment.time}
+   br
+   b #{comment.comment}
+   br
+   br
   br
+  button(onclick="") Load All Comments
   br
-  div
-   form(action = "#{id}/addComment" method = "POST")
-    div
-     | Add new Comments: 
-     input(type = "text", name = "currentComment")
-    input(type = "submit", value = "submit")
+  form
+   textarea(id="currentComment")
+   &nbsp;&nbsp;&nbsp;
+   input(type="button" value="Post Comment" onclick="postComment()")
