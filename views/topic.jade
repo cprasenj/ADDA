@@ -20,7 +20,7 @@ block content
  br
  u Comments:
  br
- p
+ p(id="showComments")
   each comment in topic.comments
    |Mail:
    b #{comment.emailId}
@@ -30,10 +30,10 @@ block content
    b #{comment.comment}
    br
    br
-  br
-  button(onclick="") Load All Comments
-  br
-  form
-   textarea(id="currentComment")
-   &nbsp;&nbsp;&nbsp;
-   input(type="button" value="Post Comment" onclick="postComment()")
+ br
+ button(onclick="") Load All Comments
+ br
+ form
+  textarea(id="currentComment")
+  &nbsp;&nbsp;&nbsp;
+  input(type="button" value="Post Comment" onclick="postComment(#{topic.id}, '#{topic.userEmail}')")

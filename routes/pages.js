@@ -37,22 +37,10 @@ router.get('/index', function(req, res) {
 });
 
 router.get('/topic/:id',requireLogin,function(req,res) {
-	// var topic = {
-	// 	name:"Music",
-	// 	description: "Jayanth knows it well",
-	// 	ownersEmailId:"mahesh@gmail.com",
-	// 	startTime: "2-2-2",
-	// 	closeTime: "Not Closed",
-	// 	buttonName: "Leave",
-	// 	comments: [
-	// 		{name:"prajapati@gmail.com",time:"2-3-2",comment:"hai"},
-	// 		{name:"prajapati@gmail.com",time:"2-3-2",comment:"hai"},
-	// 		{name:"prajapati@gmail.com",time:"2-3-2",comment:"hai"}
-	// 	]
-	// }	
 	var topicId = req.params.id;
 	var loggedInMail = req.session.userEmail;
 	records.getTopic(topicId, loggedInMail, function(topicDetails){
+		topicDetails.userEmail = loggedInMail;
 		res.render('topic',{topic:topicDetails});		
 	});
 });
@@ -64,12 +52,12 @@ router.get("/dashboard",requireLogin,function(req,res){
 	});
 });
 
-router.post('/topic/:id/addComment',requireLogin,function(req, res) {
-	var body = req.body;
-	body.id = req.params.id;
-	records.addComment(body);
-    res.redirect('/topic/'+body.id);
-});
+// router.post('/topic/:id/addComment',requireLogin,function(req, res) {
+// 	var body = req.body;
+// 	body.id = req.params.id;
+// 	records.addComment(body);
+//     res.redirect('/topic/'+body.id);
+// });
 
 router.get("/topics",requireLogin,function(req,res){
 	res.render('topics',{title:'Topics'})
@@ -124,5 +112,15 @@ router.get('/searchTopic',function(req,res){
 	var searchText = req.query.text;
 	records.searchTopic(searchText, function(err,relatedTopics){
 		res.end(relatedTopics);
+	});
+});
+
+router.get("/postComment",function(req,res){
+	var comment = req.query.comment;
+	var topicId = req.query.topicId;
+	var userEmail = req.session.userEmail;
+	records.addComment(comment,topicId,userEmail,function(err){
+		if(err){ res.end(""); console.log(err)}
+		else res.end("show");
 	});
 });

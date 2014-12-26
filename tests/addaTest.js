@@ -205,6 +205,41 @@ describe("Adda", function(){
 			});
 		});
 	});
+	describe("addComment", function(){
+		it("should add new comment to topic 1 with user mahesh@mail.com",function(done){
+			records.addComment("New Comment",1,"mahesh@mail.com",function(err){
+				assert.notOk(err);
+				records.loadLastFiveComments(1,function(err,comments){
+					assert.deepEqual(comments,[ { id: 4,
+					    topicId: 1,
+					    emailId: 'suparna@gmail.com',
+					    comment: 'i want to learn cricket',
+					    time: '2014-12-20 13:13' },
+					  { id: 5,
+					    topicId: 1,
+					    emailId: 'step@gmail.com',
+					    comment: 'sataurday is cricket day for step',
+					    time: '2014-12-20 13:13' },
+					  { id: 6,
+					    topicId: 1,
+					    emailId: 'mahesh@gmail.com',
+					    comment: 'not now',
+					    time: '2014-12-20 13:13' },
+					  { id: 7,
+					    topicId: 1,
+					    emailId: 'prasenjit@gmail.com',
+					    comment: 'thanq all for commenting',
+					    time: '2014-12-20 13:13' },
+					  { id: 13,
+					    topicId: 1,
+					    emailId: 'mahesh@mail.com',
+					    comment: 'New Comment',
+					    time: String(new Date()).slice(0,21) } ]);
+					done();
+				});
+			});
+		});
+	});
 	describe("loadLastFiveComments",function(){
 		it("should give last five comments of topic id 1", function(done){
 			records.loadLastFiveComments(1,function(err, comments){

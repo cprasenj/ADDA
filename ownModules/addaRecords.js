@@ -63,7 +63,8 @@ records.loadUser = function(email,callback){
 records.validate = function(loginDetails,validateCallBack){
 	records.loadUser(loginDetails.emailId,function(err,userDetails){
 		if(err)validateCallBack("/login","");
-		else if(userDetails.secret == loginDetails.password) validateCallBack("/dashboard",loginDetails.emailId);
+		else if(userDetails && userDetails.secret == loginDetails.password) 
+			validateCallBack("/dashboard",loginDetails.emailId);
 		else validateCallBack("/login",""); 
 	});
 };
@@ -185,9 +186,20 @@ records.getTopic = function(topicId, loggedInMail, callback){
 	});
 }
 
+records.addComment = function(comment,topicId,userEmail,callback){
+	var commentQry = new JsSql();
+	var date = String(new Date()).slice(0,21);
+	commentQry.insertInto(["comments"]).someFields(["topicId","emailId","comment","time"]);	
+	commentQry.values([topicId,userEmail,comment,date]);
+	var db = openDBConnection();	
+	commentQry.ready(db,"run",callback);
+	commentQry.fire();
+	closeDBConnection(db);
+}
+
 exports.create = function(path){
-		location = path;
-		return records;
+	location = path;
+	return records;
 };
 	
 
