@@ -2,7 +2,8 @@ extends layout
 
 block content
  h3= title
-
+ 
+ script(src="javascripts/topics.js")
  p
   form(action="topicAdd" method="post")
    |Name:
@@ -13,5 +14,6 @@ block content
  p
   form(action="/searchTopic" method="post")
    |Search Topic Here:
-   input(type="text" name="searchKeyWord")
-   input(type="submit" value="Search")
+   input(type="text" name="searchKeyWord" id="searchText")
+   input(type="button" onclick="onSearch()" value="Search" )
+ div(id="searchResults")

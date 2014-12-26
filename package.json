@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "initDB": "node scripts/initializeDB.js data/adda.db",
-    "test": "mocha tests/*test.js"
+    "test": "mocha tests/*Test.js"
   },
   "dependencies": {
     "body-parser": "~1.8.1",

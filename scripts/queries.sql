@@ -38,7 +38,6 @@ insert into comments (topicId, emailId, comment, time)
 insert into joinedTopics (email, topicId, topicName)
 	values
 	("mahesh@gmail.com","1","Cricket"),
-	("mahesh@gmail.com","1","Cricket"),
 	("budda@gmail.com","1","Cricket"),
 	("prajapati@gmail.com","1","Cricket"),
 	("suparna@gmail.com","1","Cricket"),
