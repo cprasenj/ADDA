@@ -84,14 +84,9 @@ var set = function(fields){
 var ready = function(db,method,callback){
 	this.db = db;
 	this.method = method;
-	if(typeof callback == 'function')this.callback = callback;
-	else{
-		this.callback = function(err){
-			if(err) throw err;
-			else callback.fire();
-		}
-	}
+	this.callback = callback;
 }
+
 var fire = function(){
 	this.db[this.method](this.query,this.callback);
 }

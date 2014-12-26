@@ -87,4 +87,28 @@ describe('JsSql',function(){
 			assert.equal(a.query,"UPDATE emp SET id='1'");
 		})
 	});
+	describe("ready",function(){
+		it("should set db,method and callback",function(){
+			var a = new JsSql();
+			var callback = function(){};
+			a.ready({},'get',callback);
+			assert.deepEqual(a.db,{});
+			assert.deepEqual(a.method,'get');
+			assert.deepEqual(a.callback,callback);
+		});
+	});
+	// describe("fire",function(done){
+	// 	it("should set db,method and callback",function(){
+	// 		var a = new JsSql();
+	// 		a.select(["id"]);
+	// 		a.from("students");
+	// 		var db = new sqlite3.Database("./data/jsdata.db");
+	// 		a.ready({},'get', function(){
+	// 			assert.deepEqual(a.db,{});
+	// 			assert.deepEqual(a.method,'get');
+	// 			assert.deepEqual(a.callback,callback);
+	// 			done();
+	// 		});
+	// 	});
+	// });
 });
