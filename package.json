@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "initDB": "node scripts/initializeDB.js data/adda.db",
-    "test": "sh runTest.sh"
+    "test": "sh runTest.sh",
+    "setup": "npm install && npm run initDB"
   },
   "dependencies": {
     "body-parser": "~1.8.1",
@@ -18,7 +19,6 @@
     "morgan": "~1.3.0",
     "serve-favicon": "~2.1.3",
     "sqlite3": "3.0.4",
-    "express-session": "*" ,
     "mocha": "*" 
   },
   "devDependencies": {
