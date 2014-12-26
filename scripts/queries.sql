@@ -11,8 +11,17 @@ insert into topics (name, description, ownersEmailId, startTime, closeTime)
 insert into topics (name, description, ownersEmailId, startTime, closeTime)
 	values ('foobar', 'Something is smelling', 'mahesh@gmail.com', '2014-12-17 15:12', '2014-12-17 16:14');
 
+insert into topics (name, description, ownersEmailId, startTime, closeTime)
+	values ('hockey', 'Horrible game', 'prasenjit@gmail.com', '2014-12-17 15:12', '2014-12-17 16:14');
+insert into topics (name, description, ownersEmailId, startTime, closeTime)
+	values ('TT', 'Horrible game', 'prasenjit@gmail.com', '2014-12-17 15:12', '2014-12-17 16:14');
+insert into topics (name, description, ownersEmailId, startTime, closeTime)
+	values ('FuseBall', 'Horrible game', 'prasenjit@gmail.com', '2014-12-17 15:12', '2014-12-17 16:14');
+insert into topics (name, description, ownersEmailId, startTime, closeTime)
+	values ('KhoKho', 'Horrible game', 'prasenjit@gmail.com', '2014-12-17 15:12', '2014-12-17 16:14');					
+
 insert into comments (topicId, emailId, comment, time)
 	values (1, 'mahesh@gmail.com', 'fool game','2014-12-20 13:13'), (1, 'prasenjit@gmail.com', 'nice game', '2014-12-25 18:18');
 
--- insert into joinTopic (emailId, topicId)
-	-- values ('mahesh@gmail.com', 1), ('prasenjit@gmail.com', 2), ('mahesh@mail.com', 3);
+insert into joinTopic (emailId, topicId)
+	values ('mahesh@gmail.com', 1), ('prasenjit@gmail.com', 2), ('mahesh@mail.com', 3);

@@ -1,5 +1,5 @@
 var location = process.argv[2];
-var sqlite3 = require("sqlite3");
+var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database(location);
 var runAllQueries = function(){	
 	var runQuery = function(q){
@@ -22,8 +22,8 @@ var runAllQueries = function(){
 			"emailId text not null, comment text not null, time text not null,"+
 			" foreign key(topicId) references topics(id), foreign key(emailId) references users(emailId));",
 
-		// "create table joinTopic(mailId text not null, topicId integer not null"+
-		// " foreign key(mailId) references users(emailId), foreign key(topicId) references topics(id));"
+		"create table joinTopic(emailId text not null, topicId integer not null,"+
+		" foreign key(emailId) references users(emailId), foreign key(topicId) references topics(id));"
 
 	].forEach(runQuery)	;
 };

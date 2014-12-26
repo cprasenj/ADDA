@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var records = require("../ownModules/addaRecords.js").create("./pdata/addaDB.json",0);
-// var lib = require('../library/userStore.js').create();
+var records = require("../ownModules/addaRecords.js").create("./data/adda.db",0);
 module.exports = router;
 
 var loadUserFromSession = function(req,res,next){
@@ -30,8 +29,10 @@ router.get('/index', function(req, res) {
 	var topics = records.getTop5Topics();
 	res.render('index', { title:'Home',topics:topics});
 });
-router
-.get('/topic/:id',requireLogin,function(req,res) {
+
+
+
+router.get('/topic/:id',requireLogin,function(req,res) {
 	var id = req.params.id;
 	var topic = records.db['topics'][id];
 	topic['id'] = id;

@@ -16,6 +16,7 @@ describe("#adda",function(){
   				assert.deepEqual(actual,expected);		
   				done();
 			});
+
 			it("should return Cricket when Cri is typed",function(done){
 				var lib = create("./tests/data/db.json", 0);
 				var actual = lib.getRelatedTopics("Cri");
@@ -204,23 +205,55 @@ describe("addaRecords",function(){
 			lib.getAllTopics(function(err,topics) {
 				assert.deepEqual(topics, [ { id: 1,
 					name: 'Cricket',
-					description: 'Horrible game',
-					ownersEmailId: 'mahesh@gmail.com',
-					startTime: '2014-12-17 15:12',
-					closeTime: '2014-12-17 16:14' },
+ 					 description: 'Horrible game',
+					 ownersEmailId: 'mahesh@gmail.com',
+					 startTime: '2014-12-17 15:12',
+					 closeTime: '2014-12-17 16:14' },
 					{ id: 2,
-					name: 'football',
-					description: 'Horrible game',
-					ownersEmailId: 'prasenjit@gmail.com',
-					startTime: '2014-12-17 15:12',
-					closeTime: '2014-12-17 16:14' },
+					 name: 'football',
+					 description: 'Horrible game',
+					 ownersEmailId: 'prasenjit@gmail.com',
+					 startTime: '2014-12-17 15:12',
+					 closeTime: '2014-12-17 16:14' },
 					{ id: 3,
-					name: 'foobar',
-					description: 'Something is smelling',
-					ownersEmailId: 'mahesh@gmail.com',
-					startTime: '2014-12-17 15:12',
-					closeTime: '2014-12-17 16:14' }  
-					]);
+					 name: 'foobar',
+					 description: 'Something is smelling',
+					 ownersEmailId: 'mahesh@gmail.com',
+					 startTime: '2014-12-17 15:12',
+					 closeTime: '2014-12-17 16:14' },
+					 {
+					   "closeTime": "2014-12-17 16:14",
+					   "description": "Horrible game",
+					   "id": 4,
+   					   "name": "hockey",
+   					   "ownersEmailId": "prasenjit@gmail.com",
+   					   "startTime": "2014-12-17 15:12",
+   					 },
+   					 {
+					   "closeTime": "2014-12-17 16:14",
+   					   "description": "Horrible game",
+   					   "id": 5,
+   					   "name": "TT",
+   					   "ownersEmailId": "prasenjit@gmail.com",
+   					   "startTime": "2014-12-17 15:12",
+   					 },
+   					 {
+					   "closeTime": "2014-12-17 16:14",
+   					   "description": "Horrible game",
+   					   "id": 6,
+   					   "name": "FuseBall",
+   					   "ownersEmailId": "prasenjit@gmail.com",
+   					   "startTime": "2014-12-17 15:12",
+   					 },
+   					 {
+					   "closeTime": "2014-12-17 16:14",
+   					   "description": "Horrible game",
+   					   "id": 7,
+   					   "name": "KhoKho",
+   					   "ownersEmailId": "prasenjit@gmail.com",
+   					   "startTime": "2014-12-17 15:12",
+   					 } 
+			]);
 				done();
 			})
 		});
@@ -286,4 +319,23 @@ describe("addaRecords",function(){
 		// 	done();
 		// });
 	// });
+// });
+	
+	describe("getRecent5Topics",function(){
+		it("should get the recent 5 topics",function(done){
+			lib.getRecent5Topic(function(err,topics){
+				assert.deepEqual(topics,["KhoKho","FuseBall","TT","hockey","foobar"]);
+				done();	
+			})
+		})
+	})
+
+	describe("getRecent5Comment",function(){
+		it("should get the top 5 comments",function(done){
+			lib.getRecent5Comment(1,function(err,comments){
+				assert.deepEqual(comments,["nice game","fool game"]);
+				done();	
+			});
+		})
+	})
 });
