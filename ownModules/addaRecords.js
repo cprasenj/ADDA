@@ -12,10 +12,11 @@ var openDBConnection = function(){
 	}
 	var db = new sqlite3.Database(location);
 	return db;
-}
+};
+
 var closeDBConnection = function(db){
 	db.close();
-}
+};
 
 records.getMyJoinedTopics = function(email,callback){
 	var joinedTopicsQry = new JsSql();
@@ -26,7 +27,7 @@ records.getMyJoinedTopics = function(email,callback){
 	joinedTopicsQry.ready(db,"all",callback);
 	joinedTopicsQry.fire();
 	closeDBConnection(db);
-}
+};
 
 records.getMyCreatedTopics = function(email,callback){
 	var createdTopicsQry = new JsSql();
@@ -37,7 +38,7 @@ records.getMyCreatedTopics = function(email,callback){
 	createdTopicsQry.ready(db,"all",callback);
 	createdTopicsQry.fire();
 	closeDBConnection(db);
-}
+};
 
 records.getMyTopics = function(email,callback){
 	records.getMyCreatedTopics(email,function(err,createdTopics){
@@ -46,7 +47,7 @@ records.getMyTopics = function(email,callback){
 			callback(null,myTopics); 
 		});
 	});
-}
+};
 
 records.loadUser = function(email,callback){
 	var userQry = new JsSql();
@@ -131,10 +132,11 @@ records.createNewUser = function(email,name,password,callback){
 	newUserQry.ready(db,"run",callback);
 	newUserQry.fire();
 	closeDBConnection(db);
-}
-
+};
 exports.create = function(path){
-	location = path;
-	return records;
-}
+		location = path;
+		return records;
+};
+	
+
 
