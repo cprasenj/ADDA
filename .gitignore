@@ -4,3 +4,4 @@ image/
 data/
 a
 npm-debug.log
+tests/data
