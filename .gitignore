@@ -1,11 +1,6 @@
-tests/data/db.db
 node_modules/
-pdata/
 npm_debug.log
 image/
-data/addaDB.json
 data/
 a
-data/
-data/adda.db
-tests/data/db.db
+npm-debug.log

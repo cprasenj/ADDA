@@ -15,7 +15,7 @@ describe("Adda", function(){
 					{ id: 2, name: 'Music' },
   					{ id: 7, name: 'Vijayawada'},
   					{ id: 1, name: 'Cricket' },
-  					{ id: 5, name: 'STEP' } ]);
+  					{ id: 3, name: 'STEP' } ]);
 				done();
 			});
 		});
@@ -25,15 +25,15 @@ describe("Adda", function(){
 			records.getMyJoinedTopics("mahesh@gmail.com",function(err,myJoinedTopics){
 				assert.deepEqual(myJoinedTopics,[
 					{ id: 1, name: 'Cricket' },
-  					{ id: 5, name: 'STEP' } ]);
+  					{ id: 3, name: 'STEP' } ]);
 				done();
 			});
 		});
 	});
 	describe("getMyCreatedTopics",function(){
-		it("should give all joined topics of mahesh@gmail.com", function(done){
-			records.getMyCreatedTopics("mahesh@gmail.com",function(err,myJoinedTopics){
-				assert.deepEqual(myJoinedTopics,[ 
+		it("should give all created topics of mahesh@gmail.com", function(done){
+			records.getMyCreatedTopics("mahesh@gmail.com",function(err,myCreatedTopics){
+				assert.deepEqual(myCreatedTopics,[ 
 					{ id: 2, name: 'Music' },
   					{ id: 7, name: 'Vijayawada'} ]);
 				done();
@@ -148,6 +148,91 @@ describe("Adda", function(){
 					{ name: 'Punjab' },
 					{ name: 'Vijayawada' },
 					{ name: 'Football' } ]);
+				done();
+			});
+		});
+	});
+	describe("getTopic",function(){
+		it("shpould give the details and comments of topic id 1", function(done){
+			records.getTopic(1,"mahesh@gmail.com",function(topicDetails){
+				assert.deepEqual(topicDetails,{ id: 1,
+				  name: 'Cricket',
+				  description: 'Swamiji is very good cricket player',
+				  ownersEmailId: 'prasenjit@gmail.com',
+				  startTime: '2014-12-17 15:12',
+				  closeTime: 'Not Closed',
+				  buttonName: 'Leave Topic',
+				  comments:
+				   [ { id: 3,
+				       topicId: 1,
+				       emailId: 'prajapati@gmail.com',
+				       comment: 'i dont know how to play',
+				       time: '2014-12-20 13:13' },
+				     { id: 4,
+				       topicId: 1,
+				       emailId: 'suparna@gmail.com',
+				       comment: 'i want to learn cricket',
+				       time: '2014-12-20 13:13' },
+				     { id: 5,
+				       topicId: 1,
+				       emailId: 'step@gmail.com',
+				       comment: 'sataurday is cricket day for step',
+				       time: '2014-12-20 13:13' },
+				     { id: 6,
+				       topicId: 1,
+				       emailId: 'mahesh@gmail.com',
+				       comment: 'not now',
+				       time: '2014-12-20 13:13' },
+				     { id: 7,
+				       topicId: 1,
+				       emailId: 'prasenjit@gmail.com',
+				       comment: 'thanq all for commenting',
+				       time: '2014-12-20 13:13' } ] })
+				done();
+			});
+		});
+	});
+	describe("getTopicById",function(){
+		it("should give the details of topic id 1", function(done){
+			records.getTopicById(1,function(err, topicDetails){
+				assert.deepEqual(topicDetails,{ id: 1,
+					name: 'Cricket',
+					description: 'Swamiji is very good cricket player',
+					ownersEmailId: 'prasenjit@gmail.com',
+					startTime: '2014-12-17 15:12',
+					closeTime: 'Not Closed' });
+				done();
+			});
+		});
+	});
+	describe("loadLastFiveComments",function(){
+		it("should give last five comments of topic id 1", function(done){
+			records.loadLastFiveComments(1,function(err, comments){
+				assert.deepEqual(comments,[ { id: 3,
+				    topicId: 1,
+				    emailId: 'prajapati@gmail.com',
+				    comment: 'i dont know how to play',
+				    time: '2014-12-20 13:13' },
+				  { id: 4,
+				    topicId: 1,
+				    emailId: 'suparna@gmail.com',
+				    comment: 'i want to learn cricket',
+				    time: '2014-12-20 13:13' },
+				  { id: 5,
+				    topicId: 1,
+				    emailId: 'step@gmail.com',
+				    comment: 'sataurday is cricket day for step',
+				    time: '2014-12-20 13:13' },
+				  { id: 6,
+				    topicId: 1,
+				    emailId: 'mahesh@gmail.com',
+				    comment: 'not now',
+				    time: '2014-12-20 13:13' },
+				  { id: 7,
+				    topicId: 1,
+				    emailId: 'prasenjit@gmail.com',
+				    comment: 'thanq all for commenting',
+				    time: '2014-12-20 13:13' } ]);
 				done();
 			});
 		});
