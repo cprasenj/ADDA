@@ -1,10 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var records = require("../ownModules/addaRecords.js").create("./data/adda.db");
-// var lib = require('../library/userStore.js').create();
 
 module.exports = router;
-
 
 var loadUserFromSession = function(req,res,next){
 	records.loadUser(req.session.userEmail,function(err,user){
@@ -16,11 +14,10 @@ var loadUserFromSession = function(req,res,next){
 		}
 		next();	
 	});	
-}
-
-var requireLogin = function(req,res,next){
+};
+ var requireLogin = function(req,res,next){
 	req.user ? next(): res.redirect("/login");
-}
+};
 
 router.use(loadUserFromSession);
 

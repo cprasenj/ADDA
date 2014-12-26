@@ -63,7 +63,8 @@ records.loadUser = function(email,callback){
 records.validate = function(loginDetails,validateCallBack){
 	records.loadUser(loginDetails.emailId,function(err,userDetails){
 		if(err)validateCallBack("/login","");
-		else if(userDetails.secret == loginDetails.password) validateCallBack("/dashboard",loginDetails.emailId);
+		else if(userDetails && userDetails.secret == loginDetails.password) 
+			validateCallBack("/dashboard",loginDetails.emailId);
 		else validateCallBack("/login",""); 
 	});
 };
@@ -109,7 +110,7 @@ records.searchTopic = function(searchText,callback){
 	});
 	searchQry.fire();
 	closeDBConnection(db);
-}
+};
 
 records.getTop5Topics = function(callback){
 	var top5Qry = new JsSql();
@@ -122,7 +123,7 @@ records.getTop5Topics = function(callback){
 	});
 	top5Qry.fire();
 	closeDBConnection(db);
-}
+};
 
 records.createNewUser = function(email,name,password,callback){
 	var newUserQry = new JsSql();
@@ -133,6 +134,7 @@ records.createNewUser = function(email,name,password,callback){
 	newUserQry.fire();
 	closeDBConnection(db);
 };
+
 exports.create = function(path){
 		location = path;
 		return records;
