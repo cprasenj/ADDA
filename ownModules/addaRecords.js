@@ -5,7 +5,6 @@ var JsSql = require("./JsSql").JsSql;
 var location = "";
 
 var records = {};
-
 var openDBConnection = function(){
 	var filePresent = fs.existsSync(location);
 	if(!filePresent){

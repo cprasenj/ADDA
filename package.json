@@ -5,7 +5,11 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "initDB": "node scripts/initializeDB.js data/adda.db",
-    "test": "mocha tests/*Test.js"
+    "test": "mocha tests/*Test.js",
+    "delete": "rm -rf tests/data/instance.db && rm -rf tests/data/instance.db.backup" ,
+    "initTestDB": "node scripts/initializeDB.js tests/data/instance.db",    
+    "backupTestDB": "node scripts/initializeDB.js tests/data/instance.db.backup",    
+    "setupTestDBs": "npm run initTestDB && npm run backupTestDB"
   },
   "dependencies": {
     "body-parser": "~1.8.1",

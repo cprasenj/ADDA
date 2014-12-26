@@ -19,7 +19,6 @@ insert into topics (name, description, ownersEmailId, startTime, closeTime)
 	('Punjab', 'A State in India', 'pooja@gmail.com', '2014-12-17 15:12', 'Not Closed'),
 	('Vijayawada', 'New Capital of A.P', 'mahesh@gmail.com', '2014-12-17 15:12', 'Not Closed'),
 	('Football', 'Horrible game', 'prasenjit@gmail.com', '2014-12-17 15:12', '2014-12-17 16:14');
-
 insert into comments (topicId, emailId, comment, time)
 	values
 	(1, 'mahesh@gmail.com', 'Very nice game','2014-12-20 13:13'),

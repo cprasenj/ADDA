@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var records = require("../ownModules/addaRecords.js").create("./data/adda.db");
 // var lib = require('../library/userStore.js').create();
+
 module.exports = router;
 
 
@@ -34,6 +35,7 @@ router.get('/index', function(req, res) {
 		res.render('index', { title:'Home',topics:topics});
 	});
 });
+
 router.get('/topic/:id',requireLogin,function(req,res) {
 	var id = req.params.id;
 	var topic = records.db['topics'][id];
