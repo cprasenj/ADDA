@@ -1,185 +1,142 @@
 var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
 var _ = require('lodash');
+var JsSql = require("./JsSql").JsSql;
+var location = "";
 
-var _getAllTopics = function(db,onComplete){
-	var topicsQuery = "select * from topics;";
-	db.all(topicsQuery,function(err,data) {
-		onComplete(null,data);
-	});
-};
-
-var _getRelatedTopics = function(chunk,db,onComplete){
-	var searchQuery = 'select id, name from topics where name like "' + chunk + '%";';
-	db.all(searchQuery, function(err, data) {
-		onComplete(null, data);
-	});	
-};
-
-var _getMyTopics = function(email, db, onComplete){
-	var searchQuery = ""
-};
-
-var _getRecent5Topic = function(db,onComplete) {
-	var topicQuery = "select name from topics";
-	db.all(topicQuery,function(err,topics){
-		var topicNames = topics.map(function(topic){
-			return topic.name;
-		})
-		onComplete(null,topicNames.reverse().slice(0,5));
-	});
-};
-
-var _getRecent5Comment = function(id,db,onComplete){
-	var selectRecent5Comment = "select comment from comments where topicId="+id;
-	db.all(selectRecent5Comment,function(err,comments){
-		var commentNames = comments.map(function(comment){
-			return comment.comment;
-		});
-		onComplete(null,commentNames.reverse().slice(0,5));
-	});
-};
-
-exports.init = function(location){	
-	var operate = function(operation){
-		return function(){
-			var onComplete = (arguments.length == 2)?arguments[1]:arguments[0];
-			var arg = (arguments.length == 2) && arguments[0];
-			var onDBOpen = function(err){
-				if(err){onComplete(err);return;}
-				db.run("PRAGMA foreign_keys = 'ON';");
-				arg && operation(arg,db,onComplete);
-				arg || operation(db,onComplete);
-				db.close();
-			};
-			var db = new sqlite3.Database(location,onDBOpen);
-		};	
-	};
-	var records = {
-		getAllTopics : operate(_getAllTopics),
-		getRelatedTopics : operate(_getRelatedTopics),
-		getMyTopics : operate(_getMyTopics),
-		getRecent5Topic : operate(_getRecent5Topic),
-		getRecent5Comment : operate(_getRecent5Comment)
-	};
-	return records;
-};
-
-
-//=====================================================
-exports.create = function(location, dbIndex){
-	var dbFile = fs.readFileSync(location,'utf-8');
-	var dbs = JSON.parse(dbFile);
-	var db = dbs[dbIndex];
-	var records = {db:db};
-
-	records.getAllTopics = function(){
-		 return db["topics"];
-	};
-
-	records.reWriteDataBaseFile = function(){
-		var dbToWrite = JSON.parse(fs.readFileSync(location));
-		dbToWrite[dbIndex] = db;
-		fs.writeFileSync(location,JSON.stringify(dbToWrite));
-	};
-
-	records.getRelatedTopics = function(chunk){
-		var keysOfDB = Object.keys(records.db["topics"]);
-		var searchResult = keysOfDB.map(function(topic){
-			var topicName = records.db["topics"][topic]["name"];
-			var matchString = new RegExp(chunk,'i');
-			if(topicName.match(matchString))
-		 		return topicName;
-		});
-		return _.compact(searchResult);
-	};
-
-	records.getMyTopics = function(email){
-		if(db["userTopics"][email]){
-			var myAllTopicIds = db["userTopics"][email];
-			var myCretedTopics = records.getMyCreatedTopics(myAllTopicIds);
-			var myJoinedTopics = records.getMyJoinedTopics(myAllTopicIds);
-			myTopics = myCretedTopics.concat(myJoinedTopics);
-			return myTopics;
-		}
-		return "No Topics";
-	};
-
-	records.getMyJoinedTopics = function(myAllTopicIds){
-		return myJoinedTopics =  myAllTopicIds["joined"].map(function(joinedTopicId){
-			var topicName = db["topics"][joinedTopicId]["name"];
-			return({topicId: joinedTopicId, topicName: topicName});
-		});	
+var records = {};
+var openDBConnection = function(){
+	var filePresent = fs.existsSync(location);
+	if(!filePresent){
+		throw new Error("DataBase file not found");
 	}
+	var db = new sqlite3.Database(location);
+	return db;
+};
 
-	records.getMyCreatedTopics = function(myAllTopicIds){
-		return myCretedTopics = myAllTopicIds["created"].map(function(createdTopicId){
-			var topicName = db["topics"][createdTopicId]["name"];
-			return({topicId: createdTopicId, topicName: topicName});
+var closeDBConnection = function(db){
+	db.close();
+};
+
+records.getMyJoinedTopics = function(email,callback){
+	var joinedTopicsQry = new JsSql();
+	joinedTopicsQry.select(["topicId","topicName"]).as(["id","name"]);
+	joinedTopicsQry.from(["joinedTopics"]);
+	joinedTopicsQry.where(["email='"+email+"'"]);
+	var db = openDBConnection();
+	joinedTopicsQry.ready(db,"all",callback);
+	joinedTopicsQry.fire();
+	closeDBConnection(db);
+};
+
+records.getMyCreatedTopics = function(email,callback){
+	var createdTopicsQry = new JsSql();
+	createdTopicsQry.select(["id","name"]);
+	createdTopicsQry.from(["topics"]);
+	createdTopicsQry.where(["ownersEmailId='"+email+"'"]);
+	var db = openDBConnection();
+	createdTopicsQry.ready(db,"all",callback);
+	createdTopicsQry.fire();
+	closeDBConnection(db);
+};
+
+records.getMyTopics = function(email,callback){
+	records.getMyCreatedTopics(email,function(err,createdTopics){
+		records.getMyJoinedTopics(email,function(err,joinedTopics){
+			var myTopics = createdTopics.concat(joinedTopics);
+			callback(null,myTopics); 
 		});
-	};
+	});
+};
+
+records.loadUser = function(email,callback){
+	var userQry = new JsSql();
+	userQry.select();
+	userQry.from(["users"]);
+	userQry.where(["emailId='"+email+"'"]);
+	var db = openDBConnection();
+	userQry.ready(db,"get",callback);
+	userQry.fire();	
+	closeDBConnection(db);
+}
+
+records.validate = function(loginDetails,validateCallBack){
+	records.loadUser(loginDetails.emailId,function(err,userDetails){
+		if(err)validateCallBack("/login","");
+		else if(userDetails.secret == loginDetails.password) validateCallBack("/dashboard",loginDetails.emailId);
+		else validateCallBack("/login",""); 
+	});
+};
+
+records.getAllTopics = function(callback){
+	var topicsQry = new JsSql();
+	topicsQry.select();
+	topicsQry.from(["topics"]);
+	var db = openDBConnection();
+	topicsQry.ready(db,"all",callback);
+	topicsQry.fire();
+	closeDBConnection(db);
+}
+
+records.addTopic = function(email,topicName,topicDescription,callback){
+	var date = String(new Date()).slice(0,21);
+	var topicAddQry = new JsSql();
+	topicAddQry.insertInto(["topics"]).someFields(["name","description","ownersEmailId","startTime","closeTime"]);
+	topicAddQry.values([topicName,topicDescription,email,date,"Not Closed"]);
+	var db = openDBConnection();
+	topicAddQry.ready(db,"run",function(err){
+		records.getAllTopics(function(err,topics){
+			callback(topics[topics.length - 1].id);
+		});
+	});
+	topicAddQry.fire();
+	closeDBConnection(db);
+};
+
+records.searchTopic = function(searchText,callback){
+	var searchQry = new JsSql();
+	searchQry.select(["id","name"]);
+	searchQry.from(["topics"]);
+	searchQry.where(["name='"+searchText+"'"]);
+	var db = openDBConnection();
+	searchQry.ready(db,"all",function(err,relatedTopics){
+		var relatedTopics = relatedTopics.reduce(function(html,topic){
+			html += "<a href='topic/"+topic.id+"'>"+topic.name+"</a>";
+			html += "<br>";
+			return html;
+		},"");
+		callback(err, relatedTopics);
+	});
+	searchQry.fire();
+	closeDBConnection(db);
+}
+
+records.getTop5Topics = function(callback){
+	var top5Qry = new JsSql();
+	top5Qry.select(["name"]);
+	top5Qry.from(["topics"]);
+	var db = openDBConnection();
+	top5Qry.ready(db,"all",function(err,top5Topics){
+		var topicsLength = top5Topics.length;
+		callback(top5Topics.slice(topicsLength-5,topicsLength));
+	});
+	top5Qry.fire();
+	closeDBConnection(db);
+}
+
+records.createNewUser = function(email,name,password,callback){
+	var newUserQry = new JsSql();
+	newUserQry.insertInto(["users"]);
+	newUserQry.values([email,name,password]);
+	var db = openDBConnection();
+	newUserQry.ready(db,"run",callback);
+	newUserQry.fire();
+	closeDBConnection(db);
+};
+exports.create = function(path){
+		location = path;
+		return records;
+};
 	
-	records.loadRecentComments = function(Id) {
-		return db['topics'][Id].comments.slice(-5);
-	};
 
-	records.addComment = function(newComment) {
-		var comment = {text:newComment.currentComment,time:'12:00',commentor:'prasenjit'};
-		db['topics'][newComment.id].comments.push(comment);
-	}; 
 
-	records.getTop5Topics = function(){
-		var topicIds = Object.keys(db.topics);
-		var topics = topicIds.map(function(id){
-			return db.topics[id].name;
-		});
-		return topics.reverse().slice(0,5);
-	};
-
-	records.findNumberOfCommentors = function(){
-		var topicIds = Object.keys(db.topics);
-		return topicIds.map(function(id){
-			return db.topics[id].comments.length;
-		});
-	};
-
-	records.addTopic = function(email,topicName,topicDescription){
-		var newId = +(_.max(Object.keys(db["topics"]))) + 1;
-		if(_.has(db["userTopics"],email))
-			db['userTopics'][email]["created"].push(newId);
-		else
-			db["userTopics"][email] = {joined: [], created: [newId]};
-
-		db["topics"][newId] = {
-			name: topicName,
-			ownerEmailId: email, 
-			startTime: String(new Date()).slice(0,21), 
-			closeTime: "Not Closed",
-			description: topicDescription,
-			comments: []
-		};
-		records.reWriteDataBaseFile();
-		return newId;
-	};
-	
-	records.validate = function(login){
-		var user = db.loginDetails[login.emailId];
-		return user && user.password == login.password;
-	};
-
-	records.loadUser = function(email){
-		return (db.loginDetails[email]);
-	}
-
-	records.createNewUser = function(email,name,password){
-		if(db.loginDetails[email]){
-			return false;
-		} else{
-			db.loginDetails[email] = {name:name ,password:password};
-			records.reWriteDataBaseFile();
-			return true;
-		}
-	}
-	return records;
-};
-//============================================================

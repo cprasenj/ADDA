@@ -23,8 +23,9 @@ var runAllQueries = function(){
 			" foreign key(topicId) references topics(id), foreign key(emailId) references users(emailId));",
 
 		"create table joinTopic(emailId text not null, topicId integer not null,"+
-		" foreign key(emailId) references users(emailId), foreign key(topicId) references topics(id));"
+		" foreign key(emailId) references users(emailId), foreign key(topicId) references topics(id));",
 
-	].forEach(runQuery)	;
+		"create table joinedTopics(id integer primary key autoincrement, email text, topicId integer, topicName text);"
+	].forEach(runQuery);
 };
 db.serialize(runAllQueries);
