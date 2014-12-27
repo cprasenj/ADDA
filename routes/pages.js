@@ -80,8 +80,10 @@ router.post('/validate',function(req,res){
 			res.location('/login');
 			res.render('login',{title:'login',error:error});
 		}
-		req.session.userEmail = user;
-		res.redirect(pageToRender);
+		else {
+			req.session.userEmail = user;
+			res.redirect(pageToRender);
+		}
 	});
 });
 
