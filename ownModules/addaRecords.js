@@ -222,8 +222,6 @@ records.leaveUserfromTopic = function(topicId,mail,callback){
 }
 
 records.closeTopic = function(topicId,email,callback){
-		console.log("got here")
-
 	var date = String(new Date()).slice(0,21);
 	var closeQry = new JsSql();
 	closeQry.update(["topics"]);
@@ -240,10 +238,3 @@ exports.create = function(path){
 	location = path;
 	return records;
 };
-
-
-
-
-
-	
-
