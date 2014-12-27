@@ -148,8 +148,8 @@ records.getTopicById = function(topicId,callback){
 
 records.giveJoinOrLeave = function(joinedTopics,topicId,topic){
 	var joined = _.find(joinedTopics,{id: +topicId});
-	if(joined) topic.buttonName = "Leave Topic";
-	else topic.buttonName = "Join To Topic";
+	if(joined) topic.buttonName = "Leave";
+	else topic.buttonName = "Join";
 }
 
 records.loadLastFiveComments = function(topicId,callback){
@@ -171,7 +171,7 @@ records.getTopic = function(topicId, loggedInMail, callback){
 	records.getTopicById(topicId,function(err,topic){
 		records.loadLastFiveComments(topicId,function(err,lastComments){
 			if(topic.ownersEmailId == loggedInMail){
-				topic.buttonName = "Close Topic";
+				topic.buttonName = "Close";
 				topic.comments = lastComments;
 				callback(topic);
 			} else{
