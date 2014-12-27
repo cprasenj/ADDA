@@ -122,3 +122,15 @@ router.get("/postComment",function(req,res){
 		else res.end("show");
 	});
 });
+
+router.get("/join/:id",function(req,res){
+	var topicId = req.params.id;
+	var email = req.session.userEmail;
+	var topicName = req.query.topic;
+	records.joinUserToTopic(topicId,topicName,email,function(err){
+		if(err)
+			res.end("Error");
+		else
+			res.end("Leave");
+	});
+});

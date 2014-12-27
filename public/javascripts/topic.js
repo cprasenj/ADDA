@@ -6,8 +6,8 @@ var postComment = function(topicId,userEmail,value){
 	commentElement.value = "";
 }
 
-var onCloseOrJoinOrLeave = function(id,buttonName){
-	var request = "/"+buttonName.toLowerCase()+"/"+id;
+var onCloseOrJoinOrLeave = function(id,buttonName,topicName){
+	var request = "/"+buttonName.toLowerCase()+"/"+id+"?topic="+topicName;
 	sendAjaxGetRequest(onResponseOfCJL,[id,buttonName],request)
 }
 
@@ -73,6 +73,7 @@ var onErr = function(){
 }
 
 var onResponseOfCJL = function(values,response){
+	alert(response)
 	var functionality = {
 		"Closed":onClosed,
 		"Join":onJoin,

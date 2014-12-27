@@ -197,6 +197,16 @@ records.addComment = function(comment,topicId,userEmail,callback){
 	closeDBConnection(db);
 }
 
+records.joinUserToTopic = function(topicId,topicName,email,callback){
+	var joinQry = new JsSql();
+	joinQry.insertInto(["joinedTopics"]).someFields(["email","topicId","topicName"]);
+	joinQry.values([email,topicId,topicName]);
+	var db = openDBConnection();
+	joinQry.ready(db,"run",callback);
+	joinQry.fire();
+	closeDBConnection(db);
+}
+
 exports.create = function(path){
 	location = path;
 	return records;
