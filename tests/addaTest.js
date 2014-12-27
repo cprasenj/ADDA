@@ -240,6 +240,19 @@ describe("Adda", function(){
 			});
 		});
 	});
+
+	describe("joinUserToTopic",function(){
+		it("should join mahesh@gmail.com to the topic adda which id is 5",function(done){
+			records.joinUserToTopic(5,"Adda","mahesh@gmail.com",function(err){
+				assert.notOk(err);
+				records.getMyJoinedTopics("mahesh@gmail.com",function(err,topics){
+					assert.deepEqual(topics[2],{ id: 5, name: 'Adda' });
+					done();
+				});
+			});
+		});
+	})
+
 	describe("loadLastFiveComments",function(){
 		it("should give last five comments of topic id 1", function(done){
 			records.loadLastFiveComments(1,function(err, comments){
