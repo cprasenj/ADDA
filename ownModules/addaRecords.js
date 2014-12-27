@@ -220,6 +220,10 @@ records.leaveUserfromTopic = function(topicId,mail,callback){
 	closeDBConnection(db);
 }
 
+records.closeTopic = function(topicId,userEmail,callback){
+	
+}
+
 exports.create = function(path){
 	location = path;
 	return records;
