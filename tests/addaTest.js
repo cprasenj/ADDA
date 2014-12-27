@@ -1,4 +1,4 @@
-var records = require("../ownModules/addaRecords.js").create("./tests/data/instance.db");
+var records = require("../ownModules/addaRecords.js").setLocation("./tests/data/instance.db");
 var assert = require("chai").assert;
 var fs = require('fs');
 var backUpDb = fs.readFileSync("./tests/data/instance.db.backup");
@@ -49,10 +49,27 @@ describe("Adda", function(){
 		});
 	});
 	describe("validate", function(){
-		it("should validate the user details of mahesh@gmail.com", function(done){
-			records.validate({emailId:"mahesh@gmail.com",password:"mahesh"},function(page,mail){
+		it("should give /dashboard as next page for valid login", function(done){
+			records.validate({emailId:"mahesh@gmail.com",password:"mahesh"},function(page,emailId,error){
 				assert.equal(page,"/dashboard");
-				assert.equal(mail,"mahesh@gmail.com");
+				assert.equal(emailId,"mahesh@gmail.com");
+				assert.notOk(error);
+				done();
+			});
+		});
+		it("should give /login as next page for invalid password", function(done){
+			records.validate({emailId:"mahesh@gmail.com",password:"kolla"},function(page,user,error){
+				assert.equal(page,"/login");
+				assert.equal(error,"invalid password");
+				assert.notOk(user);
+				done();
+			});
+		});
+		it("should give /login as next page for invalid emailId", function(done){
+			records.validate({emailId:"riya@gmail.com",password:"kolla"},function(page,user,error){
+				assert.equal(page,"/login");
+				assert.equal(error,"invalid user");
+				assert.notOk(user);
 				done();
 			});
 		});
@@ -240,6 +257,31 @@ describe("Adda", function(){
 			});
 		});
 	});
+
+	describe("joinUserToTopic",function(){
+		it("should join mahesh@gmail.com to the topic adda which id is 5",function(done){
+			records.joinUserToTopic(5,"Adda","mahesh@gmail.com",function(err){
+				assert.notOk(err);
+				records.getMyJoinedTopics("mahesh@gmail.com",function(er,topics){
+					assert.deepEqual(topics[2],{ id: 5, name: 'Adda' });
+					done();
+				});
+			});
+		});
+	});
+
+	describe("leaveUserFromTopic",function(){
+		it("should leave make leave mahesh@gmail.com from the topic STEP which id is 3",function(done){
+			records.leaveUserfromTopic(3,"mahesh@gmail.com",function(err){
+				assert.notOk(err);
+				records.getMyJoinedTopics("mahesh@gmail.com", function(er,topics){
+					assert.deepEqual(topics,[ { id: 1, name: 'Cricket' } ]);
+					done();
+				});
+			});
+		});
+	});
+
 	describe("loadLastFiveComments",function(){
 		it("should give last five comments of topic id 1", function(done){
 			records.loadLastFiveComments(1,function(err, comments){
@@ -272,5 +314,25 @@ describe("Adda", function(){
 			});
 		});
 	});
-	
+	describe('Detect Global namespace Leaks', function(){
+		it('global_namespace_is_not_polluted_in_windows_or_mac', function(){
+			var global_fields = Object.keys(global).length;
+			var isWindows = process.env.OS && process.env.OS.indexOf('Windows')==0;
+			assert.equal(global_fields,(isWindows && 50)||31);
+		});
+	});
 });
+
+describe("openDBConnection", function(){
+	it("it should throw an error 'DataBase file not found' on providing bad db Location", function(done){
+		var records = require("../ownModules/addaRecords.js").setLocation("bad.db");
+		
+		try{
+			assert.notOk(records.openDBConnection());
+		}
+		catch(err){
+			assert.deepEqual(err.message, "DataBase file not found")
+		}
+		done();
+	});
+})	

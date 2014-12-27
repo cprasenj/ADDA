@@ -2,6 +2,11 @@ extends layout
 
 block content
  h3= title
+ if error
+  div
+   h4 oops Login failed:
+   |#{error}
+  br
  form(action="/validate" method="POST")
   div
    |Email Id:

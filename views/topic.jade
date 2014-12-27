@@ -18,7 +18,7 @@ block content
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Closed Time:
  b #{topic.closeTime}
  br
- button(id="CJL" onclick="onCloseOrJoinOrLeave('#{topic.id}','#{topic.buttonName}')") #{topic.buttonName}
+ button(id="CJL" onclick="onCloseOrJoinOrLeave('#{topic.id}','#{topic.buttonName}','#{topic.name}')") #{topic.buttonName}
  br
  br
  u Comments:
@@ -39,4 +39,4 @@ block content
  form
   textarea(id="currentComment")
   &nbsp;&nbsp;&nbsp;
-  input(type="button" id="postComment" value="Post Comment" onclick="postComment(#{topic.id}, '#{topic.userEmail}',value)")
+  input(type="button" id="postComment" value="Post Comment" onclick="comment('#{topic.id}','#{topic.userEmail}')")

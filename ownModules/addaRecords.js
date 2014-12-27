@@ -5,14 +5,19 @@ var JsSql = require("./JsSql").JsSql;
 var location = "";
 
 var records = {};
+
 var openDBConnection = function(){
 	var filePresent = fs.existsSync(location);
 	if(!filePresent){
 		throw new Error("DataBase file not found");
 	}
-	var db = new sqlite3.Database(location);
-	return db;
+	else{
+		var db = new sqlite3.Database(location);
+		return db;
+	}
 };
+
+records.openDBConnection = openDBConnection;
 
 var closeDBConnection = function(db){
 	db.close();
@@ -62,10 +67,11 @@ records.loadUser = function(email,callback){
 
 records.validate = function(loginDetails,validateCallBack){
 	records.loadUser(loginDetails.emailId,function(err,userDetails){
-		if(err)validateCallBack("/login","");
+		if(err || !userDetails)
+			validateCallBack("/login",null,"invalid user");
 		else if(userDetails && userDetails.secret == loginDetails.password) 
 			validateCallBack("/dashboard",loginDetails.emailId);
-		else validateCallBack("/login",""); 
+		else validateCallBack("/login",null,"invalid password"); 
 	});
 };
 
@@ -101,7 +107,7 @@ records.searchTopic = function(searchText,callback){
 	searchQry.where(["name like'"+searchText+"%'"]);
 	var db = openDBConnection();
 	searchQry.ready(db,"all",function(err,relatedTopics){
-		if(relatedTopics.length!=0){
+		if(relatedTopics.length != 0){
 			var relatedTopics = relatedTopics.reduce(function(html,topic){
 				html += "<a href='topic/"+topic.id+"'>"+topic.name+"</a>";
 				html += "<br>";
@@ -109,7 +115,7 @@ records.searchTopic = function(searchText,callback){
 			},"");
 		}
 		else{
-			relatedTopics = "<p>NO SUCH TOPIC</p><br/>"
+			relatedTopics = "<p>No Topics Found related to search</p><br/>"
 		}
 		callback(err, relatedTopics);
 	});
@@ -202,7 +208,24 @@ records.addComment = function(comment,topicId,userEmail,callback){
 	closeDBConnection(db);
 };
 
-exports.create = function(path){
+records.joinUserToTopic = function(topicId,topicName,email,callback){
+	var joinQry = new JsSql();
+	joinQry.insertInto(["joinedTopics"]).someFields(["email","topicId","topicName"]);
+	joinQry.values([email,topicId,topicName]);
+	var db = openDBConnection();
+	joinQry.ready(db,"run",callback);
+	joinQry.fire();
+	closeDBConnection(db);
+}
+
+records.leaveUserfromTopic = function(topicId,mail,callback){
+	var leaveQry = "delete from joinedTopics where email='"+mail+"' and topicId='"+topicId+"'";
+	var db = openDBConnection();
+	db.run(leaveQry,callback);
+	closeDBConnection(db);
+}
+
+exports.setLocation = function(path){
 	location = path;
 	return records;
 };

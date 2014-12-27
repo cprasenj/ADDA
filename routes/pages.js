@@ -70,15 +70,20 @@ router.post("/topicAdd",requireLogin,function(req,res){
 	});
 });
 
-
 router.get('/login', function(req, res) {
 	res.render('login',{title:'Login'});
 });
 
 router.post('/validate',function(req,res){
-	records.validate(req.body,function(pageToRender,user){
-		req.session.userEmail = user;
-		res.redirect(pageToRender);
+	records.validate(req.body,function(pageToRender,user,error){
+		if(error){
+			res.location('/login');
+			res.render('login',{title:'login',error:error});
+		}
+		else {
+			req.session.userEmail = user;
+			res.redirect(pageToRender);
+		}
 	});
 });
 
@@ -122,3 +127,37 @@ router.get("/postComment",function(req,res){
 		else res.end("show");
 	});
 });
+
+router.get("/join/:id",function(req,res){
+	var topicId = req.params.id;
+	var email = req.session.userEmail;
+	var topicName = req.query.topic;
+	records.joinUserToTopic(topicId,topicName,email,function(err){
+		if(err)
+			res.end("Error");
+		else
+			res.end("Leave");
+	});
+});
+
+router.get("/leave/:id",function(req,res){
+	var topicId = req.params.id;
+	var email = req.session.userEmail;
+	records.leaveUserfromTopic(topicId,email,function(err){
+		if(err)
+			res.end("Error");
+		else
+			res.end("Join");
+	});
+});
+
+router.get("/close/:id", function(req,res){
+	var topicId = req.params.id;
+	var email = req.session.userEmail;
+	records.closeTopic(topicId,userEmail,function(err){
+		if(err) res.end("Error");
+		else res.end("Closed");
+	});
+});
+
+
