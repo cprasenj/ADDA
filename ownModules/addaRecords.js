@@ -98,14 +98,19 @@ records.searchTopic = function(searchText,callback){
 	var searchQry = new JsSql();
 	searchQry.select(["id","name"]);
 	searchQry.from(["topics"]);
-	searchQry.where(["name='"+searchText+"'"]);
+	searchQry.where(["name like'"+searchText+"%'"]);
 	var db = openDBConnection();
 	searchQry.ready(db,"all",function(err,relatedTopics){
-		var relatedTopics = relatedTopics.reduce(function(html,topic){
-			html += "<a href='topic/"+topic.id+"'>"+topic.name+"</a>";
-			html += "<br>";
-			return html;
-		},"");
+		if(relatedTopics.length!=0){
+			var relatedTopics = relatedTopics.reduce(function(html,topic){
+				html += "<a href='topic/"+topic.id+"'>"+topic.name+"</a>";
+				html += "<br>";
+				return html;
+			},"");
+		}
+		else{
+			relatedTopics = "<p>NO SUCH TOPIC</p><br/>"
+		}
 		callback(err, relatedTopics);
 	});
 	searchQry.fire();
@@ -195,7 +200,7 @@ records.addComment = function(comment,topicId,userEmail,callback){
 	commentQry.ready(db,"run",callback);
 	commentQry.fire();
 	closeDBConnection(db);
-}
+};
 
 records.joinUserToTopic = function(topicId,topicName,email,callback){
 	var joinQry = new JsSql();
@@ -211,6 +216,10 @@ exports.create = function(path){
 	location = path;
 	return records;
 };
-	
 
+
+
+
+
+	
 

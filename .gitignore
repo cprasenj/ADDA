@@ -5,3 +5,5 @@ data
 a
 npm-debug.log
 tests/data
+data
+data/adda.db
