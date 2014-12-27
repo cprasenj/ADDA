@@ -2,14 +2,20 @@ extends layout
 
 block content
   h3= title
-  p 
-  |Welcome to Adda
-  br
-  |Please 
-  a(href="/registration") registration
-  |&nbsp;or 
-  a(href="/login") login
-  |&nbsp;to continue
+  if(loggedIn)
+   p
+    a(href="/dashboard") Dashboard
+    |&nbsp;&nbsp;
+    a(href="/logout") logout
+  else
+   p 
+   |Welcome to Adda
+   br
+   |Please 
+   a(href="/registration") register
+   |&nbsp;or 
+   a(href="/login") login
+   |&nbsp;to continue
   p Top 5 Prasange
   ul
     each topic in topics

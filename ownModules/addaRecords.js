@@ -182,7 +182,8 @@ records.getTopic = function(topicId, loggedInMail, callback){
 	records.getTopicById(topicId,function(err,topic){
 		records.loadLastFiveComments(topicId,function(err,lastComments){
 			if(topic.ownersEmailId == loggedInMail){
-				topic.buttonName = "Close";
+				if(topic.closeTime == "Not Closed") topic.buttonName = "Close";
+				else topic.buttonName = "Closed";
 				topic.comments = lastComments;
 				callback(topic);
 			} else{
@@ -225,6 +226,29 @@ records.leaveUserfromTopic = function(topicId,mail,callback){
 	closeDBConnection(db);
 }
 
+records.closeTopic = function(topicId,email,callback){
+	var date = String(new Date()).slice(0,21);
+	var closeQry = new JsSql();
+	closeQry.update(["topics"]);
+	closeQry.set(["closeTime"]);
+	closeQry.values([date]);
+	closeQry.where(["id='"+topicId+"'","ownersEmailId='"+email+"'"]).connectors(["AND"]);
+	var db = openDBConnection();
+	closeQry.ready(db,"run",callback);
+	closeQry.fire();
+	closeDBConnection(db);
+}
+
+records.loadAllComments = function(id,callback){
+	var commentsQry = new JsSql();
+	commentsQry.select();
+	commentsQry.from(["comments"]);
+	commentsQry.where(["topicId='"+id+"'"]);
+	var db = openDBConnection();
+	commentsQry.ready(db,"all",callback);
+	commentsQry.fire();
+	closeDBConnection(db);
+}
 exports.setLocation = function(path){
 	location = path;
 	return records;

@@ -1,4 +1,4 @@
-var comment = function(topicId,userEmail){
+var sendComment = function(topicId,userEmail){
 	var commentElement = document.getElementById("currentComment");
 	var comment = encodeURIComponent(commentElement.value);
 	var request = "/postComment?comment="+comment+"&topicId="+topicId;
@@ -6,10 +6,16 @@ var comment = function(topicId,userEmail){
 	commentElement.value = "";
 };
 
-var onCloseOrJoinOrLeave = function(id,buttonName,topicName){
+var onCloseOrJoinOrLeave = function(id,topicName){
+	var buttonName = document.getElementById("CJL").innerHTML;
 	var request = "/"+buttonName.toLowerCase()+"/"+id+"?topic="+topicName;
 	sendAjaxGetRequest(onResponseOfCJL,[id,buttonName],request)
 };
+
+var loadAll = function(id){
+	var request = "/loadAllComments/"+id;
+	sendAjaxGetRequest(showAllComments,[id],request);
+}
 
 var sendAjaxGetRequest = function(onComplete,values,request){
 	var ajaxHttp = new XMLHttpRequest();
@@ -22,6 +28,17 @@ var sendAjaxGetRequest = function(onComplete,values,request){
 	ajaxHttp.open("GET",request,true);
 	ajaxHttp.send();
 };
+
+var showAllComments = function(values,response){
+	response = JSON.parse(response);
+	var commentContainer = document.getElementById("showComments");
+	commentContainer.innerHTML = "";
+	response.forEach(function(comment){
+		var html = "Mail: <b>" + comment.emailId + "</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time:<b>" + 
+		    comment.time + "</b><br><b>"+comment.comment+"</b><br><br>";
+		commentContainer.innerHTML += html; 
+	});	
+}
 
 var toHtml = function(values,response){
 	if(response == "show"){
@@ -68,7 +85,7 @@ var onLeave = function(){
 };
 
 var onErr = function(){
-
+	alert("Some Error")
 };
 
 var onResponseOfCJL = function(values,response){
@@ -82,8 +99,9 @@ var onResponseOfCJL = function(values,response){
 };
 
 var noMethod = function(){
+	console.log("Close")
+}
 
-};
 
 var onResponseOfCJL = function(values,response){
 	var functionality = {

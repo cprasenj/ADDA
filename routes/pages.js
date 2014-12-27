@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var records = require("../ownModules/addaRecords.js").create("./data/adda.db");
+var records = require("../ownModules/addaRecords.js").setLocation("./data/adda.db");
 
 module.exports = router;
 
@@ -15,7 +15,7 @@ var loadUserFromSession = function(req,res,next){
 		next();	
 	});	
 };
- var requireLogin = function(req,res,next){
+var requireLogin = function(req,res,next){
 	req.user ? next(): res.redirect("/login");
 };
 
@@ -23,13 +23,13 @@ router.use(loadUserFromSession);
 
 router.get('/', function(req, res) {
 	records.getTop5Topics(function(topics){
-		res.render('index', { title:'Home',topics:topics});
+		res.render('index', { title:'Home',topics:topics,loggedIn:req.user });
 	});
 });
 
 router.get('/index', function(req, res) {
 	records.getTop5Topics(function(topics){
-		res.render('index', { title:'Home',topics:topics});
+		res.render('index', { title:'Home',topics:topics,loggedIn:req.user });
 	});
 });
 
@@ -48,13 +48,6 @@ router.get("/dashboard",requireLogin,function(req,res){
 		res.render('dashboard',{ title:'dashboard', myTopics:myTopics});
 	});
 });
-
-// router.post('/topic/:id/addComment',requireLogin,function(req, res) {
-// 	var body = req.body;
-// 	body.id = req.params.id;
-// 	records.addComment(body);
-//     res.redirect('/topic/'+body.id);
-// });
 
 router.get("/topics",requireLogin,function(req,res){
 	res.render('topics',{title:'Topics'})
@@ -154,9 +147,17 @@ router.get("/leave/:id",function(req,res){
 router.get("/close/:id", function(req,res){
 	var topicId = req.params.id;
 	var email = req.session.userEmail;
-	records.closeTopic(topicId,userEmail,function(err){
+	records.closeTopic(topicId,email,function(err){
 		if(err) res.end("Error");
 		else res.end("Closed");
+	});
+});
+
+router.get("/loadAllComments/:id",function(req,res){
+	var topicId = req.params.id;
+	records.loadAllComments(topicId,function(err,comments){
+		if(err) res.end("Error");
+		else res.json(comments);
 	});
 });
 

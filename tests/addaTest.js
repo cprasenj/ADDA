@@ -282,6 +282,36 @@ describe("Adda", function(){
 		});
 	});
 
+	describe("closeTopic",function(){
+		it("should close the topic 1 parmanently",function(done){
+			records.closeTopic(2,"mahesh@gmail.com",function(err){
+				assert.notOk(err);
+				records.getTopicById(2,function(err,topic){
+					assert.equal(topic.closeTime,String(new Date()).slice(0,21));
+					done();
+				});
+			});		
+		});
+	});
+
+	describe("loadAllComments",function(){
+		it("should load all the comments of topic 2",function(done){
+			records.loadAllComments(2,function(err,comments){
+				assert.deepEqual(comments,[ { id: 8,
+				    topicId: 2,
+				    emailId: 'mahesh@gmail.com',
+				    comment: 'DSP is my favourite music director',
+				    time: '2014-12-20 13:13' },
+				  { id: 9,
+				    topicId: 2,
+				    emailId: 'suparna@gmail.com',
+				    comment: 'ARR music is nice',
+				    time: '2014-12-20 13:13' } ]);
+				done();
+			});
+		});
+	});
+
 	describe("loadLastFiveComments",function(){
 		it("should give last five comments of topic id 1", function(done){
 			records.loadLastFiveComments(1,function(err, comments){
