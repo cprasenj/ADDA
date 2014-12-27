@@ -234,6 +234,17 @@ records.closeTopic = function(topicId,email,callback){
 	closeDBConnection(db);
 }
 
+records.loadAllComments = function(id,callback){
+	var commentsQry = new JsSql();
+	commentsQry.select();
+	commentsQry.from(["comments"]);
+	commentsQry.where(["topicId='"+id+"'"]);
+	var db = openDBConnection();
+	commentsQry.ready(db,"all",callback);
+	commentsQry.fire();
+	closeDBConnection(db);
+}
+
 exports.create = function(path){
 	location = path;
 	return records;

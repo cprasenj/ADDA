@@ -294,6 +294,24 @@ describe("Adda", function(){
 		});
 	});
 
+	describe("loadAllComments",function(){
+		it("should load all the comments of topic 2",function(done){
+			records.loadAllComments(2,function(err,comments){
+				assert.deepEqual(comments,[ { id: 8,
+				    topicId: 2,
+				    emailId: 'mahesh@gmail.com',
+				    comment: 'DSP is my favourite music director',
+				    time: '2014-12-20 13:13' },
+				  { id: 9,
+				    topicId: 2,
+				    emailId: 'suparna@gmail.com',
+				    comment: 'ARR music is nice',
+				    time: '2014-12-20 13:13' } ]);
+				done();
+			});
+		});
+	});
+
 	describe("loadLastFiveComments",function(){
 		it("should give last five comments of topic id 1", function(done){
 			records.loadLastFiveComments(1,function(err, comments){

@@ -13,6 +13,11 @@ var onCloseOrJoinOrLeave = function(id,topicName){
 	sendAjaxGetRequest(onResponseOfCJL,[id,buttonName],request)
 }
 
+var loadAll = function(id){
+	var request = "/loadAllComments/"+id;
+	sendAjaxGetRequest(showAllComments,[id],request);
+}
+
 var sendAjaxGetRequest = function(onComplete,values,request){
 	var ajaxHttp = new XMLHttpRequest();
 	ajaxHttp.onreadystatechange=function(){
@@ -24,6 +29,17 @@ var sendAjaxGetRequest = function(onComplete,values,request){
 	ajaxHttp.open("GET",request,true);
 	ajaxHttp.send();
 };
+
+var showAllComments = function(values,response){
+	response = JSON.parse(response);
+	var commentContainer = document.getElementById("showComments");
+	commentContainer.innerHTML = "";
+	response.forEach(function(comment){
+		var html = "Mail: <b>" + comment.emailId + "</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time:<b>" + 
+		    comment.time + "</b><br><b>"+comment.comment+"</b><br><br>";
+		commentContainer.innerHTML += html; 
+	});	
+}
 
 var toHtml = function(values,response){
 	if(response == "show"){

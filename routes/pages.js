@@ -152,4 +152,12 @@ router.get("/close/:id", function(req,res){
 	});
 });
 
+router.get("/loadAllComments/:id",function(req,res){
+	var topicId = req.params.id;
+	records.loadAllComments(topicId,function(err,comments){
+		if(err) res.end("Error");
+		else res.json(comments);
+	});
+});
+
 
