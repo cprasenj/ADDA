@@ -15,6 +15,7 @@ var loadUserFromSession = function(req,res,next){
 		next();	
 	});	
 };
+
 var requireLogin = function(req,res,next){
 	req.user ? next(): res.redirect("/login");
 };
@@ -58,7 +59,6 @@ router.post("/topicAdd",requireLogin,function(req,res){
 	var topicName = req.body.topicName;
 	var topicDescription = req.body.topicDescription;
 	records.addTopic(email,topicName,topicDescription,function(topicId){
-		console.log("^%@#@^%%$@#@#$%#@^%@#$%^");
 		res.redirect("topic/"+topicId);
 	});
 });
@@ -89,7 +89,6 @@ router.post('/registration',function(req,res){
   	var name = req.body.name;
   	var password = req.body.password;
   	records.createNewUser(email,name,password,function(err){
-  		console.log("err",err)
   		if(err){
   			res.end("Email already Exists");
 	  	} else{
@@ -116,7 +115,7 @@ router.get("/postComment",function(req,res){
 	var topicId = req.query.topicId;
 	var userEmail = req.session.userEmail;
 	records.addComment(comment,topicId,userEmail,function(err){
-		if(err){ res.end(""); console.log(err)}
+		if(err) res.end("");
 		else res.end("show");
 	});
 });

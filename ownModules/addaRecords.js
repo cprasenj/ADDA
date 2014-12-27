@@ -253,10 +253,3 @@ exports.setLocation = function(path){
 	location = path;
 	return records;
 };
-
-
-
-
-
-	
-
