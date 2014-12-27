@@ -99,14 +99,19 @@ records.searchTopic = function(searchText,callback){
 	var searchQry = new JsSql();
 	searchQry.select(["id","name"]);
 	searchQry.from(["topics"]);
-	searchQry.where(["name='"+searchText+"'"]);
+	searchQry.where(["name like'"+searchText+"%'"]);
 	var db = openDBConnection();
 	searchQry.ready(db,"all",function(err,relatedTopics){
-		var relatedTopics = relatedTopics.reduce(function(html,topic){
-			html += "<a href='topic/"+topic.id+"'>"+topic.name+"</a>";
-			html += "<br>";
-			return html;
-		},"");
+		if(relatedTopics.length!=0){
+			var relatedTopics = relatedTopics.reduce(function(html,topic){
+				html += "<a href='topic/"+topic.id+"'>"+topic.name+"</a>";
+				html += "<br>";
+				return html;
+			},"");
+		}
+		else{
+			relatedTopics = "<p>NO SUCH TOPIC</p><br/>"
+		}
 		callback(err, relatedTopics);
 	});
 	searchQry.fire();
@@ -149,8 +154,8 @@ records.getTopicById = function(topicId,callback){
 
 records.giveJoinOrLeave = function(joinedTopics,topicId,topic){
 	var joined = _.find(joinedTopics,{id: +topicId});
-	if(joined) topic.buttonName = "Leave Topic";
-	else topic.buttonName = "Join To Topic";
+	if(joined) topic.buttonName = "Leave";
+	else topic.buttonName = "Join";
 }
 
 records.loadLastFiveComments = function(topicId,callback){
@@ -172,7 +177,7 @@ records.getTopic = function(topicId, loggedInMail, callback){
 	records.getTopicById(topicId,function(err,topic){
 		records.loadLastFiveComments(topicId,function(err,lastComments){
 			if(topic.ownersEmailId == loggedInMail){
-				topic.buttonName = "Close Topic";
+				topic.buttonName = "Close";
 				topic.comments = lastComments;
 				callback(topic);
 			} else{
@@ -196,12 +201,16 @@ records.addComment = function(comment,topicId,userEmail,callback){
 	commentQry.ready(db,"run",callback);
 	commentQry.fire();
 	closeDBConnection(db);
-}
+};
 
 exports.create = function(path){
 	location = path;
 	return records;
 };
-	
 
+
+
+
+
+	
 

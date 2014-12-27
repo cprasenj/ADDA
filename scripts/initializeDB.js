@@ -22,8 +22,8 @@ var runAllQueries = function(){
 			"emailId text not null, comment text not null, time text not null,"+
 			" foreign key(topicId) references topics(id), foreign key(emailId) references users(emailId));",
 
-		"create table joinTopic(emailId text not null, topicId integer not null,"+
-		" foreign key(emailId) references users(emailId), foreign key(topicId) references topics(id));",
+		// "create table joinTopic(emailId text not null, topicId integer not null,"+
+		// " foreign key(emailId) references users(emailId), foreign key(topicId) references topics(id));",
 
 		"create table joinedTopics(id integer primary key autoincrement, email text, topicId integer, topicName text);"
 	].forEach(runQuery);
