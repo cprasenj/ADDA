@@ -1,22 +1,23 @@
 extends layout
 
 block content
-  h3= title
+  p.welcomeMessage
+   |Welcome to Adda
+   br
+  h1.home= title
   if(loggedIn)
-   p
+   p.menus
     a(href="/dashboard") Dashboard
     |&nbsp;&nbsp;
     a(href="/logout") logout
   else
-   p 
-   |Welcome to Adda
+   p.menus
+    a(href="/registration") Register
+    |&nbsp;&nbsp;
+    a(href="/login") Login
+  div.topFiveTopics
+   h4 Top Five Discussed Prasange
    br
-   |Please 
-   a(href="/registration") register
-   |&nbsp;or 
-   a(href="/login") login
-   |&nbsp;to continue
-  p Top 5 Prasange
-  ul
+   ul
     each topic in topics
      li #{topic.name}

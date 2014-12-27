@@ -1,12 +1,54 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #f1f1f1;
 }
 
 a {
-  color: #00B7FF;
+  color: #584d64;
 }
 
-.title{
-  text-decoration: none;
+.titleBorder {
+	border-radius: 35px;
+	color: #584d64;
+	border: 2px solid #a1a1a1;
+    padding: 10px 40px; 
+    background: #dddddd;
+    width: 300px;
+    font-family: Segoe UI;
+    font-size: 40px;
+}
+
+.title {
+	text-decoration: none;
+}
+
+.welcomeMessage {
+	text-align: center;
+	color: #584d64;
+	font-size: 25px;
+	font-family: Segoe UI;
+}
+
+.menus {
+	text-align: right;
+	font-family: Segoe UI;
+	font-size: 15px;
+}
+
+.home {
+	color: #584d64;
+    font-family: Segoe UI;
+    font-size: 30px;
+}
+
+.topFiveTopics {
+	border-radius: 35px;
+	color: #584d64;
+	border: 2px solid #a1a1a1;
+    padding: 10px 40px; 
+    background: #dddddd;
+    width: 350px;
+    font-family: Segoe UI;
+    font-size: 20px;
 }
