@@ -222,8 +222,6 @@ records.leaveUserfromTopic = function(topicId,mail,callback){
 }
 
 records.closeTopic = function(topicId,email,callback){
-		console.log("got here")
-
 	var date = String(new Date()).slice(0,21);
 	var closeQry = new JsSql();
 	closeQry.update(["topics"]);
@@ -233,6 +231,17 @@ records.closeTopic = function(topicId,email,callback){
 	var db = openDBConnection();
 	closeQry.ready(db,"run",callback);
 	closeQry.fire();
+	closeDBConnection(db);
+}
+
+records.loadAllComments = function(id,callback){
+	var commentsQry = new JsSql();
+	commentsQry.select();
+	commentsQry.from(["comments"]);
+	commentsQry.where(["topicId='"+id+"'"]);
+	var db = openDBConnection();
+	commentsQry.ready(db,"all",callback);
+	commentsQry.fire();
 	closeDBConnection(db);
 }
 
