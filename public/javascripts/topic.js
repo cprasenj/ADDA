@@ -1,4 +1,4 @@
-var postComment = function(topicId,userEmail,value){
+var comment = function(topicId,userEmail){
 	var commentElement = document.getElementById("currentComment");
 	var comment = encodeURIComponent(commentElement.value);
 	var request = "/postComment?comment="+comment+"&topicId="+topicId;
@@ -17,14 +17,13 @@ var sendAjaxGetRequest = function(onComplete,values,request){
 		if (ajaxHttp.readyState==4 && ajaxHttp.status==200){
 			var response = ajaxHttp.responseText;
 			onComplete(values,response);
-			
 		}
 	}
 	ajaxHttp.open("GET",request,true);
 	ajaxHttp.send();
 };
 
-var toHtml = function(values){
+var toHtml = function(values,response){
 	if(response == "show"){
 		comment = decodeURIComponent(values[0]);
 		var date = String(new Date()).slice(0,21);
@@ -72,8 +71,13 @@ var onErr = function(){
 
 }
 
+var noMethod = function(){
+
+}
+
 var onResponseOfCJL = function(values,response){
 	var functionality = {
+		"Close":noMethod,
 		"Closed":onClosed,
 		"Join":onJoin,
 		"Leave":onLeave,

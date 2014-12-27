@@ -36,4 +36,4 @@ block content
  form
   textarea(id="currentComment")
   &nbsp;&nbsp;&nbsp;
-  input(type="button" id="postComment" value="Post Comment" onclick="postComment(#{topic.id}, '#{topic.userEmail}',value)")
+  input(type="button" id="postComment" value="Post Comment" onclick="comment('#{topic.id}', '#{topic.userEmail}')")

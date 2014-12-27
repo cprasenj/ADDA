@@ -146,4 +146,13 @@ router.get("/leave/:id",function(req,res){
 	});
 });
 
+router.get("/close/:id", function(req,res){
+	var topicId = req.params.id;
+	var email = req.session.userEmail;
+	records.closeTopic(topicId,userEmail,function(err){
+		if(err) res.end("Error");
+		else res.end("Closed");
+	});
+});
+
 
