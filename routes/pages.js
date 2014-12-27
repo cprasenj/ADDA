@@ -49,13 +49,6 @@ router.get("/dashboard",requireLogin,function(req,res){
 	});
 });
 
-// router.post('/topic/:id/addComment',requireLogin,function(req, res) {
-// 	var body = req.body;
-// 	body.id = req.params.id;
-// 	records.addComment(body);
-//     res.redirect('/topic/'+body.id);
-// });
-
 router.get("/topics",requireLogin,function(req,res){
 	res.render('topics',{title:'Topics'})
 });
@@ -154,7 +147,7 @@ router.get("/leave/:id",function(req,res){
 router.get("/close/:id", function(req,res){
 	var topicId = req.params.id;
 	var email = req.session.userEmail;
-	records.closeTopic(topicId,userEmail,function(err){
+	records.closeTopic(topicId,email,function(err){
 		if(err) res.end("Error");
 		else res.end("Closed");
 	});

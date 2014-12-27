@@ -177,7 +177,8 @@ records.getTopic = function(topicId, loggedInMail, callback){
 	records.getTopicById(topicId,function(err,topic){
 		records.loadLastFiveComments(topicId,function(err,lastComments){
 			if(topic.ownersEmailId == loggedInMail){
-				topic.buttonName = "Close";
+				if(topic.closeTime == "Not Closed") topic.buttonName = "Close";
+				else topic.buttonName = "Closed";
 				topic.comments = lastComments;
 				callback(topic);
 			} else{
@@ -220,8 +221,19 @@ records.leaveUserfromTopic = function(topicId,mail,callback){
 	closeDBConnection(db);
 }
 
-records.closeTopic = function(topicId,userEmail,callback){
-	
+records.closeTopic = function(topicId,email,callback){
+		console.log("got here")
+
+	var date = String(new Date()).slice(0,21);
+	var closeQry = new JsSql();
+	closeQry.update(["topics"]);
+	closeQry.set(["closeTime"]);
+	closeQry.values([date]);
+	closeQry.where(["id='"+topicId+"'","ownersEmailId='"+email+"'"]).connectors(["AND"]);
+	var db = openDBConnection();
+	closeQry.ready(db,"run",callback);
+	closeQry.fire();
+	closeDBConnection(db);
 }
 
 exports.create = function(path){

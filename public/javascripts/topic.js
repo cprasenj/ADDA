@@ -7,10 +7,11 @@ var sendComment = function(topicId,userEmail){
 	commentElement.value = "";
 };
 
-// var onCloseOrJoinOrLeave = function(id,buttonName,topicName){
-// 	var request = "/"+buttonName.toLowerCase()+"/"+id+"?topic="+topicName;
-// 	sendAjaxGetRequest(onResponseOfCJL,[id,buttonName],request)
-// }
+var onCloseOrJoinOrLeave = function(id,topicName){
+	var buttonName = document.getElementById("CJL").innerHTML;
+	var request = "/"+buttonName.toLowerCase()+"/"+id+"?topic="+topicName;
+	sendAjaxGetRequest(onResponseOfCJL,[id,buttonName],request)
+}
 
 var sendAjaxGetRequest = function(onComplete,values,request){
 	var ajaxHttp = new XMLHttpRequest();
@@ -37,57 +38,57 @@ var toHtml = function(values,response){
 		alert("Dont give single quotes")
 }
 
-// var onClosed = function(){
-// 	var closeButton = document.getElementById("CJL");
-// 	closeButton.innerHTML = "Topic Closed";
-// 	closeButton.disabled = true;
-// 	var commentElement = document.getElementById("currentComment");
-// 	commentElement.value = "You Cannot post any comments on Closed Topics";
-// 	commentElement.readOnly = true;
-// 	var postCommentButtonElement = document.getElementById("postComment");
-// 	postCommentButtonElement.disabled = true;
-// }
+var onClosed = function(){
+	var closeButton = document.getElementById("CJL");
+	closeButton.innerHTML = "Topic Closed";
+	closeButton.disabled = true;
+	var commentElement = document.getElementById("currentComment");
+	commentElement.value = "You Cannot post any comments on Closed Topics";
+	commentElement.readOnly = true;
+	var postCommentButtonElement = document.getElementById("postComment");
+	postCommentButtonElement.disabled = true;
+}
 
-// var onJoin = function(){
-// 	var leaveButton = document.getElementById("CJL");
-// 	leaveButton.innerHTML = "Join";
-// 	var commentElement = document.getElementById("currentComment");
-// 	commentElement.value = "You need to Join to the topic to post comments";
-// 	commentElement.readOnly = true;
-// 	var postCommentButtonElement = document.getElementById("postComment");
-// 	postCommentButtonElement.disabled = true;
-// }
+var onJoin = function(){
+	var leaveButton = document.getElementById("CJL");
+	leaveButton.innerHTML = "Join";
+	var commentElement = document.getElementById("currentComment");
+	commentElement.value = "You need to Join to the topic to post comments";
+	commentElement.readOnly = true;
+	var postCommentButtonElement = document.getElementById("postComment");
+	postCommentButtonElement.disabled = true;
+}
 
-// var onLeave = function(){
-// 	var joinButton = document.getElementById("CJL");
-// 	joinButton.innerHTML = "Leave";
-// 	var commentElement = document.getElementById("currentComment");
-// 	commentElement.value = "";
-// 	commentElement.readOnly = false;
-// 	var postCommentButtonElement = document.getElementById("postComment");
-// 	postCommentButtonElement.disabled = false;
-// }
+var onLeave = function(){
+	var joinButton = document.getElementById("CJL");
+	joinButton.innerHTML = "Leave";
+	var commentElement = document.getElementById("currentComment");
+	commentElement.value = "";
+	commentElement.readOnly = false;
+	var postCommentButtonElement = document.getElementById("postComment");
+	postCommentButtonElement.disabled = false;
+}
 
-// var onErr = function(){
-// 	alert("Some Error")
-// }
+var onErr = function(){
+	alert("Some Error")
+}
 
-// var noMethod = function(){
-// 	console.log("Close")
-// }
+var noMethod = function(){
+	console.log("Close")
+}
 
-// var onResponseOfCJL = function(values,response){
-// 	var functionality = {
-// 		"Close":noMethod,
-// 		"Closed":onClosed,
-// 		"Join":onJoin,
-// 		"Leave":onLeave,
-// 		"Error":onErr
-// 	};
-// 	functionality[response]();
-// }
+var onResponseOfCJL = function(values,response){
+	var functionality = {
+		"Close":noMethod,
+		"Closed":onClosed,
+		"Join":onJoin,
+		"Leave":onLeave,
+		"Error":onErr
+	};
+	functionality[response]();
+}
 
-// document.onreadystatechange = function(){
-// 	var CJLElement = document.getElementById("CJL")
-// 	onResponseOfCJL([],CJLElement.innerHTML);
-// }
+document.onreadystatechange = function(){
+	var CJLElement = document.getElementById("CJL")
+	onResponseOfCJL([],CJLElement.innerHTML);
+}

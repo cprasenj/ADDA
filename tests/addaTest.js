@@ -282,11 +282,17 @@ describe("Adda", function(){
 		});
 	});
 
-	// describe("closeTopic",function(){
-	// 	it("should close the topic 1 parmanently",function(done){
-			
-	// 	});
-	// });
+	describe("closeTopic",function(){
+		it("should close the topic 1 parmanently",function(done){
+			records.closeTopic(2,"mahesh@gmail.com",function(err){
+				assert.notOk(err);
+				records.getTopicById(2,function(err,topic){
+					assert.equal(topic.closeTime,String(new Date()).slice(0,21));
+					done();
+				});
+			});		
+		});
+	});
 
 	describe("loadLastFiveComments",function(){
 		it("should give last five comments of topic id 1", function(done){
