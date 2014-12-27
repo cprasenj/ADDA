@@ -245,13 +245,25 @@ describe("Adda", function(){
 		it("should join mahesh@gmail.com to the topic adda which id is 5",function(done){
 			records.joinUserToTopic(5,"Adda","mahesh@gmail.com",function(err){
 				assert.notOk(err);
-				records.getMyJoinedTopics("mahesh@gmail.com",function(err,topics){
+				records.getMyJoinedTopics("mahesh@gmail.com",function(er,topics){
 					assert.deepEqual(topics[2],{ id: 5, name: 'Adda' });
 					done();
 				});
 			});
 		});
-	})
+	});
+
+	describe("leaveUserFromTopic",function(){
+		it("should leave make leave mahesh@gmail.com from the topic STEP which id is 3",function(done){
+			records.leaveUserfromTopic(3,"mahesh@gmail.com",function(err){
+				assert.notOk(err);
+				records.getMyJoinedTopics("mahesh@gmail.com", function(er,topics){
+					assert.deepEqual(topics,[ { id: 1, name: 'Cricket' } ]);
+					done();
+				});
+			});
+		});
+	});
 
 	describe("loadLastFiveComments",function(){
 		it("should give last five comments of topic id 1", function(done){

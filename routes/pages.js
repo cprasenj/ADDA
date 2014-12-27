@@ -134,3 +134,16 @@ router.get("/join/:id",function(req,res){
 			res.end("Leave");
 	});
 });
+
+router.get("/leave/:id",function(req,res){
+	var topicId = req.params.id;
+	var email = req.session.userEmail;
+	records.leaveUserfromTopic(topicId,email,function(err){
+		if(err)
+			res.end("Error");
+		else
+			res.end("Join");
+	});
+});
+
+

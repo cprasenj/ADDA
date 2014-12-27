@@ -73,7 +73,6 @@ var onErr = function(){
 }
 
 var onResponseOfCJL = function(values,response){
-	alert(response)
 	var functionality = {
 		"Closed":onClosed,
 		"Join":onJoin,

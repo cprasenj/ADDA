@@ -212,6 +212,13 @@ records.joinUserToTopic = function(topicId,topicName,email,callback){
 	closeDBConnection(db);
 }
 
+records.leaveUserfromTopic = function(topicId,mail,callback){
+	var leaveQry = "delete from joinedTopics where email='"+mail+"' and topicId='"+topicId+"'";
+	var db = openDBConnection();
+	db.run(leaveQry,callback);
+	closeDBConnection(db);
+}
+
 exports.create = function(path){
 	location = path;
 	return records;
