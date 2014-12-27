@@ -63,7 +63,7 @@ records.loadUser = function(email,callback){
 	userQry.ready(db,"get",callback);
 	userQry.fire();	
 	closeDBConnection(db);
-}
+};
 
 records.validate = function(loginDetails,validateCallBack){
 	records.loadUser(loginDetails.emailId,function(err,userDetails){
@@ -83,7 +83,7 @@ records.getAllTopics = function(callback){
 	topicsQry.ready(db,"all",callback);
 	topicsQry.fire();
 	closeDBConnection(db);
-}
+};
 
 records.addTopic = function(email,topicName,topicDescription,callback){
 	var date = String(new Date()).slice(0,21);
@@ -115,7 +115,7 @@ records.searchTopic = function(searchText,callback){
 			},"");
 		}
 		else{
-			relatedTopics = "<p>No Topics Found related to search</p><br/>"
+			relatedTopics = "<p>No Topics Found related to search</p><br/>";
 		}
 		callback(err, relatedTopics);
 	});
