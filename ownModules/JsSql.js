@@ -88,7 +88,7 @@ var ready = function(db,method,callback){
 }
 
 var fire = function(){
-	this.db[this.method](this.query,this.callback);
+	return this.db[this.method](this.query,this.callback);
 }
 
 var JsSql = function(){

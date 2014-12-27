@@ -161,7 +161,7 @@ describe("Adda", function(){
 				  ownersEmailId: 'prasenjit@gmail.com',
 				  startTime: '2014-12-17 15:12',
 				  closeTime: 'Not Closed',
-				  buttonName: 'Leave Topic',
+				  buttonName: 'Leave',
 				  comments:
 				   [ { id: 3,
 				       topicId: 1,

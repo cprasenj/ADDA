@@ -1,7 +1,7 @@
 var JsSql = require("../ownModules/JsSql").JsSql;
-var assert = require('assert');
-var chaiAssert = require('chai').assert;
-// var db = new sqlite3.Database("./data/");
+var assert = require('chai').assert;
+var sqlite = require('sqlite3');
+var db = new sqlite.Database("./tests/data/instance.db");
 
 describe('JsSql',function(){
 	describe("select",function(){
@@ -101,18 +101,16 @@ describe('JsSql',function(){
 			assert.deepEqual(a.callback,callback);
 		});
 	});
-	// describe("fire",function(done){
-	// 	it("should set db,method and callback",function(){
-	// 		var a = new JsSql();
-	// 		a.select(["id"]);
-	// 		a.from("students");
-	// 		var db = new sqlite3.Database("./data/jsdata.db");
-	// 		a.ready({},'get', function(){
-	// 			assert.deepEqual(a.db,{});
-	// 			assert.deepEqual(a.method,'get');
-	// 			assert.deepEqual(a.callback,callback);
-	// 			done();
-	// 		});
-	// 	});
-	// });
+	describe("fire",function(){
+		it("should call the callback with null, budda@gmail.com",function(done){
+			var a = new JsSql();
+			a.query = "select emailId from comments where id=2";
+			a.ready(db,'get', function(err,result){
+				assert.ok(!err);
+				assert.deepEqual(result,{'emailId':'budda@gmail.com'});
+				done();
+			});
+			a.fire();
+		});
+	});
 });

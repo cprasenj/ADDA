@@ -6,7 +6,8 @@
     "start": "nodemon ./bin/www",
     "initDB": "mkdir data && touch data/adda.db && node scripts/initializeDB.js data/adda.db",
     "test": "sh runTest.sh",
-    "setup": "npm install && npm run initDB"
+    "setup": "npm install && npm run initDB",
+    "reset": "rm -rf data && npm run setup"
   },
   "dependencies": {
     "body-parser": "~1.8.1",
