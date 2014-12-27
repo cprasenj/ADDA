@@ -70,15 +70,20 @@ router.post("/topicAdd",requireLogin,function(req,res){
 	});
 });
 
-
 router.get('/login', function(req, res) {
 	res.render('login',{title:'Login'});
 });
 
 router.post('/validate',function(req,res){
-	records.validate(req.body,function(pageToRender,user){
-		req.session.userEmail = user;
-		res.redirect(pageToRender);
+	records.validate(req.body,function(pageToRender,user,error){
+		if(error){
+			res.location('/login');
+			res.render('login',{title:'login',error:error});
+		}
+		else {
+			req.session.userEmail = user;
+			res.redirect(pageToRender);
+		}
 	});
 });
 
