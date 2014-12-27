@@ -49,10 +49,27 @@ describe("Adda", function(){
 		});
 	});
 	describe("validate", function(){
-		it("should validate the user details of mahesh@gmail.com", function(done){
-			records.validate({emailId:"mahesh@gmail.com",password:"mahesh"},function(page,mail){
+		it("should give /dashboard as next page for valid login", function(done){
+			records.validate({emailId:"mahesh@gmail.com",password:"mahesh"},function(page,emailId,error){
 				assert.equal(page,"/dashboard");
-				assert.equal(mail,"mahesh@gmail.com");
+				assert.equal(emailId,"mahesh@gmail.com");
+				assert.notOk(error);
+				done();
+			});
+		});
+		it("should give /login as next page for invalid password", function(done){
+			records.validate({emailId:"mahesh@gmail.com",password:"kolla"},function(page,user,error){
+				assert.equal(page,"/login");
+				assert.equal(error,"invalid password");
+				assert.notOk(user);
+				done();
+			});
+		});
+		it("should give /login as next page for invalid emailId", function(done){
+			records.validate({emailId:"riya@gmail.com",password:"kolla"},function(page,user,error){
+				assert.equal(page,"/login");
+				assert.equal(error,"invalid user");
+				assert.notOk(user);
 				done();
 			});
 		});

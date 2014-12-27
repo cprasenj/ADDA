@@ -62,10 +62,11 @@ records.loadUser = function(email,callback){
 
 records.validate = function(loginDetails,validateCallBack){
 	records.loadUser(loginDetails.emailId,function(err,userDetails){
-		if(err)validateCallBack("/login","");
+		if(err || !userDetails)
+			validateCallBack("/login",null,"invalid user");
 		else if(userDetails && userDetails.secret == loginDetails.password) 
 			validateCallBack("/dashboard",loginDetails.emailId);
-		else validateCallBack("/login",""); 
+		else validateCallBack("/login",null,"invalid password"); 
 	});
 };
 
