@@ -282,6 +282,12 @@ describe("Adda", function(){
 		});
 	});
 
+	// describe("closeTopic",function(){
+	// 	it("should close the topic 1 parmanently",function(done){
+			
+	// 	});
+	// });
+
 	describe("loadLastFiveComments",function(){
 		it("should give last five comments of topic id 1", function(done){
 			records.loadLastFiveComments(1,function(err, comments){

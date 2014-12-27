@@ -7,13 +7,13 @@ block content
  p
   form(action="topicAdd" method="post")
    |Name:
-   input(type="text" name="topicName")
+   input(type="text" name="topicName" required)
    |Description:
-   input(type="text" name="topicDescription")
+   input(type="text" name="topicDescription" required)
    input(type="submit" value="Add Topic")
  p
   form(action="/searchTopic" method="post")
    |Search Topic Here:
    input(type="text" name="searchKeyWord" id="searchText")
-   input(type="button" onclick="onSearch()" value="Search" )
+   input(type="button" onclick="onSearch()" value="Search")
  div(id="searchResults")
