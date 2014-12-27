@@ -156,6 +156,12 @@ describe("Adda", function(){
 				done();
 			});
 		});
+		it("should give the topic that is searched in this case cricket",function(done){
+			records.searchTopic("boxing",function(err,topic){
+				assert.equal(topic,"<p>No Topics Found related to search</p><br/>");
+				done();
+			});
+		});
 	});
 	describe("getTop5Topics",function(){
 		it("should give the top five topics in the database",function(done){
@@ -354,9 +360,8 @@ describe("Adda", function(){
 });
 
 describe("openDBConnection", function(){
-	it("it should throw an error 'DataBase file not found' on providing bad db Location", function(done){
+	it("it should throw an error 'DataBase file not found' on providing db Location which is not existing", function(done){
 		var records = require("../ownModules/addaRecords.js").setLocation("bad.db");
-		
 		try{
 			assert.notOk(records.openDBConnection());
 		}
