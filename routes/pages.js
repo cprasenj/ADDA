@@ -15,7 +15,7 @@ var loadUserFromSession = function(req,res,next){
 		next();	
 	});	
 };
- var requireLogin = function(req,res,next){
+var requireLogin = function(req,res,next){
 	req.user ? next(): res.redirect("/login");
 };
 
@@ -23,13 +23,13 @@ router.use(loadUserFromSession);
 
 router.get('/', function(req, res) {
 	records.getTop5Topics(function(topics){
-		res.render('index', { title:'Home',topics:topics});
+		res.render('index', { title:'Home',topics:topics,loggedIn:req.user });
 	});
 });
 
 router.get('/index', function(req, res) {
 	records.getTop5Topics(function(topics){
-		res.render('index', { title:'Home',topics:topics});
+		res.render('index', { title:'Home',topics:topics,loggedIn:req.user });
 	});
 });
 

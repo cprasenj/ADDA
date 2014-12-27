@@ -7,7 +7,9 @@
     "initDB": "mkdir data && touch data/adda.db && node scripts/initializeDB.js data/adda.db",
     "test": "sh runTest.sh",
     "setup": "npm install && npm run initDB",
-    "reset": "rm -rf data && npm run setup"
+    "reset": "rm -rf data && npm run setup",
+    "testServer": "mkdir data && cp tests/data/instance.db data/adda.db",
+    "removeProdData": "rm -rf data"
   },
   "dependencies": {
     "body-parser": "~1.8.1",
