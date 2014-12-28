@@ -6,38 +6,32 @@ block content
   |&nbsp;&nbsp;
   a(href="/logout") Logout
  script(src="/javascripts/topic.js") 
- |Name: 
- b #{topic.name}
+ h8.topicHeadding #{topic.name}
  br
- |Description:
- b #{topic.description}
- br 
- |Started By:
- b #{topic.ownersEmailId}
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Started Time:
- b #{topic.startTime}
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Closed Time:
- b #{topic.closeTime}
+ div.topicInformation
+  |Started By : #{topic.ownersEmailId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  |Started Time : #{topic.startTime}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  |Closed Time : #{topic.closeTime}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  br
- button(id="CJL" onclick="onCloseOrJoinOrLeave('#{topic.id}','#{topic.name}')") #{topic.buttonName}
+ p.description
+  |#{topic.description}
+ button(id="CJL" class="registerLoginButton" onclick="onCloseOrJoinOrLeave('#{topic.id}','#{topic.name}')") #{topic.buttonName}
  br
  br
- u Comments:
+ hr
  br
- p(id="showComments")
+ h8.searchTopic Comments:
+ button(class="registerLoginButton" onclick="loadAll('#{topic.id}')") Load All Comments
+ br
+ p(id="showComments" class="comment")
   each comment in topic.comments
-   |Mail:
-   b #{comment.emailId}
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time:
-   b #{comment.time}
+   |Mail : #{comment.emailId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   |Time : #{comment.time}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    br
-   b #{comment.comment}
+   |&nbsp;&nbsp;&nbsp;&nbsp;- #{comment.comment}
    br
    br
- br
- button(onclick="loadAll('#{topic.id}')") Load All Comments
- br
  form
   textarea(id="currentComment")
-  &nbsp;&nbsp;&nbsp;
-  input(type="button" id="postComment" value="Post Comment" onclick="sendComment('#{topic.id}', '#{topic.userEmail}')")
+  |&nbsp;&nbsp;&nbsp;
+  input(class="registerLoginButton" type="button" id="postComment" value="Post Comment" onclick="sendComment('#{topic.id}', '#{topic.userEmail}')")

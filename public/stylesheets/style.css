@@ -24,6 +24,10 @@ sub{
   font-size: 15px;
 }
 
+textarea {
+  width: 500px;
+}
+
 .titleBorder {
   border-radius: 35px;
   color: #584d64;
@@ -102,4 +106,42 @@ sub{
   width: 350px;
   font-family: Segoe UI;
   font-size: 17px;
+}
+
+.topicHeadding {
+  color: #584d64;
+  font-family: Segoe UI;
+  font-size: 35px;
+  text-align: center;
+}
+
+.topicInformation {
+  color: #584d64;
+  padding: 10px 40px; 
+  width: auto;
+  font-family: Segoe UI;
+  font-size: 18px;
+  display: inline-block;
+}
+
+.description {
+  border-radius: 20px;
+  color: #584d64;
+  padding: 10px 40px; 
+  background: #dddddd;
+  width: 350px;
+  font-family: Segoe UI;
+  font-size: 20px;
+}
+
+.comment {
+  display: inline-block;
+  border-radius: 20px;
+  color: #584d64;
+  border: 1px solid #a1a1a1;
+  padding: 10px 40px; 
+  background: #f4ecbe;
+  width: auto;
+  font-family: Segoe UI;
+  font-size: 20px;
 }
