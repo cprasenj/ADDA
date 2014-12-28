@@ -6,7 +6,7 @@ block content
   h1.pageIdentifier
    |Register your account:
   if error
-   p ERROR: #{error}
+   p.errorMessage ERROR : #{error}
   form(action="/registration" method="POST")
    span.registerForm 
     |Name:&nbsp;

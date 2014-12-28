@@ -4,15 +4,16 @@ block content
  h1.pageIdentifier= title
  if error
   div
-   h4 oops Login failed:
-   |#{error}
+   h4.errorMessage OOPS!! Login failed
+    br
+    |ERROR : #{error}
   br
  form(action="/validate" method="POST")
   div.registerForm
    |Email Id:&nbsp;
-   input(type="email" name="emailId" required)
+   input(type="email" name="emailId" placeholder=" Enter your email-id" required)
   div.registerForm
    |Password:&nbsp;
-   input(type="password" name="password" required)
+   input(type="password" name="password" placeholder=" Enter your password" required)
   br
   input(type="submit" value="Login" class="registerLoginButton")

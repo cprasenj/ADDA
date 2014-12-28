@@ -1,9 +1,10 @@
 extends layout
- 
-block links
- a(href="/dashboard" class="title") 
-  h4 Dashboard 
+
 block content
+ p.menus
+  a(href="/dashboard") Dashboard
+  |&nbsp;&nbsp;
+  a(href="/logout") Logout
  script(src="/javascripts/topic.js") 
  |Name: 
  b #{topic.name}

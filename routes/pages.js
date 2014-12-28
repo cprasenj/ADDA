@@ -71,7 +71,7 @@ router.post('/validate',function(req,res){
 	records.validate(req.body,function(pageToRender,user,error){
 		if(error){
 			res.location('/login');
-			res.render('login',{title:'login',error:error});
+			res.render('login',{title:'Login',error:error});
 		}
 		else {
 			req.session.userEmail = user;

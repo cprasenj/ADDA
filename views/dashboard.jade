@@ -3,15 +3,18 @@ extends layout
 block content
  h1.pageIdentifier= title
  p.menus
+  a(href="/topics") Topics
+  |&nbsp;&nbsp;
   a(href="/logout") Logout
  p
   if(myTopics == "No Topics") 
    |You Have no Topics Create or Join 
   else
-   |My Topics
-   ul
-    each topic in myTopics
-     li
-      a(href="/topic/#{topic.id}") #{topic.name}
- p
-  a(href="/topics") Topics
+   div.topics
+    h3 My Topics
+    ul
+     each topic in myTopics
+      li
+       a(href="/topic/#{topic.id}") #{topic.name}
+  p
+   h2 

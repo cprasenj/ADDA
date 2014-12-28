@@ -19,6 +19,11 @@ a {
   color: #584d64;
 }
 
+sub{
+  color: red;
+  font-size: 15px;
+}
+
 .titleBorder {
   border-radius: 35px;
   color: #584d64;
@@ -44,16 +49,16 @@ a {
 .menus {
   text-align: right;
   font-family: Segoe UI;
-  font-size: 15px;
+  font-size: 25px;
 }
 
 .pageIdentifier {
   color: #584d64;
   font-family: Segoe UI;
-  font-size: 30px;
+  font-size: 35px;
 }
 
-.topFiveTopics {
+.topics {
   border-radius: 35px;
   color: #584d64;
   border: 2px solid #a1a1a1;
@@ -76,4 +81,25 @@ a {
   font: 15px bold, Segoe UI;
   width: 10%;
   margin-left: 45px;
+}
+
+.errorMessage {
+  color: #584d64;
+  padding: 10px 40px; 
+  font-family: Segoe UI;
+  font-size: 20px;
+}
+
+.searchTopic {
+  color: #584d64;
+  font-family: Segoe UI;
+  font-size: 25px;
+}
+
+.searchTopicResult {
+  color: #584d64;
+  padding: 10px 40px; 
+  width: 350px;
+  font-family: Segoe UI;
+  font-size: 17px;
 }

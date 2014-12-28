@@ -1,22 +1,36 @@
 extends layout
-block links
- a(href="/dashboard" class="title") 
-  h4 Dashboard 
+
 block content
- h3= title
+ h1.pageIdentifier= title
+ p.menus
+  a(href="/dashboard") Dashboard
+  |&nbsp;&nbsp;
+  a(href="/logout") Logout
  
  script(src="javascripts/topics.js")
  p
   form(action="topicAdd" method="post")
-   |Name:
-   input(type="text" name="topicName" required)
-   |Description:
-   input(type="text" name="topicDescription" required)
-   input(type="submit" value="Add Topic")
+   span.registerForm
+    |Name:&nbsp;
+    input(type="text" name="topicName" placeholder=" Enter topic name" required)
+   br
+   br
+   br
+   span.registerForm
+    |Description:&nbsp;
+    input(type="text" name="topicDescription" placeholder=" Write the description" required)
+    |&nbsp;&nbsp;
+   br
+   br
+   br
+   input(type="submit" value="Add Topic" class="registerLoginButton")
+ br
+ hr
  p
   form(action="/searchTopic" method="post")
-   |Search Topic Here:
-   input(type="text" name="searchKeyWord" id="searchText")
-   input(type="button" onclick="onSearch()" value="Search" )
-   sub  [To see all topics, leave search box empty & click on search button]
- div(id="searchResults")
+   h8.searchTopic Search Topic Here:
+   p
+    input(type="text" name="searchKeyWord" id="searchText" placeholder=" Enter topic name")
+    input(type="button" onclick="onSearch()" value="Search" class="registerLoginButton")
+    sub  [ **To see all topics, leave search box empty & click on search button ]
+  div(id="searchResults" class="searchTopicResult")
