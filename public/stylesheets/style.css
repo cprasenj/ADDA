@@ -136,11 +136,8 @@ textarea {
 
 .comment {
   display: inline-block;
-  border-radius: 20px;
   color: #584d64;
-  border: 1px solid #a1a1a1;
   padding: 10px 40px; 
-  background: #f4ecbe;
   width: auto;
   font-family: Segoe UI;
   font-size: 20px;
