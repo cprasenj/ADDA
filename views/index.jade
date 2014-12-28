@@ -4,7 +4,7 @@ block content
   p.welcomeMessage
    |Welcome to Adda
    br
-  h1.home= title
+  h1.pageIdentifier= title
   if(loggedIn)
    p.menus
     a(href="/dashboard") Dashboard
@@ -16,8 +16,7 @@ block content
     |&nbsp;&nbsp;
     a(href="/login") Login
   div.topFiveTopics
-   h4 Top Five Discussed Prasange
-   br
+   h3 Top Five Discussed Prasanges
    ul
     each topic in topics
      li #{topic.name}

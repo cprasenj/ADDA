@@ -1,7 +1,9 @@
 extends layout
 
 block content
- h3= title
+ h1.pageIdentifier= title
+ p.menus
+  a(href="/logout") Logout
  p
   if(myTopics == "No Topics") 
    |You Have no Topics Create or Join 
@@ -13,5 +15,3 @@ block content
       a(href="/topic/#{topic.id}") #{topic.name}
  p
   a(href="/topics") Topics
-  hr
-  a(href="/logout") logout

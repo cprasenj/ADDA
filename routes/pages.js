@@ -46,7 +46,7 @@ router.get('/topic/:id',requireLogin,function(req,res) {
 router.get("/dashboard",requireLogin,function(req,res){
 	var email = req.session.userEmail; 
 	records.getMyTopics(email,function(err,myTopics){
-		res.render('dashboard',{ title:'dashboard', myTopics:myTopics});
+		res.render('dashboard',{ title:'Dashboard', myTopics:myTopics});
 	});
 });
 
