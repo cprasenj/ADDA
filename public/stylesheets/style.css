@@ -1,7 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #f1f1f1;
+  background-color:#f7e9d2;
 }
 
 input {
@@ -16,7 +16,7 @@ input {
 }
 
 a {
-  color: #584d64;
+  color: #612f27;
 }
 
 sub{
@@ -30,13 +30,13 @@ textarea {
 
 .titleBorder {
   border-radius: 35px;
-  color: #584d64;
-  border: 2px solid #a1a1a1;
-    padding: 10px 40px; 
-    background: #dddddd;
-    width: 300px;
-    font-family: Segoe UI;
-    font-size: 40px;
+  color: #491c0c;
+  border: 1px solid #a1a1a1;
+  padding: 10px 40px; 
+  background: #dddddd;
+  width: 300px;
+  font-family: "Arial Black";
+  font-size: 40px;
 }
 
 .title {
@@ -45,7 +45,7 @@ textarea {
 
 .welcomeMessage {
   text-align: center;
-  color: #584d64;
+  color: #612f27;
   font-size: 25px;
   font-family: Segoe UI;
 }
@@ -57,14 +57,14 @@ textarea {
 }
 
 .pageIdentifier {
-  color: #584d64;
+  color: #612f27;
   font-family: Segoe UI;
   font-size: 35px;
 }
 
 .topics {
   border-radius: 35px;
-  color: #584d64;
+  color: #612f27;
   border: 2px solid #a1a1a1;
   padding: 10px 40px; 
   background: #dddddd;
@@ -74,34 +74,34 @@ textarea {
 }
 
 .registerForm {
-  color: #584d64;
+  color: #612f27;
   padding: 10px 40px; 
   font-family: Segoe UI;
   font-size: 20px;
 }
 
 .registerLoginButton {
-  color: #584d64;
+  color: #612f27;
   font: 15px bold, Segoe UI;
   width: 10%;
   margin-left: 45px;
 }
 
 .errorMessage {
-  color: #584d64;
+  color: red;
   padding: 10px 40px; 
   font-family: Segoe UI;
   font-size: 20px;
 }
 
 .searchTopic {
-  color: #584d64;
+  color: #612f27;
   font-family: Segoe UI;
   font-size: 25px;
 }
 
 .searchTopicResult {
-  color: #584d64;
+  color: #612f27;
   padding: 10px 40px; 
   width: 350px;
   font-family: Segoe UI;
@@ -109,14 +109,14 @@ textarea {
 }
 
 .topicHeadding {
-  color: #584d64;
+  color: #612f27;
   font-family: Segoe UI;
   font-size: 35px;
   text-align: center;
 }
 
 .topicInformation {
-  color: #584d64;
+  color: #612f27;
   padding: 10px 40px; 
   width: auto;
   font-family: Segoe UI;
@@ -126,7 +126,7 @@ textarea {
 
 .description {
   border-radius: 20px;
-  color: #584d64;
+  color: #612f27;
   padding: 10px 40px; 
   background: #dddddd;
   width: 350px;
@@ -136,7 +136,7 @@ textarea {
 
 .comment {
   display: inline-block;
-  color: #584d64;
+  color: #612f27;
   padding: 10px 40px; 
   width: auto;
   font-family: Segoe UI;

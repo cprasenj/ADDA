@@ -34,8 +34,8 @@ var showAllComments = function(values,response){
 	var commentContainer = document.getElementById("showComments");
 	commentContainer.innerHTML = "";
 	response.forEach(function(comment){
-		var html = "Mail: <b>" + comment.emailId + "</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time:<b>" + 
-		    comment.time + "</b><br><b>"+comment.comment+"</b><br><br>";
+		var html = "Mail : " + comment.emailId + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Time : " + 
+		    comment.time + "<br>&nbsp;&nbsp;&nbsp;&nbsp;- "+comment.comment+"<br><br>";
 		commentContainer.innerHTML += html; 
 	});	
 }
